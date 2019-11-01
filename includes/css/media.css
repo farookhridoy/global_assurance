@@ -1,0 +1,65 @@
+
+@media screen and (max-width: 1900px)
+{
+	.policy_rebox .formheading, .policy_rebox .form-group {display: block; width: 100%;max-width: 100%;text-align: left;}
+	.policy_rebox .formheading{padding-left: 20px;margin-top: 0px;margin-bottom: 6px;}
+	.healthdeshbord_content .col-md-7{float: left; -ms-flex: 0 0 100%; flex: 0 0 100%; max-width: 100%;}
+	.healthdeshbord_content .col-md-5{float: right; -ms-flex: 0 0 100%; flex: 0 0 100%; max-width: 100%;}
+	.pending_contorl_perent .col-md-3{-ms-flex: 0 0 40%; flex: 0 0 40%; max-width: 40%;} 
+	.pending_contorl_perent .col-md-9{-ms-flex: 0 0 60%; flex: 0 0 60%; max-width: 60%;}
+	.pending_contorl_two .col-md-3{-ms-flex: 0 0 50%; flex: 0 0 50%; max-width: 50%;} 
+
+	.checkapproval ul li {width:33.333%; height: 25px;}
+	.policy_rebox.autoWcolumn .pending_qt{ clear: both; }
+	.policy_rebox.autoWcolumn .formheading{ width: 100%; display: block; }
+	.policy_rebox.autoWcolumn
+
+
+}
+
+@media screen and (max-width: 1700px)
+{
+
+	.renewals_queuelist .col-md-3 {-ms-flex: 0 0 33.333%; flex: 0 0 33.333%; max-width: 33.333%;}
+}
+
+@media screen and (max-width: 1600px)
+{
+	.life_paymode_status ul li {margin-right: 20px;}
+	.paymode_status ul li p {font-size: 18px;}
+	.paymode_status ul li span {font-size: 15px;}
+	
+}
+
+@media screen and (max-width: 1400px)
+{
+	
+}
+
+@media screen and (max-width: 1350px)
+{
+.renewals_queuelist .col-md-3 {-ms-flex: 0 0 50%; flex: 0 0 50%; max-width: 50%;}
+}
+
+@media screen and (max-width: 1280px)
+{
+	
+}
+
+@media screen and (max-width: 991px)
+{
+	
+}
+
+@media screen and (max-width: 767px)
+{
+	
+
+}
+@media (min-width: 576px){
+}
+
+@media screen and (max-width: 567px)
+{
+	
+}

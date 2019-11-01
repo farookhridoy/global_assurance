@@ -1,0 +1,74 @@
+/*---DEFAULT--*/
+
+	* {margin: 0px; padding: 0px;}	
+	* html li {vertical-align: bottom;}	
+	* html img {vertical-align: middle;}	
+	* html input {vertical-align: middle;}	
+	body {font-family: Arial, Helvetica, sans-serif;font-size:11px;	color:#000000; background:#ffffff url(images/index/main-bg.png) repeat-x; text-align:center;}
+	input {border: 0px;}	
+	img {border: 0px;}	
+	ul {padding: 0px; margin: 0px;}	
+	li {padding: 0px; margin: 0px; list-style: none;}	
+	* html li {vertical-align: bottom;}	
+	a {color:#575757; text-decoration: none;}	
+	a:hover {color: #999999; text-decoration: none;}	
+	p {margin: 0px; padding: 0px;}	
+	.clear {clear: both; height:0px; display:block; font-size:0px;}	
+	.left {float: left;}	
+	.right {float: right;}
+	 
+	h1{ color:#45950b; font-size:26px; font-family:Georgia, "Times New Roman", Times, serif; font-weight:normal;}
+	h2{ color:#c32602; font-size:18px;}
+ 
+
+		
+/*/////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+ #wrapper { width:100%; margin:auto; clear:both; text-align:left;} 
+  #header{ width:535px; margin:auto; clear:both;}
+   #branding{width:100%; clear:both; margin:auto; padding-top:12%; border-bottom:1px solid #eeeeee;}
+    .admin-login{/*width:50%;*/ float:left;}
+    .login{ color:#da7508;}
+	.admin{ color:#45950b;}
+    .logo{float:right; width:334px; height:100px; margin:0px; padding:0px; background:url(images/msftlogo.jpg) no-repeat;}
+	.logo a{text-indent:-999999px; display:block; width:204px; height:41px;}
+ 
+   #container{ width:535px; margin:auto; clear:both; background:url(images/index/background-wrapper.png) no-repeat top; padding-top:15px; height:350px;} 
+	.main{ width:100%; margin:auto; clear:both;}  
+	.leftside{ width:285px; float:left;} 
+		.login_information li{float:left; margin-bottom:15px;}
+		.input-box{width:280px;}
+		.userleft{ background:url(images/index/user_text.png) no-repeat left; padding-left:29px; height:37px;}
+		.usermid{ background:url(images/index/text_m.png) repeat-x top; height:37px; width:240px;}
+		.userright{ background:url(images/index/user_right_text.png) no-repeat right; padding-left:0px; padding-right:7px; height:37px;}		
+		.passleft{ background:url(images/index/pass_text.png) no-repeat left; width:29px; height:37px;}
+	 
+		.textbox{height:25px; color:#657740; font-size:18px; padding-left:6px; background:#f6f5f5; padding-top:5px;  margin-top:2px; border:0px; width:240px;}
+		.passbox{height:25px; color:#657740; font-size:18px; padding-left:6px; background:#f6f5f5; padding-top:5px;  margin-top:2px; border:0px; width:240px;}
+	    .selectbox{padding:6px 5px 8px 5px; border:1px solid #dfdcdc; background:#f6f5f5; color:#da7508; font-size:14px;  width:275px; _width:280px;}
+		 
+		.restofform_capcha{ width:525px; padding:5px; margin:auto; _margin:5px auto; background:#ffffff; border:1px solid #dfdcdc;}
+		.restofform_capcha ul li{float:left; margin-right:5px;}
+		
+		.restofform-button{ width:525px; margin:5px auto 0px auto;}
+		.restofform-button li{ display: inline;} 
+		.rempass{font-size:10px; color:#525252;}
+		.forgotpass{ padding-left:40px; color:#3a8900; font-size:11px;}
+		.forgotpass a{ color:#3a8900;}
+	    .button{ background:url(images/index/login-btn.png) no-repeat; width:124px; line-height:40px; height:40px;  color:#ffffff; font-weight:bold; font-size:16px; text-transform:uppercase; border:0px; padding:5px 2px 5px 20px; _padding:0px 2px 4px 20px;margin:10px auto; }
+   
+		.input-box-m{ background:url(images/index/text_m.png) repeat-x; height:37px;}
+		.input-box-l{ background:url(images/index/input-box-l.png) no-repeat left; padding-left:7px; height:37px;}
+		.input-box-r{ background:url(images/index/user_right_text.png) no-repeat right; padding-left:0px; padding-right:7px; height:37px;}
+		.capcha-textbox{ height:25px; color:#787777; font-size:14px; padding-left:6px; background:#f6f5f5; padding-top:6px;  margin-top:2px; border:0px; width:238px;}
+		.capchabox{ margin-top:20px;width:255px;}
+	
+    .rightside{width:230px; float:left; padding:0px 5px 10px 15px;}
+	   .invalid{ background:url(images/index/warning-ico.png) no-repeat left; padding-left:18px;}
+	   .rightside p{ font-size:11px; line-height:18px; color:#930303; padding-left:20px;}
+	
+	#footer{ width:535px; margin:auto; clear:both;}
+	.copyright{ text-align:center; font-size:11px; line-height:18px; color:#b0b0b0;}
+	.copyright a{color:#b0b0b0;} 
+    
+  

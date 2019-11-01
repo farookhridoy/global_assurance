@@ -1,0 +1,66 @@
+ $policyInfo = getSinglePolicy($policy_id);
+
+                $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','xlsx','csv','txt'];
+
+                /*if($_FILES["file"]["type"]!='xlxs')){*/
+
+                    $targetPath = '../includes/file-folder/'.$_FILES['file']['name'];
+                    move_uploaded_file($_FILES["file"]['tmp_name'], $targetPath);
+                    //move_uploaded_file (trim($_FILES["file"]['tmp_name']) , $targetPath ); 
+
+
+                    $Reader = new SpreadsheetReader($targetPath);
+
+                    $sheetCount = count($Reader->sheets());
+
+                    for($i=0;$i<=$sheetCount;$i++){
+                        $Reader->ChangeSheet($i);
+                        foreach ($Reader as $row){
+
+                            if(isset($row[3])){
+                                    $paid_date= date("Y-m-d",strtotime($row[3]));
+                            }
+
+                            if(isset($policyInfo['paymentduedate'])){
+                                    $due_date= date("Y-m-d",strtotime($policyInfo['paymentduedate']));
+                            }
+
+                        if($row[10]!="APPROVAL"){
+                                    $status= "Recieved";
+                                }else{
+                                     $status= "Pending";
+                                }
+                        if($row[9]!="RepeatSale"){
+                                    $type= "Payment";
+                                }else{
+                                     $type= "Discount";
+                                }
+
+                        $sql = "INSERT INTO `payments`(`id_policy`,`id_pay_cycle`,`amount`,`agent_1_discount`, `agent_2_discount`, `agent_3_discount`, `agent_4_discount`, `agent_5_discount`,`date_paid`,`action`,`id_pay_type`,`fee`,`id_discount`,`id_user`,`date_due`,`locked`,`type`,`details`,`paid`,`date_created`,
+                                `receipt_pay`,`receipt_type`,`receipt_note`) VALUES ('".trim($policyInfo['id'])."','".trim($policyInfo['idpaycycle'])."','".$row[12]."','0.00','0.00','0.00','0.00','0.00','".trim($paid_date)."','".trim($status)."','1','".trim($policyInfo['fee'])."','','".trim($row[15])."','".trim($due_date)."','0','".trim($type)."','','0','','".trim($row[8])."','".trim($row[5]).'-'.trim($row[7])."','".trim($row[18])."')";
+
+                        $result = $db->insert($sql);
+
+                            if (!empty($result)) {
+
+                                    $data_sucess['sucess'] = 1;
+
+                                } else {
+                                    $data_sucess['sucess'] = 401;
+                                     //alert("Problem in Importing Excel Data");
+                                }
+
+                            }//end foreach
+
+                        }//end for
+                    /*}
+                    else
+                    { 
+                        $data_sucess['sucess'] = 402;
+                        //alert("Invalid File Type. Upload Excel File.");
+                    }*/
+                    
+              }else{
+
+                $data_sucess['sucess'] = 1; 
+            }

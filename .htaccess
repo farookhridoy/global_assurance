@@ -1,0 +1,15 @@
+# For security reasons, Option followsymlinks cannot be overridden.
+#Options +FollowSymLinks
+Options +SymLinksIfOwnerMatch
+RewriteEngine on
+
+#RewriteBase /light/
+
+# please use .php at url for admin
+
+# To ignore htaccess - enlist here
+RewriteCond $1 !^(index\.php|(.*)\.php|cron|gerbage|language|includes|ajax|resources|fonts|images|uploads|media|system|robots\.txt|sitemap\.xml|urllist\.txt)
+
+
+
+RewriteRule ^(.*) index.php [NC]

@@ -1,0 +1,82 @@
+ 
+.jqueryslidemenu {width:940px;margin:auto;}
+.jqueryslidemenu ul {margin: 0; padding: 0;}
+.jqueryslidemenu ul ul {
+	background:url(images/ul-ul-hover.png) no-repeat bottom;
+	height:auto;
+	padding-bottom:4px;
+
+}
+.jqueryslidemenu ul li {
+	position: relative;
+	display:inline-block;
+	float: left;
+	font-size:12px;
+ 
+	
+}
+* html .jqueryslidemenu ul li {
+	vertical-align: bottom;
+}
+/*Top level menu link items style*/
+.jqueryslidemenu ul li a {
+ 
+	 
+	padding:0 25px; 
+	display: inline-block; height:30px; 
+	font-size:12px; font-weight:bold; color:#790101; line-height:30px;
+	
+	
+}
+
+ 
+.jqueryslidemenu ul li a:hover  {
+		font-size:12px; color:#083f57; background:url(images/nav-hover.png) repeat-x; height:31px; margin-top:1px; _margin-top:0px; display:inline-block;
+ 
+}
+ .jqueryslidemenu ul ul li a:hover {
+	background: url(images/bullet3.png) no-repeat left;
+	padding-left:15px;
+	color:#464646;
+ 
+}
+* html .jqueryslidemenu ul li a { /*IE6 hack to get sub menu links to behave correctly*/
+	display: inline-block;
+}
+ 
+.jqueryslidemenu ul li ul {
+	position: absolute;
+	left: 0;
+	display: block;
+	visibility: hidden;
+}
+/*Sub level menu list items (undo style from Top level List Items)*/
+.jqueryslidemenu ul li ul li { 
+	float:left;
+	width:200px;
+	clear:both;
+	font-size:11px; 
+	text-align:left;
+	border-left:1px solid #dde4e7;
+	border-right:1px solid #dde4e7; 
+	background:#f4f7f9;
+}
+
+  
+.jqueryslidemenu ul li ul li ul {
+	top: 0;
+}
+ 
+.jqueryslidemenu ul li ul li a { 
+	padding-left:25px;
+	color: #000033;
+	font-size:11px;
+	 
+}
+.jqueryslidemenu ul li ul li a:hover { /*sub menus hover style*/
+    color:#083f57;  
+    padding-left:25px;
+	color:#990000;
+	font-size:11px;
+	width:150px;
+}
