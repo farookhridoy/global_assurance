@@ -553,6 +553,7 @@ switch($action)
           $paidcheck = $db_data['paid'] = $_POST['paidcheck'];
 
           $paymentAction = $db_data['action'] = $_POST['paymentAction'];
+          
 
           $paymentpaid = $_POST['paymentpaid'];
           if($paymentpaid)
@@ -566,6 +567,9 @@ switch($action)
             $new_payments = createNewPayments($db_data);
             if($new_payments){
               $data_sucess['sucess'] = 1;
+
+              $db_upstatus_data['idstatus'] = $_POST['policy_status'];
+              $updStats = saveHealthPolicy($policy_id,$db_upstatus_data); 
 
             }
           }else{

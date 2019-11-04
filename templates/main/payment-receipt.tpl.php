@@ -70,8 +70,12 @@
 
             
             <tr style="background: #f3f3f3;">
-              <td colspan="2" style="padding:6px 15px;font-size: 13px;color: #000;"><strong>Date:&nbsp;</strong></td>
+              <td colspan="2" style="padding:6px 15px;font-size: 13px;color: #000;"><strong>Paid Date:&nbsp;</strong></td>
               <td align="right" colspan="2" style="color: #000;padding:6px 15px;font-size: 13px;"><?php echo dateFormFormat($payment_info['date_paid']);?></td>
+            </tr>
+            <tr style="background: #f3f3f3;">
+              <td colspan="2" style="padding:6px 15px;font-size: 13px;color: #000;"><strong>Due Date:&nbsp;</strong></td>
+              <td align="right" colspan="2" style="color: #000;padding:6px 15px;font-size: 13px;"><?php echo dateFormFormat($payment_info['date_due']);?></td>
             </tr>
 
           </table>

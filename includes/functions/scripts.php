@@ -484,20 +484,32 @@ function agent_note_form_submit(){
 
 
 //payment table save start//
-  function payment_form_submit(){
+   function payment_form_submit(){
     var policy_id = $('#policy_id').val();
+    var paymenType = $('#paymenType').val();
+    var id_pay_cycle = $('#id_pay_cycle').val();
+    var paymentpaid = $('#paymentpaid').val();
     //var payments_id = $('#payments_id').val();
+    var receipt_note = $('#receipt_note').val();
+    var receipt_type = $('#receipt_type').val();
+    var receipt_pay = $('#receipt_pay').val();
+    var policy_status = $('#policy_status').val();
+    //alert(receipt_note);
                   
     if(policy_id){
+        if ( paymenType !="" && id_pay_cycle !="" && paymentpaid !="" ) {
+
         var rowData = $('#content_section_payments .row_payment').last().find('#payments_id').val();
         //alert(rowData);
         if(!rowData){
+            var rowCurrentData = $('#content_section_payments .row_payment').last().attr('id');
+            //alert(rowCurrentData);
             $("#ajax_progress").find('label').text('Pyament form saving please wait...');
             $("#ajax_progress").show();
             $.ajax({
                 type: 'POST',
                 url: admin_ajax_url+"?action=save_payments",
-                data: $('form').serialize(), 
+                data: $('#'+rowCurrentData+' :input').serialize()+"&receipt_pay="+receipt_pay+"&receipt_type="+receipt_type+"&policy_status="+policy_status+"&receipt_note="+receipt_note,
                 success: function(response) {
                     //alert(response); 
                     //return 1;
@@ -514,6 +526,10 @@ function agent_note_form_submit(){
             });
         }
 
+
+        }else{
+            alert("Fill Type, Paymod & Payment date required field");
+        }
     }else{
         alert("Policy id not found!!!");
     }

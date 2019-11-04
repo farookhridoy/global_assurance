@@ -23,6 +23,21 @@ $getData = $db->select_single($sql);
     </ul>
 </div><!-- page-breadcrumbs END -->
 <h1 class="page-titlename">System</h1>
+<?php 
+    if(isset($_SESSION["message-authrize"])) {
+      $success = $_SESSION["message-authrize"];
+      
+      unset($_SESSION["message-authrize"]);
+    }elseif(isset($_SESSION["message"])) {
+      $success = $_SESSION["message"];
+     unset($_SESSION["message"]);
+    } else {
+      $success = "";
+    }
+
+    echo '<strong style="color:green;font-size: 18px;font-weight: bold;">'.$success.'</strong>';
+?>
+
 <div class="clearfix"></div>
 <div class="row">  
     <div class="col-md-8"> 
@@ -79,7 +94,9 @@ $getData = $db->select_single($sql);
 </div>
 
 </div>
-</div><!-- sectionPanel_Right END -->
+</div>
+
+<!-- sectionPanel_Right END -->
 
 <!-- /*require_once('../spreadsheet-plugin/php-excel-reader/excel_reader2.php');
 require_once('../spreadsheet-plugin/SpreadsheetReader.php');
