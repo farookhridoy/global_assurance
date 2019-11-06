@@ -23,6 +23,28 @@ $action = $_REQUEST['action'];
 switch($action)
 	{		
 		
+        case 'load_agent_data':
+        $agentType = trim($_POST['agent_type']);
+        $agentID = trim($_POST['agent_num']);
+        $agentLevel = trim($_POST['agent_level']);
+        $policy_id = trim($_POST['policy_id']);
+        $agentLevelSub = $agentLevel + 1;
+        
+        $agentInfo = getSingleAgentCommission($agentID,$agentLevel,$policy_id);
+       
+       
+        
+        if($agentInfo){
+        $data_sucess['sucess'] = 1;
+        $data_sucess['agent_data'] = $agentInfo;
+        
+        }else{
+           $data_sucess['sucess'] = 0; 
+        }
+		echo json_encode($data_sucess);
+	    break;
+
+
         case 'load_agent':
         $agentType = trim($_POST['agent_type']);
         $agentID = trim($_POST['agent_num']);
@@ -40,8 +62,8 @@ switch($action)
         }else{
            $data_sucess['sucess'] = 0; 
         }
-		echo json_encode($data_sucess);
-	    break;
+        echo json_encode($data_sucess);
+        break;
         
         case 'load_coverage':
         $planID = trim($_POST['plan_num']);
@@ -489,33 +511,7 @@ switch($action)
         
         ## Payment Codes 
         
-        case 'save_agent_notes':
-          $checkPermission = checkUserAccessRole('Policies');
-          if(!$checkPermission){
-            $data_sucess = array("sucess"=>0,"pr"=>1,"message"=>"Permission error");
-            echo json_encode($data_sucess);
-            break;
-          }
-          $policy_id =trim($_POST['policy_id']);
-          $note_1 = trim($_POST['note_1']);
-          $note_2 = trim($_POST['note_2']);
-          $note_3 = trim($_POST['note_3']);
-          $note_4 = trim($_POST['note_4']);
-          $note_5 = trim($_POST['note_5']);
-          $created_date = date("Y-m-d");
-          $updated_date = date("Y-m-d");
-
-          if($policy_id){
-            $new_agent_notes = createNewAgentNotes($policy_id,$note_1,$note_2,$note_3,$note_4,$note_5,$created_date,$updated_date);
-            if($new_agent_notes){
-            $data_sucess['sucess'] = 1;
-          }
-        }else{
-         $data_sucess['sucess'] = 0; 
-       }
-       echo json_encode($data_sucess);
-
-        break;
+        
         //for save payments
          case 'save_payments':
 
@@ -546,6 +542,7 @@ switch($action)
           $discount_agent_5 = $db_data['agent_5_discount'] = $_POST['discount_agent_5'];
 
           $paymentMethod = $db_data['id_pay_type'] = $_POST['paymentMethod'];
+          $id_user = $db_data['id_user'] = $_POST['payment_user_id'];
 
 
 
@@ -561,15 +558,28 @@ switch($action)
           $paymentduedate = $_POST['paymentduedate'];
           if($paymentduedate)
             $db_data['date_due']  = date("Y-m-d",strtotime($paymentduedate));
-
-
+          //fro agent note for each policy
+          $notes = $_POST['notes'];
+          $notesids = $_POST['notesids'];
+          
+          //endfor agent note for each policy
           if($policy_id){
             $new_payments = createNewPayments($db_data);
             if($new_payments){
               $data_sucess['sucess'] = 1;
 
               $db_upstatus_data['idstatus'] = $_POST['policy_status'];
-              $updStats = saveHealthPolicy($policy_id,$db_upstatus_data); 
+              $db_upstatus_data['paymentduedate'] = date("Y-m-d",strtotime($paymentpaid));
+
+              $updStats = saveHealthPolicy($policy_id,$db_upstatus_data);
+              if($notes){
+                 $sql='INSERT INTO notespolicy SET note="'.$notes.'", idpolicy="'.$policy_id.'"'; 
+                 $note_id = $db->insert($sql); 
+
+                 if($note_id){
+                  addAudit(array("uid"=>$user_id,"idpolicy"=>$policy_id,"action"=>$user_name." add a note"));
+                } 
+              } 
 
             }
           }else{
@@ -591,16 +601,18 @@ switch($action)
             $policy_id = trim($_POST['policy_id']);
             $data_id = trim($_POST['data_id']);
             $agent_id = trim($_POST['agent_id']);
+            $notes = trim($_POST['notes']);
 
             $db_data['agent_id'] =  $agent_id;
             $db_data['policy_id'] = $policy_id;
-            $db_data['label_id'] = $data_id;
+            $db_data['level_id'] = $data_id;
             $db_data['commission'] = trim($_POST['agent_level'.$data_id.'_commission']);
             $db_data['sys_nb'] = trim($_POST['agent_level'.$data_id.'_sys_nb']);
             $db_data['nb'] = trim($_POST['agent_level'.$data_id.'_nb']);
             $db_data['sys_rn'] = trim($_POST['agent_level'.$data_id.'_sys_rn']);
             $db_data['rn'] = trim($_POST['agent_level'.$data_id.'_rn']);
             $db_data['pay_by'] = trim($_POST['agent_level'.$data_id.'_pay_by']);
+            $db_data['notes'] = $notes;
 
             if($policy_id && $agent_id){
 

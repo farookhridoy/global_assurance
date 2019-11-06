@@ -1,6 +1,6 @@
 <?php
 function scriptHealthNew(){  
-global $policyInfo,$policyNotes,$insuredLists,$checkPermissionRole;
+global $policyInfo,$policyNotes,$insuredLists,$checkPermissionRole,$db;
     $paymentsList=getPaymentsLists($policyInfo['id']);
 ?>
 <script type="text/javascript">
@@ -163,10 +163,84 @@ function loadCoverages(curr_plan)
        var ae_id = $(this).attr("id");
        var ae_data_id = $(this).attr("data-id");
        var selected_val = $(this).val();
-       loadAgentsForPayment(ae_id,ae_data_id,selected_val);
+       var policy_id = $('#policy_id').val();
+       if (policy_id) {
+            loadAgentsDataForPayment(ae_id,ae_data_id,selected_val,policy_id);
+       }else{
+
+            loadAgentsForPayment(ae_id,ae_data_id,selected_val);
+       }
    });
 
     //end call loadagentsforpayment//
+
+    function loadAgentsDataForPayment(curr_ae_id,curr_ae_data_id,curr_val,policy_id)
+    {
+        
+        var next_level = parseInt(curr_ae_data_id) + 1;
+        var curr_val_data = parseInt(curr_val);
+
+        if(curr_val_data){
+        $.post(admin_ajax_url,{action:'load_agent_data', agent_type:'health', agent_num: curr_val,agent_level: curr_ae_data_id,policy_id:policy_id},
+            function(data)
+            {    
+                if(parseInt(data.sucess) == 1)
+                {     
+                    $("#agent_level"+curr_ae_data_id+"_active").removeClass('hiddenbtn');
+
+                   if(data.agent_data.name)
+                       $("#agent_level"+curr_ae_data_id+"_f_name").val(data.agent_data.name);
+                       
+
+                   if(data.agent_data.lastname)
+                       $("#agent_level"+curr_ae_data_id+"_l_name").val(data.agent_data.lastname);
+
+                   if(data.agent_data.commission)
+                       $("#agent_level"+curr_ae_data_id+"_commission").val(data.agent_data.commission); 
+
+                   if(data.agent_data.sys_nb)
+                       $("#agent_level"+curr_ae_data_id+"_sys_nb").val(data.agent_data.sys_nb); 
+
+                   if(data.agent_data.nb)
+                       $("#agent_level"+curr_ae_data_id+"_nb").val(data.agent_data.nb);
+
+                   if(data.agent_data.sys_rn)
+                       $("#agent_level"+curr_ae_data_id+"_sys_rn").val(data.agent_data.sys_rn);
+
+                   if(data.agent_data.rn)
+                       $("#agent_level"+curr_ae_data_id+"_rn").val(data.agent_data.rn);
+
+                   if(data.agent_data.pay_by)
+                       $("#agent_level"+curr_ae_data_id+"_pay_by").val(data.agent_data.pay_by);
+
+                   if(data.agent_data.notes)
+                       $("#agent_level"+curr_ae_data_id+"_notes").val(data.agent_data.notes);
+                 
+                
+                  
+                }
+                else
+                {
+                 //alert("Failed");
+                }
+            },'json');
+            
+            }else{
+               $("#agent_level"+curr_ae_data_id+"_f_name").val("");
+               $("#agent_level"+curr_ae_data_id+"_l_name").val("");
+               $("#agent_level"+curr_ae_data_id+"_commission").val("");
+               $("#agent_level"+curr_ae_data_id+"_sys_nb").val("");
+               $("#agent_level"+curr_ae_data_id+"_nb").val("");
+               $("#agent_level"+curr_ae_data_id+"_sys_rn").val("");
+               $("#agent_level"+curr_ae_data_id+"_rn").val("");
+               $("#agent_level"+curr_ae_data_id+"_pay_by").val("");
+               $("#agent_level"+curr_ae_data_id+"_notes").val("");
+
+              
+               
+            }
+            return false;
+    }
 
     function loadAgentsForPayment(curr_ae_id,curr_ae_data_id,curr_val)
     {
@@ -206,6 +280,9 @@ function loadCoverages(curr_plan)
 
                    if(data.agent_data.pay_by)
                        $("#agent_level"+curr_ae_data_id+"_pay_by").val(data.agent_data.pay_by);
+
+                   if(data.agent_data.notes)
+                       $("#agent_level"+curr_ae_data_id+"_notes").val(data.agent_data.notes);
                  
                 
                   
@@ -225,6 +302,7 @@ function loadCoverages(curr_plan)
                $("#agent_level"+curr_ae_data_id+"_sys_rn").val("");
                $("#agent_level"+curr_ae_data_id+"_rn").val("");
                $("#agent_level"+curr_ae_data_id+"_pay_by").val("");
+               $("#agent_level"+curr_ae_data_id+"_notes").val("");
 
               
                
@@ -446,40 +524,6 @@ function savePolicyInsureds(){
   
 
 
-//agents-note add//
-function agent_note_form_submit(){
-    var policy_id = $('#policy_id').val();
-                  
-    if(policy_id){
-        
-    $("#ajax_progress").find('label').text('Note saving please wait...');
-    $("#ajax_progress").show();
-    $.ajax({
-        type: 'POST',
-        url: admin_ajax_url+"?action=save_agent_notes",
-        data: $('form').serialize()+"&policy_id="+policy_id, 
-        success: function(response) {
-            //alert(response); 
-            //return 1;
-            var response_json = $.parseJSON(response);
-            if(parseInt(response_json.sucess) == 1){
-                window.location.reload();
-                
-            }else{
-             
-             alert("Failed to  save agent notes"); 
-            }
-            //alert(response);
-        },
-    });
-
-    }else{
-        alert("Policy id can't find!!!");
-    }
-    return false;
-  }
-
-
 
 
 
@@ -489,12 +533,17 @@ function agent_note_form_submit(){
     var paymenType = $('#paymenType').val();
     var id_pay_cycle = $('#id_pay_cycle').val();
     var paymentpaid = $('#paymentpaid').val();
-    //var payments_id = $('#payments_id').val();
+  
     var receipt_note = $('#receipt_note').val();
     var receipt_type = $('#receipt_type').val();
     var receipt_pay = $('#receipt_pay').val();
     var policy_status = $('#policy_status').val();
-    //alert(receipt_note);
+
+    var notes = $('#notes').val();
+    var notesids = $('#notesids').val();
+
+    ///alert(notes+'/'+notesids);
+
                   
     if(policy_id){
         if ( paymenType !="" && id_pay_cycle !="" && paymentpaid !="" ) {
@@ -509,7 +558,7 @@ function agent_note_form_submit(){
             $.ajax({
                 type: 'POST',
                 url: admin_ajax_url+"?action=save_payments",
-                data: $('#'+rowCurrentData+' :input').serialize()+"&receipt_pay="+receipt_pay+"&receipt_type="+receipt_type+"&policy_status="+policy_status+"&receipt_note="+receipt_note,
+                data: $('#'+rowCurrentData+' :input').serialize()+"&receipt_pay="+receipt_pay+"&receipt_type="+receipt_type+"&policy_status="+policy_status+"&receipt_note="+receipt_note+"&notes="+notes+"&notesids="+notesids,
                 success: function(response) {
                     //alert(response); 
                     //return 1;
@@ -545,6 +594,7 @@ function agent_note_form_submit(){
      var data_id = parseInt($(this).attr('data-id'));
      var policy_id = $('#policy_id').val();
      var agent_id = parseInt($('#agent_level'+data_id).children("option:selected").val());
+     var notes = $('#agent_level'+data_id+'_notes').val();
 
      //alert(data_id+'/'+policy_id+'/'+agent_id);
 
@@ -555,7 +605,7 @@ function agent_note_form_submit(){
             $.ajax({
                 type: 'POST',
                 url: admin_ajax_url+"?action=save_agent_label",
-                data: $('#agent_frm'+data_id+' :input').serialize()+"&policy_id="+policy_id+"&data_id="+data_id+"&agent_id="+agent_id, 
+                data: $('#agent_frm'+data_id+' :input').serialize()+"&policy_id="+policy_id+"&data_id="+data_id+"&agent_id="+agent_id+"&notes="+notes, 
                 success: function(response) {
                     var response_json = $.parseJSON(response);
                     if(parseInt(response_json.sucess) ==1){

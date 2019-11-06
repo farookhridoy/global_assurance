@@ -205,6 +205,7 @@ function getAgentLists($policy_type,$level,$parent=0){
 }
 
 
+
 function getSingleAgent($agent_id){
     global $db;
     $agent = array();
@@ -802,30 +803,6 @@ function getPayCyclebyid($paycycle_id){
   return $payCycleData;
 }
 
-function createNewAgentNotes($policy_id,$note_1,$note_2,$note_3,$note_4,$note_5,$created_date,$updated_date){
-  
-  global $db;  
-  $stats = '';
-
-  if($policy_id){
-
-    $sql="SELECT * FROM notes WHERE policy_id='$policy_id'";
-    $getData = $db->select_single($sql);
-    if ($getData!=null) {
-      
-        $sql='UPDATE notes SET  note_1="'.$note_1.'", note_2 = "'.$note_2.'" , note_3="'.$note_3.'", note_4 = "'.$note_4.'", note_5 = "'.$note_5.'", updated_date = "'.$updated_date.'" WHERE policy_id="'.$policy_id.'"'; 
-         $stats= $db->update($sql);
-     
-    }else{
-
-         $sql='INSERT INTO notes SET  policy_id="'.$policy_id.'", note_1="'.$note_1.'", note_2 = "'.$note_2.'" , note_3="'.$note_3.'", note_4 = "'.$note_4.'", note_5 = "'.$note_5.'", created_date = "'.$created_date.'"'; 
-         $stats= $db->insert($sql);
-
-    }
-
-  }
-    return $stats;
-}
 
 
 function createNewPayments($db_data){
@@ -857,7 +834,7 @@ function createNewAgentLabel($db_data,$agent_id,$policy_id,$data_id){
 
     if($db_data && is_array($db_data)){
 
-      $sql="SELECT * FROM `agent_commissions` WHERE `policy_id`='$policy_id' AND `agent_id`='$agent_id' AND `label_id`='$data_id'";
+      $sql="SELECT * FROM `agent_commissions` WHERE `policy_id`='$policy_id' AND `agent_id`='$agent_id' AND `level_id`='$data_id'";
       $getdata=$db->select_single($sql);
 
         if ($getdata !=null)
@@ -873,7 +850,7 @@ function createNewAgentLabel($db_data,$agent_id,$policy_id,$data_id){
         $sql = rtrim($sql,",");
 
          if ($getdata !=null)
-        $sql .= 'WHERE agent_id="'.$agent_id.'" and policy_id="'.$policy_id.'" and label_id="'.$data_id.'" ';
+        $sql .= 'WHERE agent_id="'.$agent_id.'" and policy_id="'.$policy_id.'" and level_id="'.$data_id.'" ';
         
          if ($getdata !=null)
             $stats = $db->edit($sql);
@@ -917,6 +894,52 @@ function getSingleAgentNameById($agent_id,$level){
   return $agent_name;
 }
 
+
+function getAgentData($policy_id,$level){
+    global $db;
+    $agentLists = array();
+    if($policy_id && $level){
+        
+      $sql="SELECT agent_commissions.commission,
+      agent_commissions.sys_nb,
+      agent_commissions.nb,
+      agent_commissions.sys_rn,
+      agent_commissions.rn,
+      agent_commissions.pay_by,
+      agent_commissions.notes, 
+      agents.name,
+      agents.lastname,
+      agents.id
+      FROM agent_commissions
+      INNER JOIN agents ON agent_commissions.agent_id=agents.id
+      WHERE agent_commissions.policy_id='$policy_id' AND agents.level='$level'";
+      $agentLists = $db->select($sql);
+    }
+    return $agentLists;
+}
+
+function getSingleAgentCommission($agent_id,$level,$policy_id){
+    global $db;
+    $agent = array();
+    if($policy_id && $level && $agent_id){
+        
+      $sql="SELECT agent_commissions.commission,
+      agent_commissions.sys_nb,
+      agent_commissions.nb,
+      agent_commissions.sys_rn,
+      agent_commissions.rn,
+      agent_commissions.pay_by,
+      agent_commissions.notes, 
+      agents.name,
+      agents.lastname,
+      agents.id
+      FROM agent_commissions
+      INNER JOIN agents ON agent_commissions.agent_id=agents.id
+      WHERE agent_commissions.policy_id='$policy_id' AND agents.level='$level' AND agent_commissions.agent_id='$agent_id'";
+      $agent = $db->select_single($sql);
+    }
+    return $agent;
+}
 
 //end file upload
 ?>
