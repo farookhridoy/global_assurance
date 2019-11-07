@@ -122,7 +122,7 @@
                 </tr>
                 <tr>
                   <td valign="top" style=" padding-right: 20px; padding-top: 30px;"><span style="font-size: 14px;"><strong>PAYMENT</strong></span></td>
-                  <td valign="top" style=" padding-top: 30px;"><span style="font-size: 14px;"><?php echo $payment_info['amount']; ?></span></td>
+                  <td valign="top" style=" padding-top: 30px;"><span style="font-size: 14px;">$<?php echo $payment_info['amount']; ?></span></td>
                 </tr>
                 <tr>
                   <td valign="top" style=" padding-right: 20px; padding-top: 30px;"><span style="font-size: 14px;"><strong>&nbsp;</strong></span></td>
@@ -135,23 +135,23 @@
                       </tr>
                       <tr>
                         <td style="color: #000;padding:10px 15px 10px 0;font-size: 14px;">L1:</td>
-                        <td style="color: #000;padding:10px 15px;font-size: 14px;"><?php echo $payment_info['agent_1_discount']; ?></td>
+                        <td style="color: #000;padding:10px 15px;font-size: 14px;">$<?php echo $payment_info['agent_1_discount']; ?></td>
                       </tr>
                       <tr>
                         <td style="color: #000;padding:10px 15px 10px 0;font-size: 14px;">L2:</td>
-                        <td style="color: #000;padding:10px 15px;font-size: 14px;"><?php echo $payment_info['agent_2_discount']; ?></td>
+                        <td style="color: #000;padding:10px 15px;font-size: 14px;">$<?php echo $payment_info['agent_2_discount']; ?></td>
                       </tr>
                       <tr>
                         <td style="color: #000;padding:10px 15px 10px 0;font-size: 14px;">L3:</td>
-                        <td style="color: #000;padding:10px 15px;font-size: 14px;"><?php echo $payment_info['agent_3_discount']; ?></td>
+                        <td style="color: #000;padding:10px 15px;font-size: 14px;">$<?php echo $payment_info['agent_3_discount']; ?></td>
                       </tr>
                       <tr>
                         <td style="color: #000;padding:10px 15px 10px 0;font-size: 14px;">L4:</td>
-                        <td style="color: #000;padding:10px 15px;font-size: 14px;"><?php echo $payment_info['agent_4_discount']; ?></td>
+                        <td style="color: #000;padding:10px 15px;font-size: 14px;">$<?php echo $payment_info['agent_4_discount']; ?></td>
                       </tr>
                       <tr>
                         <td style="color: #000;padding:10px 15px 10px 0;font-size: 14px;">L5:</td>
-                        <td style="color: #000;padding:10px 15px;font-size: 14px;"><?php echo $payment_info['agent_5_discount']; ?></td>
+                        <td style="color: #000;padding:10px 15px;font-size: 14px;">$<?php echo $payment_info['agent_5_discount']; ?></td>
                       </tr>
                     </table>
 

@@ -24,18 +24,24 @@ $getData = $db->select_single($sql);
 </div><!-- page-breadcrumbs END -->
 <h1 class="page-titlename">System</h1>
 <?php 
-    if(isset($_SESSION["message-authrize"])) {
-      $success = $_SESSION["message-authrize"];
+    if(isset($_SESSION["message-authorize"])) {
+      $success = $_SESSION["message-authorize"];
       
-      unset($_SESSION["message-authrize"]);
+      unset($_SESSION["message-authorize"]);
+    echo '<strong style="color:green;font-size: 18px;font-weight: bold;">'.$success.'</strong>';
     }elseif(isset($_SESSION["message"])) {
       $success = $_SESSION["message"];
      unset($_SESSION["message"]);
-    } else {
-      $success = "";
-    }
-
     echo '<strong style="color:green;font-size: 18px;font-weight: bold;">'.$success.'</strong>';
+    }elseif(isset($_SESSION["error"])) {
+      $success = $_SESSION["error"];
+     unset($_SESSION["error"]);
+    echo '<strong style="color:red;font-size: 18px;font-weight: bold;">'.$success.'</strong>';
+   }else {
+      $success = "";
+  }
+
+
 ?>
 
 <div class="clearfix"></div>
@@ -57,7 +63,7 @@ $getData = $db->select_single($sql);
                   <input type="hidden" name="data_id" value="1">
               </div>
               <div class="col-md-6">
-                  <button class="btn btn-primary bgorange" type="submit" data-id="1">Upload Hertland</button>
+                  <input class="btn btn-primary bgorange" type="submit" value="Upload Hertland" name="upload" data-id="1">
                  
 
               </div>
@@ -74,7 +80,7 @@ $getData = $db->select_single($sql);
 
             <div class="form-group-row">
               <div class="row rowsm">
-                <div class="col-md-3"><label class="formheading labelSide">Choose Authrize Excel File</label></div>
+                <div class="col-md-3"><label class="formheading labelSide">Choose Authorize Excel File</label></div>
                 <div class="col-md-3">
 
                   <input type="file" name="fileToUpload"  id="file" class="form-control btn btn-primary" style="height: 33px !important;margin-top: -3px;">
@@ -83,7 +89,7 @@ $getData = $db->select_single($sql);
               </div>
               <div class="col-md-6">
                   <input type="hidden" name="data_id" value="2">
-                  <button class="btn btn-success" type="submit" data-id="2">Upload Authrize</button>
+                  <input class="btn btn-success" type="submit" value="Upload Authorize" name="upload" data-id="2">
 
               </div>
           </div>

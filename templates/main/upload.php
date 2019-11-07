@@ -4,14 +4,15 @@ require_once('spreadsheet-plugin/php-excel-reader/excel_reader2.php');
 require_once('spreadsheet-plugin/SpreadsheetReader.php');
 
 global $db;
-
+$user_id = state('user_id');
  
 $target_dir = "files/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 
 // Check if image file is a actual image or fake image
-if(isset($_POST["submit"])) {
+if(isset($_POST["upload"])) {
 	$check = $_FILES["fileToUpload"]["tmp_name"];
+	$name = $_FILES["fileToUpload"]["name"];
 
 }
 
@@ -34,32 +35,38 @@ if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 
 
 			if($data_id==1){
-				if(isset($row[3])){
-					$paid_date= date("Y-m-d",strtotime($row[3]));
-				}
 
-				if(isset($policyInfo['paymentduedate'])){
-					$due_date= date("Y-m-d",strtotime($policyInfo['paymentduedate']));
-				}
+				if ($name=="Heartland.xlsx") {
+					if(isset($row[5])){
+						$paid_date= date("Y-m-d",strtotime($row[5]));
+					}
 
-				if($row[10]!="APPROVAL"){
-					$status= "Recieved";
-				}else{
-					$status= "Pending";
-				}
-				if($row[9]!="RepeatSale"){
+					if(isset($policyInfo['paymentduedate'])){
+						$due_date= date("Y-m-d",strtotime($policyInfo['paymentduedate']));
+					}
+
+					if($row[12]!="APPROVAL"){
+						$status= "Recieved";
+					}else{
+						$status= "Pending";
+					}
 					$type= "Payment";
+
+					$sql = "INSERT INTO `payments`(`id_policy`,`id_pay_cycle`,`amount`,`agent_1_discount`, `agent_2_discount`, `agent_3_discount`, `agent_4_discount`, `agent_5_discount`,`date_paid`,`action`,`id_pay_type`,`fee`,`id_discount`,`id_user`,`date_due`,`locked`,`type`,`details`,`paid`,`date_created`,
+					`receipt_pay`,`receipt_type`,`receipt_note`) VALUES ('".trim($policyInfo['id'])."','".trim($policyInfo['idpaycycle'])."','".strval($row[15])."','0.00','0.00','0.00','0.00','0.00','".trim($paid_date)."','".trim($status)."','1','".trim($policyInfo['fee'])."','','".trim($user_id)."','".trim($due_date)."','0','".$type."','".trim($row[21])."','0','','".trim($row[10])."','".trim($row[7]).'-'.trim($row[9])."','".trim($row[21])."')";
+
+					$_SESSION["message"]='Hartland record created successfully from CSV/XLSX file.';
 				}else{
-					$type= "Discount";
+					$_SESSION["error"]='Please upload "Heartland.xlsx" not '.$_FILES["fileToUpload"]["name"];
+					header('Location: '.THE_URL."main/file-upload/".$policyInfo['id']);
 				}
 
-				$sql = "INSERT INTO `payments`(`id_policy`,`id_pay_cycle`,`amount`,`agent_1_discount`, `agent_2_discount`, `agent_3_discount`, `agent_4_discount`, `agent_5_discount`,`date_paid`,`action`,`id_pay_type`,`fee`,`id_discount`,`id_user`,`date_due`,`locked`,`type`,`details`,`paid`,`date_created`,
-				`receipt_pay`,`receipt_type`,`receipt_note`) VALUES ('".trim($policyInfo['id'])."','".trim($policyInfo['idpaycycle'])."','".number_format($row[12],2)."','0.00','0.00','0.00','0.00','0.00','".trim($paid_date)."','".trim($status)."','1','".trim($policyInfo['fee'])."','','".trim($row[15])."','".trim($due_date)."','0','".trim($type)."','','0','','".trim($row[8])."','".trim($row[5]).'-'.trim($row[7])."','".trim($row[18])."')";
+				
 
-				$_SESSION["message"]='New Hartland record created successfully from CSV/XLSX file.';
+
 
 			}elseif($data_id==2){
-
+				if ($name=="Authorize.xlsx") {
 					if(isset($row[5])){
 						$paid_date= date("Y-m-d",strtotime($row[5]));
 					}
@@ -71,13 +78,16 @@ if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 
 					$status= "Pending";
 					$type= "Payment";
-				
 
-				$sql = "INSERT INTO `payments`(`id_policy`,`id_pay_cycle`,`amount`,`agent_1_discount`, `agent_2_discount`, `agent_3_discount`, `agent_4_discount`, `agent_5_discount`,`date_paid`,`action`,`id_pay_type`,`fee`,`id_discount`,`id_user`,`date_due`,`locked`,`type`,`details`,`paid`,`date_created`,
-				`receipt_pay`,`receipt_type`,`receipt_note`) VALUES ('".trim($policyInfo['id'])."','".trim($policyInfo['idpaycycle'])."','".number_format($row[10],2)."','0.00','0.00','0.00','0.00','0.00','".trim($paid_date)."','".trim($status)."','1','".trim($policyInfo['fee'])."','','".trim($row[13])."','".trim($due_date)."','0','".trim($type)."','','0','','".trim($row[14])."','".trim($row[6])."','".trim($row[9])."')";
 
-				$_SESSION["message-authrize"]='New Authrize record created successfully from CSV/XLSX file.';
+					$sql = "INSERT INTO `payments`(`id_policy`,`id_pay_cycle`,`amount`,`agent_1_discount`, `agent_2_discount`, `agent_3_discount`, `agent_4_discount`, `agent_5_discount`,`date_paid`,`action`,`id_pay_type`,`fee`,`id_discount`,`id_user`,`date_due`,`locked`,`type`,`details`,`paid`,`date_created`,
+					`receipt_pay`,`receipt_type`,`receipt_note`) VALUES ('".trim($policyInfo['id'])."','".trim($policyInfo['idpaycycle'])."','".strval($row[10])."','0.00','0.00','0.00','0.00','0.00','".trim($paid_date)."','".trim($status)."','1','".trim($policyInfo['fee'])."','','".trim($user_id)."','".trim($due_date)."','0','".$type."','','0','','".trim($row[14])."','".trim($row[11]).'-'.trim($row[6])."','".trim($row[9])."')";
 
+					$_SESSION["message-authorize"]='Authorize record created successfully from CSV/XLSX file.';
+				}else{
+					$_SESSION["error"]='Please upload "Authorize.xlsx" not '.$_FILES["fileToUpload"]["name"];
+					header('Location: '.THE_URL."main/file-upload/".$policyInfo['id']);
+				}
 			}
 
 
@@ -97,7 +107,9 @@ if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 	} 
 
 } else {
-	echo "Sorry, there was an error uploading your file.";
+	
+	$_SESSION["error"]='Sorry, there was an error uploading your file.';
+	header('Location: '.THE_URL."main/file-upload/".$policyInfo['id']);
 }
 
 ?>

@@ -941,5 +941,15 @@ function getSingleAgentCommission($agent_id,$level,$policy_id){
     return $agent;
 }
 
+function getSingleAdmin($admin_id){
+    global $db;
+    $admin = array();
+    if($admin_id){
+        $sql="SELECT * FROM users WHERE id='$admin_id'";
+        $admin = $db->select_single($sql);
+    }
+    return $admin['name'];
+}
+
 //end file upload
 ?>

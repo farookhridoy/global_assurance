@@ -164,92 +164,21 @@ function loadCoverages(curr_plan)
        var ae_data_id = $(this).attr("data-id");
        var selected_val = $(this).val();
        var policy_id = $('#policy_id').val();
-       if (policy_id) {
-            loadAgentsDataForPayment(ae_id,ae_data_id,selected_val,policy_id);
-       }else{
+      
 
-            loadAgentsForPayment(ae_id,ae_data_id,selected_val);
-       }
+        loadAgentsForPayment(ae_id,ae_data_id,selected_val,policy_id);
+       
    });
 
     //end call loadagentsforpayment//
-
-    function loadAgentsDataForPayment(curr_ae_id,curr_ae_data_id,curr_val,policy_id)
+    function loadAgentsForPayment(curr_ae_id,curr_ae_data_id,curr_val,policy_id)
     {
         
         var next_level = parseInt(curr_ae_data_id) + 1;
         var curr_val_data = parseInt(curr_val);
 
         if(curr_val_data){
-        $.post(admin_ajax_url,{action:'load_agent_data', agent_type:'health', agent_num: curr_val,agent_level: curr_ae_data_id,policy_id:policy_id},
-            function(data)
-            {    
-                if(parseInt(data.sucess) == 1)
-                {     
-                    $("#agent_level"+curr_ae_data_id+"_active").removeClass('hiddenbtn');
-
-                   if(data.agent_data.name)
-                       $("#agent_level"+curr_ae_data_id+"_f_name").val(data.agent_data.name);
-                       
-
-                   if(data.agent_data.lastname)
-                       $("#agent_level"+curr_ae_data_id+"_l_name").val(data.agent_data.lastname);
-
-                   if(data.agent_data.commission)
-                       $("#agent_level"+curr_ae_data_id+"_commission").val(data.agent_data.commission); 
-
-                   if(data.agent_data.sys_nb)
-                       $("#agent_level"+curr_ae_data_id+"_sys_nb").val(data.agent_data.sys_nb); 
-
-                   if(data.agent_data.nb)
-                       $("#agent_level"+curr_ae_data_id+"_nb").val(data.agent_data.nb);
-
-                   if(data.agent_data.sys_rn)
-                       $("#agent_level"+curr_ae_data_id+"_sys_rn").val(data.agent_data.sys_rn);
-
-                   if(data.agent_data.rn)
-                       $("#agent_level"+curr_ae_data_id+"_rn").val(data.agent_data.rn);
-
-                   if(data.agent_data.pay_by)
-                       $("#agent_level"+curr_ae_data_id+"_pay_by").val(data.agent_data.pay_by);
-
-                   if(data.agent_data.notes)
-                       $("#agent_level"+curr_ae_data_id+"_notes").val(data.agent_data.notes);
-                 
-                
-                  
-                }
-                else
-                {
-                 //alert("Failed");
-                }
-            },'json');
-            
-            }else{
-               $("#agent_level"+curr_ae_data_id+"_f_name").val("");
-               $("#agent_level"+curr_ae_data_id+"_l_name").val("");
-               $("#agent_level"+curr_ae_data_id+"_commission").val("");
-               $("#agent_level"+curr_ae_data_id+"_sys_nb").val("");
-               $("#agent_level"+curr_ae_data_id+"_nb").val("");
-               $("#agent_level"+curr_ae_data_id+"_sys_rn").val("");
-               $("#agent_level"+curr_ae_data_id+"_rn").val("");
-               $("#agent_level"+curr_ae_data_id+"_pay_by").val("");
-               $("#agent_level"+curr_ae_data_id+"_notes").val("");
-
-              
-               
-            }
-            return false;
-    }
-
-    function loadAgentsForPayment(curr_ae_id,curr_ae_data_id,curr_val)
-    {
-        
-        var next_level = parseInt(curr_ae_data_id) + 1;
-        var curr_val_data = parseInt(curr_val);
-
-        if(curr_val_data){
-        $.post(admin_ajax_url,{action:'load_agent', agent_type:'health', agent_num: curr_val,agent_level: curr_ae_data_id},
+        $.post(admin_ajax_url,{action:'load_agent', agent_type:'health', agent_num: curr_val,agent_level: curr_ae_data_id,policy_id:policy_id},
             function(data)
             {    
                 if(parseInt(data.sucess) == 1)
@@ -540,13 +469,13 @@ function savePolicyInsureds(){
     var policy_status = $('#policy_status').val();
 
     var notes = $('#notes').val();
-    var notesids = $('#notesids').val();
+   
 
     ///alert(notes+'/'+notesids);
 
                   
     if(policy_id){
-        if ( paymenType !="" && id_pay_cycle !="" && paymentpaid !="" ) {
+        
 
         var rowData = $('#content_section_payments .row_payment').last().find('#payments_id').val();
         //alert(rowData);
@@ -558,7 +487,7 @@ function savePolicyInsureds(){
             $.ajax({
                 type: 'POST',
                 url: admin_ajax_url+"?action=save_payments",
-                data: $('#'+rowCurrentData+' :input').serialize()+"&receipt_pay="+receipt_pay+"&receipt_type="+receipt_type+"&policy_status="+policy_status+"&receipt_note="+receipt_note+"&notes="+notes+"&notesids="+notesids,
+                data: $('#'+rowCurrentData+' :input').serialize()+"&receipt_pay="+receipt_pay+"&receipt_type="+receipt_type+"&policy_status="+policy_status+"&receipt_note="+receipt_note+"&notes="+notes,
                 success: function(response) {
                     //alert(response); 
                     //return 1;
@@ -575,10 +504,6 @@ function savePolicyInsureds(){
             });
         }
 
-
-        }else{
-            alert("Fill Type, Paymod & Payment date required field");
-        }
     }else{
         alert("Policy id not found!!!");
     }
