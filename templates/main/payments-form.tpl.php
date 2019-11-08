@@ -52,6 +52,7 @@ $noteData = $db->select_single($sql);
     <div class="titlebar_perent">            
       <div class="btn btn-primary agentnot_butt"><a target="_blank" href="<?php echo THE_URL."main/agent-notes/".$policyInfo['id']; ?>">Agent Notes</a></div>
       <div class="title_bar">
+       <div class="btn btn-success"><a target="_blank" style="color: white" href="<?php echo THE_URL."main/receipts/"?>"><i class="fas fa-print"></i> &nbsp;Receipts</a></div>
        <div class="btn btn-info"><a target="_blank" style="color: white" href="<?php echo THE_URL."main/file-upload/".$policyInfo['id']; ?>"><i class="fas fa-upload"></i> &nbsp;System</a></div> 
 
        <div class="btn btn-primary bgwhite"><a href="javascript:void(0);" onclick="window.location.reload()"><i class="fas fa-sync-alt"></i> &nbsp;Refresh</a></div>
@@ -725,7 +726,7 @@ $noteData = $db->select_single($sql);
   <div class="col-md-12"> 
     <div class="content_section_aside" id="content_section_payments">
       <div class="table_overlay">
-        <table class="tableContent tableHover">
+        <table class="tableContent tableHover" >
           <tr>
             <th class="fltersearch"><span>Type</span></th>
             <th class="fltersearch"><span>Pay Mod</span></th>

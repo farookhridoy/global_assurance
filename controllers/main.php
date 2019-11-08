@@ -1102,6 +1102,31 @@ class main
 
 }
 
+ function  receipts($params = array()){
+
+   $check_login = checkLoggedIn();
+   if(!($check_login && $check_login['user_type']==1)){
+       urlredirect(THE_URL."auth/login");
+       exit;
+   }
+   
+   require(COMMON_TEMPLATES.'user.header.tpl.php');
+   require(TEMPLATE_STORE.$this->controler_name.'/receipts.tpl.php');
+   require(COMMON_TEMPLATES.'user.footer.tpl.php');
+}
+
+function  payment_report_rcv($params = array()){
+
+   $check_login = checkLoggedIn();
+   if(!($check_login && $check_login['user_type']==1)){
+       urlredirect(THE_URL."auth/login");
+       exit;
+   }
+
+   require(TEMPLATE_STORE.$this->controler_name.'/payment-report-rcv.tpl.php');
+  
+}
+
 
 } //end main function
 ?>

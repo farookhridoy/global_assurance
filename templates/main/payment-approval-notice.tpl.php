@@ -9,22 +9,8 @@
     $payment_info = $db->select_single($sql);
   //paycycle name by idpaycycle from policyinfo
   $payCycle_name = getPayCyclebyid($payment_info['id_pay_cycle']);
-
-
   $policyInfo = getSinglePolicy($payment_info['id_policy']);
-  
-  //$sqlAgent="SELECT * FROM agents WHERE id=4 AND active ='1' AND level=2";
-   //$agent = $db->select_single($sqlAgent);
-   //$agent_name = $agent['name'];
-   //print_r($agent);
-   //echo $policyInfo['idagent'];
-   
-   $agent_name1 = getSingleAgentNameById($policyInfo['idagent'],1);
-   $agent_name2 = getSingleAgentNameById($policyInfo['idagent'],2);
-   $agent_name3 = getSingleAgentNameById($policyInfo['idagent'],3);
-   $agent_name4 = getSingleAgentNameById($policyInfo['idagent'],4);
-   $agent_name5 = getSingleAgentNameById($policyInfo['idagent'],5);
-   //echo $agent_name;
+$policyAgents = loadHealthPolicyAgents($policyInfo['idagent']);
 
 ?>
 
@@ -53,8 +39,9 @@
 
     <tbody>
       <tr style="background-color: #fff;">
-        <th colspan="9" align="right" style="padding: 10px;color: #000; font-size: 20px;text-transform: capitalize;font-family: 'Montserrat', sans-serif;font-weight: 700;">PAYMENTS/DISCOUNTS APPROVAL SHEET
+        <th colspan="9" align="right" style="padding: 10px;color: #000; font-size: 20px;text-transform: capitalize;font-family: 'Montserrat', sans-serif;font-weight: 700;">PAYMENTS/DISCOUNTS APPROVAL SHEET <?php  echo $agent_name = $agent['name']; ?>
         </th>
+    
       </tr>
       <tr rowspan="3" style="background-color: #fff;">
         <th colspan="6" valign="top" align="left" style="color: #000; font-size: 20px;text-transform: capitalize;font-family: 'Montserrat', sans-serif;">
@@ -86,23 +73,130 @@
               </tr>
               <tr style="background: #f3f3f3;">
                 <td colspan="2" style="padding:10px 15px;font-size: 13px;color: #000;"><strong>Agent L1:</strong></td>
-                <td align="right" colspan="2" style="color: #000;padding:10px 15px;font-size: 13px;"><?php echo $agent_name1; ?></td>
+                <td align="right" colspan="2" style="color: #000;padding:10px 15px;font-size: 13px;">
+                    <?php 
+                        $agentLvl1 = $policyAgents[2][0]['idagent'];
+                            if($agentLvl1){
+                                $agents = getAgentLists("health",1);
+                                    if($agents){
+                                      foreach($agents as $al_key => $al_vl){
+                                        $selected_text = ( trim($policyAgents[2][0]['idagent']) == $al_vl['id']) ? $al_vl['name']: ''; 
+                                        echo $selected_text;
+                                    }
+                                }
+                            }else{
+                                $agents = getAgentLists("health",1); 
+                                if($agents){
+                                    foreach($agents as $al_key => $al_vl){ 
+                                      $selected_text = ($policyInfo['idagent'] == $al_vl['id']) ? $al_vl['name']: '';  
+                                      echo $selected_text;
+                                  }
+                              }
+                          }
+                      ?>
+
+                </td>
               </tr>
               <tr style="background: #f3f3f3;">
                 <td colspan="2" style="padding:10px 15px;font-size: 13px;color: #000;"><strong>Agent L2:</strong></td>
-                <td align="right" colspan="2" style="color: #000;padding:10px 15px;font-size: 13px;"><?php echo $agent_name2; ?></td>
+                <td align="right" colspan="2" style="color: #000;padding:10px 15px;font-size: 13px;">
+                    <?php 
+                        $agentLvl1 = $policyAgents[3][0]['idagent'];
+                            if($agentLvl1){
+                                $agents = getAgentLists("health",2);
+                                    if($agents){
+                                      foreach($agents as $al_key => $al_vl){
+                                        $selected_text = ( trim($policyAgents[3][0]['idagent']) == $al_vl['id']) ? $al_vl['name']: ''; 
+                                        echo $selected_text;
+                                    }
+                                }
+                            }else{
+                                $agents = getAgentLists("health",2); 
+                                if($agents){
+                                    foreach($agents as $al_key => $al_vl){ 
+                                      $selected_text = ($policyInfo['idagent'] == $al_vl['id']) ? $al_vl['name']: '';  
+                                      echo $selected_text;
+                                  }
+                              }
+                          }
+                      ?>
+
+
+                </td>
               </tr>
               <tr style="background: #f3f3f3;">
                 <td colspan="2" style="padding:10px 15px;font-size: 13px;color: #000;"><strong>Agent L3:</strong></td>
-                <td align="right" colspan="2" style="color: #000;padding:10px 15px;font-size: 13px;"><?php echo $agent_name3; ?></td>
+                <td align="right" colspan="2" style="color: #000;padding:10px 15px;font-size: 13px;">
+                    <?php 
+                        $agentLvl1 = $policyAgents[4][0]['idagent'];
+                            if($agentLvl1){
+                                $agents = getAgentLists("health",3);
+                                    if($agents){
+                                      foreach($agents as $al_key => $al_vl){
+                                        $selected_text = ( trim($policyAgents[4][0]['idagent']) == $al_vl['id']) ? $al_vl['name']: ''; 
+                                        echo $selected_text;
+                                    }
+                                }
+                            }else{
+                                $agents = getAgentLists("health",3); 
+                                if($agents){
+                                    foreach($agents as $al_key => $al_vl){ 
+                                      $selected_text = ($policyInfo['idagent'] == $al_vl['id']) ? $al_vl['name']: '';  
+                                      echo $selected_text;
+                                  }
+                              }
+                          }
+                      ?>
+
+                </td>
               </tr>
               <tr style="background: #f3f3f3;">
                 <td colspan="2" style="padding:10px 15px;font-size: 13px;color: #000;"><strong>Agent L4:</strong></td>
-                <td align="right" colspan="2" style="color: #000;padding:10px 15px;font-size: 13px;"><?php echo $agent_name4; ?></td>
+                <td align="right" colspan="2" style="color: #000;padding:10px 15px;font-size: 13px;">
+                    <?php 
+                        $agentLvl1 = $policyAgents[5][0]['idagent'];
+                            if($agentLvl1){
+                                $agents = getAgentLists("health",4);
+                                    if($agents){
+                                      foreach($agents as $al_key => $al_vl){
+                                        $selected_text = ( trim($policyAgents[5][0]['idagent']) == $al_vl['id']) ? $al_vl['name']: ''; 
+                                        echo $selected_text;
+                                    }
+                                }
+                            }else{
+                                $agents = getAgentLists("health",4); 
+                                if($agents){
+                                    foreach($agents as $al_key => $al_vl){ 
+                                      $selected_text = ($policyInfo['idagent'] == $al_vl['id']) ? $al_vl['name']: '';  
+                                      echo $selected_text;
+                                  }
+                              }
+                          }
+                      ?>
+                </td>
               </tr>
               <tr style="background: #f3f3f3;">
                 <td colspan="2" style="padding:10px 15px;font-size: 13px;color: #000;"><strong>Agent L5:</strong></td>
-                <td align="right" colspan="2" style="color: #000;padding:10px 15px;font-size: 13px;"><?php echo $agent_name5; ?></td>
+                <td align="right" colspan="2" style="color: #000;padding:10px 15px;font-size: 13px;"><?php 
+                        $agentLvl1 = $policyAgents[6][0]['idagent'];
+                            if($agentLvl1){
+                                $agents = getAgentLists("health",5);
+                                    if($agents){
+                                      foreach($agents as $al_key => $al_vl){
+                                        $selected_text = ( trim($policyAgents[6][0]['idagent']) == $al_vl['id']) ? $al_vl['name']: ''; 
+                                        echo $selected_text;
+                                    }
+                                }
+                            }else{
+                                $agents = getAgentLists("health",5); 
+                                if($agents){
+                                    foreach($agents as $al_key => $al_vl){ 
+                                      $selected_text = ($policyInfo['idagent'] == $al_vl['id']) ? $al_vl['name']: '';  
+                                      echo $selected_text;
+                                  }
+                              }
+                          }
+                      ?></td>
               </tr>
 
             </tbody></table>
