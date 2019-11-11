@@ -951,5 +951,30 @@ function getSingleAdmin($admin_id){
     return $admin['name'];
 }
 
+function createNewAgentNotes($policy_id,$note_1,$note_2,$note_3,$note_4,$note_5,$created_date,$updated_date){
+  
+  global $db;  
+  $stats = '';
+
+  if($policy_id){
+
+    $sql="SELECT * FROM notes WHERE policy_id='$policy_id'";
+    $getData = $db->select_single($sql);
+    if ($getData!=null) {
+      
+        $sql='UPDATE notes SET  note_1="'.$note_1.'", note_2 = "'.$note_2.'" , note_3="'.$note_3.'", note_4 = "'.$note_4.'", note_5 = "'.$note_5.'", updated_date = "'.$updated_date.'" WHERE policy_id="'.$policy_id.'"'; 
+         $stats= $db->update($sql);
+     
+    }else{
+
+         $sql='INSERT INTO notes SET  policy_id="'.$policy_id.'", note_1="'.$note_1.'", note_2 = "'.$note_2.'" , note_3="'.$note_3.'", note_4 = "'.$note_4.'", note_5 = "'.$note_5.'", created_date = "'.$created_date.'"'; 
+         $stats= $db->insert($sql);
+
+    }
+
+  }
+    return $stats;
+}
+
 //end file upload
 ?>

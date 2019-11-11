@@ -212,9 +212,9 @@ $noteData = $db->select_single($sql);
                   <div class="tabl_cell"> <input type="text" id="agent_level1_l_name" name="agent_level1_l_name" class="form-control" value="<?php echo $lName;?>" /> </div>                                
                   <div class="tabl_cell"> <input type="text" id="agent_level1_commission" name="agent_level1_commission" class="form-control widthsm" value="<?php echo $commission;?>" /></div>
                   <div class="tabl_cell"> <input type="text" id="agent_level1_sys_nb" name="agent_level1_sys_nb" class="form-control widthsm" value="<?php echo $sys_nb;?>" /></div>
-                  <div class="tabl_cell"> <input type="text" id="agent_level1_nb" name="agent_level1_nb" class="form-control widthsm" value="<?php echo $nb;?>" /></div>
+                  <div class="tabl_cell"> <input type="text" id="agent_level1_nb" name="agent_level1_nb" onkeyup="newbalance(1)" class="form-control widthsm" value="<?php echo $nb;?>" /></div>
                   <div class="tabl_cell"> <input type="text" id="agent_level1_sys_rn" name="agent_level1_sys_rn" class="form-control widthsm" value="<?php echo $sys_rn;?>" /></div>
-                  <div class="tabl_cell"> <input type="text" id="agent_level1_rn" name="agent_level1_rn" class="form-control widthsm" value="<?php echo $rn;?>" /></div>
+                  <div class="tabl_cell"> <input type="text" id="agent_level1_rn" name="agent_level1_rn" onkeyup="renewal(1)" class="form-control widthsm" value="<?php echo $rn;?>" /></div>
                   <div class="tabl_cell"> <input type="text" id="agent_level1_pay_by" name="agent_level1_pay_by" class="form-control widthsm" value="<?php echo $pay_by;?>" /></div>
                   <div class="tabl_cell">
                     <button id="agent_level1_active" data-id="1" class="submit_btn_agent btn btn-primary blacklab <?=$hideshow?> ">AC L1</button>
@@ -268,17 +268,18 @@ $noteData = $db->select_single($sql);
                       if($agentLists2){
                         foreach($agentLists2 as $al_key => $al_vl){ 
                           $selected_text = ($policyInfo['idagent'] == $al_vl['id']) ? 'selected="selected"': '';   echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.$al_vl['name'].'</option>';
+
                           if($policyInfo['idagent'] == $al_vl['id']){
-                            $fName2 = $al_vl['name'];
-                            $lName2 = $al_vl['lastname'];
-                            $commission2 = $al_vl['commission'];
-                            $sys_nb2 = $al_vl['sys_nb'];
-                            $nb2 = $al_vl['nb'];
-                            $sys_rn2 = $al_vl['sys_rn'];
-                            $rn2 = $al_vl['rn'];
-                            $pay_by2 = $al_vl['pay_by'];
-                            $notes2 = $al_vl['notes'];
-                            $hideshow='';
+                                $fName2 = $al_vl['name'];
+                                $lName2 = $al_vl['lastname'];
+                                $commission2 = $al_vl['commission'];
+                                $sys_nb2 = $al_vl['sys_nb'];
+                                $nb2 = $al_vl['nb'];
+                                $sys_rn2 = $al_vl['sys_rn'];
+                                $rn2 = $al_vl['rn'];
+                                $pay_by2 = $al_vl['pay_by'];
+                                $notes2 = $al_vl['notes'];
+                                $hideshow='';
                           }else{
                             $hideshow='hiddenbtn';
                           }
@@ -295,9 +296,9 @@ $noteData = $db->select_single($sql);
               <div class="tabl_cell"> <input type="text" id="agent_level2_l_name" name="agent_level2_l_name" class="form-control" value="<?php echo $lName2;?>" /> </div>                                
               <div class="tabl_cell"> <input type="text" id="agent_level2_commission" name="agent_level2_commission" class="form-control widthsm" value="<?php echo $commission2;?>" /></div>
               <div class="tabl_cell"> <input type="text" id="agent_level2_sys_nb" name="agent_level2_sys_nb" class="form-control widthsm" value="<?php echo $sys_nb2;?>" /></div>
-              <div class="tabl_cell"> <input type="text" id="agent_level2_nb" name="agent_level2_nb" class="form-control widthsm" value="<?php echo $nb2;?>" /></div>
+              <div class="tabl_cell"> <input type="text" id="agent_level2_nb" name="agent_level2_nb" onkeyup="newbalance(2)" class="form-control widthsm" value="<?php echo $nb2;?>" /></div>
               <div class="tabl_cell"> <input type="text" id="agent_level2_sys_rn" name="agent_level2_sys_rn" class="form-control widthsm" value="<?php echo $sys_rn2;?>" /></div>
-              <div class="tabl_cell"> <input type="text" id="agent_level2_rn" name="agent_level2_rn" class="form-control widthsm" value="<?php echo $rn2;?>" /></div>
+              <div class="tabl_cell"> <input type="text" id="agent_level2_rn" name="agent_level2_rn" onkeyup="renewal(2)"  class="form-control widthsm" value="<?php echo $rn2;?>" /></div>
               <div class="tabl_cell"> <input type="text" id="agent_level2_pay_by" name="agent_level2_pay_by" class="form-control widthsm" value="<?php echo $pay_by2;?>" /></div>
               <div class="tabl_cell">
                 <button id="agent_level2_active" data-id="2" class="submit_btn_agent btn btn-primary blacklab <?=$hideshow?> ">AC L2</button>
@@ -378,9 +379,9 @@ $noteData = $db->select_single($sql);
           <div class="tabl_cell"> <input type="text" id="agent_level3_l_name" name="agent_level3_l_name" class="form-control" value="<?php echo $lName3;?>" /> </div>                                
           <div class="tabl_cell"> <input type="text" id="agent_level3_commission" name="agent_level3_commission" class="form-control widthsm" value="<?php echo $commission3;?>" /></div>
           <div class="tabl_cell"> <input type="text" id="agent_level3_sys_nb" name="agent_level3_sys_nb" class="form-control widthsm" value="<?php echo $sys_nb3;?>" /></div>
-          <div class="tabl_cell"> <input type="text" id="agent_level3_nb" name="agent_level3_nb" class="form-control widthsm" value="<?php echo $nb3;?>" /></div>
+          <div class="tabl_cell"> <input type="text" id="agent_level3_nb" name="agent_level3_nb" onkeyup="newbalance(3)" class="form-control widthsm" value="<?php echo $nb3;?>" /></div>
           <div class="tabl_cell"> <input type="text" id="agent_level3_sys_rn" name="agent_level3_sys_rn" class="form-control widthsm" value="<?php echo $sys_rn3;?>" /></div>
-          <div class="tabl_cell"> <input type="text" id="agent_level3_rn" name="agent_level3_rn" class="form-control widthsm" value="<?php echo $rn3;?>" /></div>
+          <div class="tabl_cell"> <input type="text" id="agent_level3_rn" name="agent_level3_rn" onkeyup="renewal(3)" class="form-control widthsm" value="<?php echo $rn3;?>" /></div>
           <div class="tabl_cell"> <input type="text" id="agent_level3_pay_by" name="agent_level3_pay_by" class="form-control widthsm" value="<?php echo $pay_by3;?>" /></div>
           <div class="tabl_cell">
             <button id="agent_level3_active" data-id="3" class="submit_btn_agent btn btn-primary blacklab <?=$hideshow?> ">AC L3</button>
@@ -461,9 +462,9 @@ $noteData = $db->select_single($sql);
       <div class="tabl_cell"> <input type="text" id="agent_level4_l_name" name="agent_level4_l_name" class="form-control" value="<?php echo $lName4;?>" /> </div>                                
       <div class="tabl_cell"> <input type="text" id="agent_level4_commission" name="agent_level4_commission" class="form-control widthsm" value="<?php echo $commission4;?>" /></div>
       <div class="tabl_cell"> <input type="text" id="agent_level4_sys_nb" name="agent_level4_sys_nb" class="form-control widthsm" value="<?php echo $sys_nb4;?>" /></div>
-      <div class="tabl_cell"> <input type="text" id="agent_level4_nb" name="agent_level4_nb" class="form-control widthsm" value="<?php echo $nb4;?>" /></div>
+      <div class="tabl_cell"> <input type="text" id="agent_level4_nb" name="agent_level4_nb" onkeyup="newbalance(4)" class="form-control widthsm" value="<?php echo $nb4;?>" /></div>
       <div class="tabl_cell"> <input type="text" id="agent_level4_sys_rn" name="agent_level4_sys_rn" class="form-control widthsm" value="<?php echo $sys_rn4;?>" /></div>
-      <div class="tabl_cell"> <input type="text" id="agent_level4_rn" name="agent_level4_rn" class="form-control widthsm" value="<?php echo $rn4;?>" /></div>
+      <div class="tabl_cell"> <input type="text" id="agent_level4_rn" name="agent_level4_rn" onkeyup="renewal(4)" class="form-control widthsm" value="<?php echo $rn4;?>" /></div>
       <div class="tabl_cell"> <input type="text" id="agent_level4_pay_by" name="agent_level4_pay_by" class="form-control widthsm" value="<?php echo $pay_by4;?>" /></div>
       <div class="tabl_cell">
         <button id="agent_level4_active" data-id="4" class="submit_btn_agent btn btn-primary blacklab <?=$hideshow?> ">AC L4</button>
@@ -545,9 +546,9 @@ $noteData = $db->select_single($sql);
   <div class="tabl_cell"> <input type="text" id="agent_level5_l_name" name="agent_level5_l_name" class="form-control" value="<?php echo $lName5;?>" /> </div>                                
   <div class="tabl_cell"> <input type="text" id="agent_level5_commission" name="agent_level5_commission" class="form-control widthsm" value="<?php echo $commission5;?>" /></div>
   <div class="tabl_cell"> <input type="text" id="agent_level5_sys_nb" name="agent_level5_sys_nb" class="form-control widthsm" value="<?php echo $sys_nb5;?>" /></div>
-  <div class="tabl_cell"> <input type="text" id="agent_level5_nb" name="agent_level5_nb" class="form-control widthsm" value="<?php echo $nb5;?>" /></div>
+  <div class="tabl_cell"> <input type="text" id="agent_level5_nb" name="agent_level5_nb" onkeyup="newbalance(5)" class="form-control widthsm" value="<?php echo $nb5;?>" /></div>
   <div class="tabl_cell"> <input type="text" id="agent_level5_sys_rn" name="agent_level5_sys_rn" class="form-control widthsm" value="<?php echo $sys_rn5;?>" /></div>
-  <div class="tabl_cell"> <input type="text" id="agent_level5_rn" name="agent_level5_rn" class="form-control widthsm" value="<?php echo $rn5;?>" /></div>
+  <div class="tabl_cell"> <input type="text" id="agent_level5_rn" name="agent_level5_rn" onkeyup="renewal(5)" class="form-control widthsm" value="<?php echo $rn5;?>" /></div>
   <div class="tabl_cell"> <input type="text" id="agent_level5_pay_by" name="agent_level5_pay_by" class="form-control widthsm" value="<?php echo $pay_by5;?>" /></div>
   <div class="tabl_cell">
     <button id="agent_level5active" data-id="5" class="submit_btn_agent btn btn-primary blacklab <?=$hideshow?>">AC L5</button>
@@ -615,21 +616,22 @@ $noteData = $db->select_single($sql);
         </div>
       </div>
     </div><!-- content_section_aside END -->
-    <div class="content_section_aside">
+    <div class="content_section_aside" id="agent_note_inner_form">
       <div class="row">
         <div class="col-md-7">
           <h4 class="content_section_aside_header">Agent Notes</h4>
         </div>
         <div class="col-md-5">
-          <a class="btn btn-primary bgorange float-right" target="_blank"  href="<?php echo THE_URL."main/agent-notes/".$policyInfo['id']; ?>">Add</a>
+              <button class="btn btn-primary bgorange float-right submit_btn_agent_note">Add</button>
         </div>
+        
       </div>
 
       <div class="form-group-row">
         <div class="row rowsm">
           <div class="col-md-12 col-lg-1"><label class="formheading labelSide">L1</label></div>
           <div class="col-md-12 col-lg-11">
-            <input type="text" class="form-control" id="agent_level1_notes" name="agent_level1_notes" value="<?=$notes?>">
+            <input type="text" class="form-control" id="note_1" name="note_1" value="<?=$noteData['note_1']?>">
           </div>
         </div>
       </div>
@@ -638,7 +640,7 @@ $noteData = $db->select_single($sql);
         <div class="row rowsm">
           <div class="col-md-12 col-lg-1"><label class="formheading labelSide">L2</label></div>
           <div class="col-md-12 col-lg-11">
-            <input type="text" class="form-control" id="agent_level2_notes" name="agent_level2_notes"  value="<?=$notes2?>">
+            <input type="text" class="form-control" id="note_2" name="note_2"  value="<?=$noteData['note_2']?>">
           </div>
         </div>
       </div>  
@@ -647,7 +649,7 @@ $noteData = $db->select_single($sql);
         <div class="row rowsm">
           <div class="col-md-12 col-lg-1"><label class="formheading labelSide">L3</label></div>
           <div class="col-md-12 col-lg-11">
-            <input type="text" class="form-control" id="agent_level3_notes" name="agent_level3_notes"  value="<?=$notes3?>">
+            <input type="text" class="form-control" id="note_3" name="note_3"  value="<?=$noteData['note_3']?>">
           </div>
         </div>
       </div> 
@@ -656,7 +658,7 @@ $noteData = $db->select_single($sql);
         <div class="row rowsm">
           <div class="col-md-12 col-lg-1"><label class="formheading labelSide">L4</label></div>
           <div class="col-md-12 col-lg-11">
-            <input type="text" class="form-control"  id="agent_level4_notes" name="agent_level4_notes" value="<?=$notes4?>">
+            <input type="text" class="form-control"  id="note_4" name="note_4" value="<?=$noteData['note_4']?>">
           </div>
         </div>
       </div> 
@@ -665,7 +667,7 @@ $noteData = $db->select_single($sql);
         <div class="row rowsm">
           <div class="col-md-12 col-lg-1"><label class="formheading labelSide">L5</label></div>
           <div class="col-md-12 col-lg-11">
-            <input type="text" class="form-control" id="agent_level5_notes" name="agent_level5_notes" value="<?=$notes5?>">
+            <input type="text" class="form-control" id="note5" name="note5" value="<?=$noteData['note_5']?>">
           </div>
         </div>
       </div> 
@@ -1100,3 +1102,47 @@ $noteData = $db->select_single($sql);
           </form>
         </div>
       </div>
+
+<script>
+    
+    
+    function newbalance(dataid) {
+
+            var parent= dataid-1;
+            var sysnb=0;
+
+            var nbchild= $('#agent_level'+dataid+'_nb').val();
+            var nbparent= $('#agent_level'+parent+'_nb').val()
+
+            if(!isNaN(nbchild) && !isNaN(nbparent) && nbchild.length!=0 && nbparent.length!=0) {
+               
+               sysnb= parseFloat(nbparent)-parseFloat(nbchild);
+            }
+
+            $('#agent_level'+parent+'_sys_nb').val(sysnb.toFixed(2));
+            $('#agent_level'+dataid+'_sys_nb').val(parseFloat(nbchild));
+            //alert(sysnb);
+    }
+
+    function renewal(dataid) {
+
+            var parent= dataid-1;
+            var sysnb=0;
+
+            var nbchild= $('#agent_level'+dataid+'_rn').val();
+            var nbparent= $('#agent_level'+parent+'_rn').val()
+
+            if(!isNaN(nbchild) && !isNaN(nbparent) && nbchild.length!=0 && nbparent.length!=0) {
+               
+               sysnb= parseFloat(nbparent)-parseFloat(nbchild);
+
+              
+            }
+            
+            $('#agent_level'+parent+'_sys_rn').val(sysnb.toFixed(2));
+            $('#agent_level'+dataid+'_sys_rn').val(parseFloat(nbchild));
+            //alert(sysnb);
+
+    }
+   
+</script>

@@ -498,7 +498,33 @@ switch($action)
         break; 
         
         ## Payment Codes 
-        
+        case 'save_agent_notes':
+          $checkPermission = checkUserAccessRole('Policies');
+          if(!$checkPermission){
+            $data_sucess = array("sucess"=>0,"pr"=>1,"message"=>"Permission error");
+            echo json_encode($data_sucess);
+            break;
+          }
+          $policy_id =trim($_POST['policy_id']);
+          $note_1 = trim($_POST['note_1']);
+          $note_2 = trim($_POST['note_2']);
+          $note_3 = trim($_POST['note_3']);
+          $note_4 = trim($_POST['note_4']);
+          $note_5 = trim($_POST['note_5']);
+          $created_date = date("Y-m-d");
+          $updated_date = date("Y-m-d");
+
+          if($policy_id){
+            $new_agent_notes = createNewAgentNotes($policy_id,$note_1,$note_2,$note_3,$note_4,$note_5,$created_date,$updated_date);
+            if($new_agent_notes){
+            $data_sucess['sucess'] = 1;
+          }
+        }else{
+         $data_sucess['sucess'] = 0; 
+       }
+       echo json_encode($data_sucess);
+
+        break;
         
         //for save payments
          case 'save_payments':

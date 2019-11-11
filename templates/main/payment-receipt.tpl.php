@@ -170,7 +170,8 @@
           </td>
         </tr>
 
-      </tbody></table>
+      </tbody>
+    </table>
     </body>
 
     </html>

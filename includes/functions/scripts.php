@@ -510,8 +510,35 @@ function savePolicyInsureds(){
     return false;
   }
 
-//agents-note end//
 
+//agents-note add//
+$( ".submit_btn_agent_note" ).click(function(e) {
+    var policy_id = $('#policy_id').val();
+    if(policy_id){
+        $("#ajax_progress").find('label').text('Note saving please wait...');
+        $("#ajax_progress").show();
+        $.ajax({
+            type: 'POST',
+            url: admin_ajax_url+"?action=save_agent_notes",
+            data: $('#agent_note_inner_form :input').serialize()+"&policy_id="+policy_id, 
+            success: function(response) {
+                
+                var response_json = $.parseJSON(response);
+                if(parseInt(response_json.sucess) == 1){
+                    window.location.reload();
+                }else{
+                    window.location.reload(); 
+                }
+                //alert(response);
+            },
+        });
+
+    }else{
+        alert("Policy id can't find!!!");
+    }
+    return false;
+});
+//agents-note End//
 //agent-commission-add stert
 
  $( ".submit_btn_agent" ).click(function(e) {
@@ -520,8 +547,16 @@ function savePolicyInsureds(){
      var policy_id = $('#policy_id').val();
      var agent_id = parseInt($('#agent_level'+data_id).children("option:selected").val());
      var notes = $('#agent_level'+data_id+'_notes').val();
+     //alert(parent_data_id+'/'+parent_sys_nb+'/'+parent_sys_rn+'/'+parent_agent_id);
 
-     //alert(data_id+'/'+policy_id+'/'+agent_id);
+     //for parent data id
+     var parent_data_id = data_id-1;
+     var parent_agent_id = parseInt($('#agent_level'+parent_data_id).children("option:selected").val());
+     var parent_notes = $('#agent_level'+parent_data_id+'_notes').val();
+
+     if (parent_data_id!=0 && parent_agent_id!="") {
+        SubmitParentAgentData(parent_data_id,policy_id,parent_notes,parent_agent_id);
+     }
 
      if(data_id && policy_id && agent_id){
         
@@ -549,8 +584,33 @@ function savePolicyInsureds(){
 
    });
 
-//agent-commission-add end
+//agent parent lavel data save
+function SubmitParentAgentData(data_id,policy_id,notes,agent_id) {
+    if(data_id && policy_id && agent_id){
+        
+            $("#ajax_progress").find('label').text('Agent label form saving please wait...');
+            $("#ajax_progress").show();
+            $.ajax({
+                type: 'POST',
+                url: admin_ajax_url+"?action=save_agent_label",
+                data: $('#agent_frm'+data_id+' :input').serialize()+"&policy_id="+policy_id+"&data_id="+data_id+"&agent_id="+agent_id+"&notes="+notes, 
+                success: function(response) {
+                    var response_json = $.parseJSON(response);
+                    if(parseInt(response_json.sucess) ==1){
+                        window.location.reload();
+                    }else{
+                     alert("Failed to  save agent label data"); 
+                    }
+                },
+            });
+        
+    }else{
+        alert("Policy id not found!!!");
+    }
+    return false;
+}
 
+//agent-commission-add end
 
   
   

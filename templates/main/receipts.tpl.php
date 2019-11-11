@@ -15,7 +15,7 @@ if (isset($_GET['from_date']) && isset($_GET['to_date'])) {
 	$from_date=date("Y-m-d",strtotime(trim($_GET['from_date'])));
 	$to_date=date("Y-m-d",strtotime(trim($_GET['to_date'])));
 
-	$sql="SELECT * FROM payments WHERE  date_due >= '".$from_date."' AND date_due <='".$to_date."' ";
+	$sql="SELECT * FROM payments WHERE  date_due >= '".$from_date."' AND date_due <='".$to_date."' ORDER BY date_due ASC";
 	$paymentsData = $db->select($sql);
 }else{
 

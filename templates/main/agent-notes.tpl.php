@@ -4,10 +4,9 @@ $checkPermissionRole = checkUserAccessRole('Policies');
 $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
 
 $policy_id_p = $policyInfo['id'];
-/*$sql="SELECT * FROM notes WHERE policy_id='$policy_id_p'";
-$getData = $db->select_single($sql);*/
 
-
+$sql="SELECT * FROM notes WHERE policy_id='$policy_id_p'";
+$getData = $db->select_single($sql);
 
 ?>
 
@@ -47,7 +46,7 @@ $getData = $db->select_single($sql);*/
 
                   <div class="tabl_th">RN</div>
                   <div class="tabl_th">PayBy</div>
-                  <div class="tabl_th">Notes</div>
+                  
                   <?php $policyAgents = loadHealthPolicyAgents($policyInfo['idagent']); ?>
                   <input type="hidden" name="policy_id" id="policy_id" value="<?php echo $policyInfo['id']; ?>">
               </div>
@@ -136,10 +135,7 @@ $getData = $db->select_single($sql);*/
 <input type="hidden" id="agent_level1_commission" name="agent_level1_commission"  class="form-control" value="<?php echo $commission;?>" /> 
 <div class="tabl_cell"> <input type="text" id="agent_level1_rn" name="agent_level1_rn" class="form-control widthsm" value="<?php echo $rn;?>" /></div>
 <div class="tabl_cell"> <input type="text" id="agent_level1_pay_by" name="agent_level1_pay_by" class="form-control widthsm" value="<?php echo $pay_by;?>" /></div>
-<div class="tabl_cell col-md-3"> <input type="text" class="form-control" id="agent_level1_notes" name="agent_level1_notes" value="<?php echo $notes;?>"></div>
-<div class="tabl_cell">
-    <button  data-id="1" class="submit_btn_agent btn btn-primary bgorange ">Save</button>
-</div>
+
 
 </div>
 <div class="tabl_row" id="agent_frm2">
@@ -222,10 +218,7 @@ if($agentLists2){
 <input type="hidden" id="agent_level2_commission" name="agent_level2_commission"  class="form-control" value="<?php echo $commission2;?>" /> 
 <div class="tabl_cell"> <input type="text" id="agent_level2_rn" name="agent_level2_rn" class="form-control widthsm" value="<?php echo $rn2;?>" /></div>
 <div class="tabl_cell"> <input type="text" id="agent_level2_pay_by" name="agent_level2_pay_by" class="form-control widthsm" value="<?php echo $pay_by2;?>" /></div>
-<div class="tabl_cell col-md-3"> <input type="text" class="form-control" id="agent_level2_notes" name="agent_level2_notes" value="<?php echo $notes2;?>"></div>
-<div class="tabl_cell">
-    <button  data-id="2" class="submit_btn_agent btn btn-primary bgorange ">Save</button>
-</div>
+
 </div>
 <div class="tabl_row" id="agent_frm3">
   <div class="tabl_cell"> Agent Level 3 </div>
@@ -307,10 +300,7 @@ if($agentLists3){
 <input type="hidden" id="agent_level3_commission" name="agent_level3_commission"  class="form-control" value="<?php echo $commission3;?>" /> 
 <div class="tabl_cell"> <input type="text" id="agent_level3_rn" name="agent_level3_rn" class="form-control widthsm" value="<?php echo $rn3;?>" /></div>
 <div class="tabl_cell"> <input type="text" id="agent_level3_pay_by" name="agent_level3_pay_by" class="form-control widthsm" value="<?php echo $pay_by3;?>" /></div>
-<div class="tabl_cell col-md-3"> <input type="text" class="form-control" id="agent_level3_notes" name="agent_level3_notes" value="<?php echo $notes3;?>"></div>
-<div class="tabl_cell">
-    <button  data-id="3" class="submit_btn_agent btn btn-primary bgorange ">Save</button>
-</div>
+
 </div>
 <div class="tabl_row" id="agent_frm4">
   <div class="tabl_cell"> Agent Level 4 </div>
@@ -392,10 +382,7 @@ if($agentLists4){
 <input type="hidden" id="agent_level4_commission" name="agent_level4_commission"  class="form-control" value="<?php echo $commission4;?>" /> 
 <div class="tabl_cell"> <input type="text" id="agent_level4_rn" name="agent_level4_rn" class="form-control widthsm" value="<?php echo $rn4;?>" /></div>
 <div class="tabl_cell"> <input type="text" id="agent_level4_pay_by" name="agent_level4_pay_by" class="form-control widthsm" value="<?php echo $pay_by4;?>" /></div>
-<div class="tabl_cell col-md-3"> <input type="text" class="form-control" id="agent_level4_notes" name="agent_level4_notes" value="<?php echo $notes4;?>"></div>
-<div class="tabl_cell">
-    <button  data-id="4" class="submit_btn_agent btn btn-primary bgorange ">Save</button>
-</div>
+
 </div>
 
 <div class="tabl_row" id="agent_frm5">
@@ -478,10 +465,7 @@ if($agentLists5){
 <input type="hidden" id="agent_level5_commission" name="agent_level5_commission"  class="form-control" value="<?php echo $commission5;?>" /> 
 <div class="tabl_cell"> <input type="text" id="agent_level5_rn" name="agent_level5_rn" class="form-control widthsm" value="<?php echo $rn5;?>" /></div>
 <div class="tabl_cell"> <input type="text" id="agent_level5_pay_by" name="agent_level5_pay_by" class="form-control widthsm" value="<?php echo $pay_by5;?>" /></div>
-<div class="tabl_cell col-md-3"> <input type="text" class="form-control" id="agent_level5_notes" name="agent_level5_notes" value="<?php echo $notes5;?>"></div>
-<div class="tabl_cell">
-    <button  data-id="5" class="submit_btn_agent btn btn-primary bgorange ">Save</button>
-</div>
+
 </div>
 
 </div>
@@ -493,75 +477,75 @@ if($agentLists5){
 </div>
 </div>
 
- <!-- <form method="post" action="" id="frm_agent_notes" enctype="multipart/form-data">
+<form method="post" action="" id="agent_note_inner_form" enctype="multipart/form-data">
     
     <div class="content_section_aside">
       <h4 class="content_section_aside_header">Agent Notes</h4>
- 
-      <div class="form-group-row" id="agent_frm1">
+
+      <div class="form-group-row">
         <div class="row rowsm">
           <div class="col-md-1"><label class="formheading labelSide">L1</label></div>
           <div class="col-md-9">
-             <input type="text" class="form-control" id="agent_level1_notes" name="agent_level1_notes" value="">
+            <input type="text" class="form-control" name="note_1" id="note_1" value="<?php echo $getData['note_1']; ?>">
             <input type="hidden" name="policy_id" id="policy_id" value="<?php echo $policyInfo['id']; ?>">
           </div>
           <div class="col-md-2">
-            <button class="btn btn-primary bgorange submit_btn_agent" data-id="1">Save</button>
+            <button class="btn btn-primary bgorange submit_btn_agent_note" >Save</button>
           </div>
         </div>
       </div>
- 
-      <div class="form-group-row" id="agent_frm2">
+
+      <div class="form-group-row">
         <div class="row rowsm">
           <div class="col-md-1"><label class="formheading labelSide">L2</label></div>
           <div class="col-md-9">
-             <input type="text" class="form-control" id="agent_level2_notes" name="agent_level2_notes" value="">
+            <input type="text" class="form-control" name="note_2" id="note_2" value="<?php echo $getData['note_2']; ?>">
           </div>
           <div class="col-md-2">
-            <button class="btn btn-primary bgorange submit_btn_agent" data-id="2">Save</button>
+            <button class="btn btn-primary bgorange submit_btn_agent_note" >Save</button>
           </div>
         </div>
       </div>
- 
-      <div class="form-group-row" id="agent_frm3">
+
+      <div class="form-group-row">
         <div class="row rowsm">
           <div class="col-md-1"><label class="formheading labelSide">L3</label></div>
           <div class="col-md-9">
-             <input type="text" class="form-control" id="agent_level3_notes" name="agent_level3_notes" value="">
+            <input type="text" class="form-control" name="note_3" id="note_3" value="<?php echo $getData['note_3']; ?>">
           </div>
           <div class="col-md-2">
-            <button class="btn btn-primary bgorange submit_btn_agent" data-id="3">Save</button>
+            <button class="btn btn-primary bgorange submit_btn_agent_note" >Save</button>
           </div>
         </div>
       </div>
- 
-      <div class="form-group-row" id="agent_frm4">
+
+      <div class="form-group-row">
         <div class="row rowsm">
           <div class="col-md-1"><label class="formheading labelSide">L4</label></div>
           <div class="col-md-9">
-            <input type="text" class="form-control" id="agent_level4_notes" name="agent_level4_notes" value="">
+            <input type="text" class="form-control" name="note_4" id="note_4" value="<?php echo $getData['note_4']; ?>">
           </div>
           <div class="col-md-2">
-            <button class="btn btn-primary bgorange submit_btn_agent" data-id="4">Save</button>
+            <button class="btn btn-primary bgorange submit_btn_agent_note" >Save</button>
           </div>
         </div>
       </div>
- 
-      <div class="form-group-row" id="agent_frm5">
+
+      <div class="form-group-row">
         <div class="row rowsm">
           <div class="col-md-1"><label class="formheading labelSide">L5</label></div>
           <div class="col-md-9">
-           <input type="text" class="form-control" id="agent_level5_notes" name="agent_level5_notes" value="">
+           <input type="text" class="form-control" name="note_5" id="note_5" value="<?php echo $getData['note_5']; ?>">
           </div>
           <div class="col-md-2">
-            <button class="btn btn-primary bgorange submit_btn_agent" data-id="5">Save</button>
+            <button class="btn btn-primary bgorange submit_btn_agent_note" >Save</button>
           </div>
         </div>
       </div>
- 
+
     </div>
- 
-</form> -->
+
+</form>
 
 </div>
 </div>
