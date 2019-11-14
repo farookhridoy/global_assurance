@@ -44,26 +44,105 @@ elseif($idstatus == 8){$idstatusText = 'Reinstatement Denied';}*/
           <td colspan="2" style="padding:6px 15px;font-size: 13px;color: #000;"><strong>Expiration Date:</strong></td>
           <td align="right" colspan="2" style="color: #000;padding:6px 15px;font-size: 13px;"><?php if($policyInfo['datecancel'] && $policyInfo['datecancel'] != '0000-00-00 00:00:00') echo dateFormFormat($policyInfo['datecancel'],"m/d/y"); ?></td>
         </tr>
-        <?php $agentNames = loadHealthPolicyAgentNames($policyInfo['idagent']); //pre($agentNames); ?>
+       
         <tr style="background: #f3f3f3;">
           <td colspan="2" style="padding:6px 15px;font-size: 13px;color: #000;"><strong>Agent L1:</strong></td>
-          <td align="right" colspan="2" style="color: #000;padding:6px 15px;font-size: 13px;"><?php echo $agentNames[1];  ?></td>
+          <td align="right" colspan="2" style="color: #000;padding:6px 15px;font-size: 13px;">
+            <?php 
+                $agents = getAgentLists("health",1);  
+                if($agents)
+                    {foreach($agents as $ag_key => $ag_value)
+                      { 
+                        $strContent=$ag_value['name']." ".$ag_value['lastname'];
+                        $output = htmlentities($strContent, 0, "UTF-8");
+                        if ($output == "") {
+                            $output = htmlentities(utf8_encode($strContent), 0, "UTF-8");
+                            $output = html_entity_decode($output);
+                        }
+                        //echo $output;
+
+                        echo $selected_text = ( trim($policyInfo['idagent']) == $ag_value['id']) ? $output: '';
+                       
+                    }
+                } 
+            ?> 
+        </td>
         </tr>
         <tr style="background: #f3f3f3;">
           <td colspan="2" style="padding:6px 15px;font-size: 13px;color: #000;"><strong>Agent L2:</strong></td>
-          <td align="right" colspan="2" style="color: #000;padding:6px 15px;font-size: 13px;"><?php echo $agentNames[2];  ?></td>
+          <td align="right" colspan="2" style="color: #000;padding:6px 15px;font-size: 13px;"> <?php 
+                $agents = getAgentLists("health",2);  
+                if($agents)
+                    {foreach($agents as $ag_key => $ag_value)
+                      { 
+                        $strContent=$ag_value['name']." ".$ag_value['lastname'];
+                        $output = htmlentities($strContent, 0, "UTF-8");
+                        if ($output == "") {
+                            $output = htmlentities(utf8_encode($strContent), 0, "UTF-8");
+                            $output = html_entity_decode($output);
+                        }
+                        echo $selected_text = ( trim($policyInfo['idagent2']) == $ag_value['id']) ? $output: '';
+                       
+                    }
+                } 
+            ?></td>
         </tr>
         <tr style="background: #f3f3f3;">
           <td colspan="2" style="padding:6px 15px;font-size: 13px;color: #000;"><strong>Agent L3:</strong></td>
-          <td align="right" colspan="2" style="color: #000;padding:6px 15px;font-size: 13px;"><?php echo $agentNames[3];  ?></td>
+          <td align="right" colspan="2" style="color: #000;padding:6px 15px;font-size: 13px;"><?php 
+                $agents = getAgentLists("health",3);  
+                if($agents)
+                    {foreach($agents as $ag_key => $ag_value)
+                      { 
+                        $strContent=$ag_value['name']." ".$ag_value['lastname'];
+                        $output = htmlentities($strContent, 0, "UTF-8");
+                        if ($output == "") {
+                            $output = htmlentities(utf8_encode($strContent), 0, "UTF-8");
+                            $output = html_entity_decode($output);
+                        }
+                        echo $selected_text = ( trim($policyInfo['idagent3']) == $ag_value['id']) ? $output: '';
+                       
+                    }
+                } 
+            ?></td>
         </tr>
         <tr style="background: #f3f3f3;">
           <td colspan="2" style="padding:6px 15px;font-size: 13px;color: #000;"><strong>Agent L4:</strong></td>
-          <td align="right" colspan="2" style="color: #000;padding:6px 15px;font-size: 13px;"><?php echo $agentNames[4];  ?></td>
+          <td align="right" colspan="2" style="color: #000;padding:6px 15px;font-size: 13px;"><?php 
+                $agents = getAgentLists("health",4);  
+                if($agents)
+                    {foreach($agents as $ag_key => $ag_value)
+                      { 
+                        $strContent=$ag_value['name']." ".$ag_value['lastname'];
+                        $output = htmlentities($strContent, 0, "UTF-8");
+                        if ($output == "") {
+                            $output = htmlentities(utf8_encode($strContent), 0, "UTF-8");
+                            $output = html_entity_decode($output);
+                        }
+                        echo $selected_text = ( trim($policyInfo['idagent4']) == $ag_value['id']) ? $output: '';
+                       
+                    }
+                } 
+            ?></td>
         </tr>
         <tr style="background: #f3f3f3;">
           <td colspan="2" style="padding:6px 15px;font-size: 13px;color: #000;"><strong>Agent L5:</strong></td>
-          <td align="right" colspan="2" style="color: #000;padding:6px 15px;font-size: 13px;"><?php echo $agentNames[5];  ?></td>
+          <td align="right" colspan="2" style="color: #000;padding:6px 15px;font-size: 13px;"><?php 
+                $agents = getAgentLists("health",5);  
+                if($agents)
+                    {foreach($agents as $ag_key => $ag_value)
+                      { 
+                        $strContent=$ag_value['name']." ".$ag_value['lastname'];
+                        $output = htmlentities($strContent, 0, "UTF-8");
+                        if ($output == "") {
+                            $output = htmlentities(utf8_encode($strContent), 0, "UTF-8");
+                            $output = html_entity_decode($output);
+                        }
+                        echo $selected_text = ( trim($policyInfo['idagent5']) == $ag_value['id']) ? $output: '';
+                       
+                    }
+                } 
+            ?></td>
         </tr>
         
       </table>

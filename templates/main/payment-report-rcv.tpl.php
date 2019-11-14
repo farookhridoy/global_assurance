@@ -29,25 +29,50 @@ if (isset($_POST['print_receipt_btn'])) {
 }
 
 ?>
-<!doctype html>
-<html>
-<head>
-  <title>Payment Receipt Report</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <meta name="robots" content="noindex"/>
-  <meta name="robots" content="nofollow"/>
 
-  <link rel="shortcut icon" type="image/png" href="<?php echo MEDIA_IMAGES; ?>favicon.ico"/>
-  <link rel="shortcut icon" type="image/png" href="<?php echo MEDIA_IMAGES; ?>favicon.png"/>
+  <style type="text/css" media="screen">
+    * {
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+    }
 
-  <link rel="stylesheet" type="text/css" href="<?php echo CSS_URL; ?>bootstrap.min.css"/>
+    .page {
+      width: 25cm;
+      min-height: 29.7cm;
+      padding: 2cm;
+      margin: 1cm auto;
+      
+      border-radius: 5px;
+      background: white;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
 
+    .subpage {
+      padding: 1cm;
+      
+      height: 256mm;
+      
+    }
 
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet">
+    @page {
+      size: A4;
+      margin: 0;
+    }
 
-</head>
-<body>
+    @media print {
+      .page {
+        margin: 0;
+        border: initial;
+        border-radius: initial;
+        width: initial;
+        min-height: initial;
+        box-shadow: initial;
+        background: initial;
+        page-break-after: always;
+      }
+    }
+  </style>
+
   <?php 
   $pd_count= count($paymentsData);
   if(count($paymentsData)>0){
@@ -62,8 +87,12 @@ if (isset($_POST['print_receipt_btn'])) {
 
       $policyInfo = getSinglePolicy($payment_info['id_policy']);
       ?>
-
-      <table align="center" width="800" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="font-family: 'Montserrat', sans-serif;font-size: 11px;">
+    <div class="page">
+      <div class="subpage">
+        
+     
+   
+      <table align="center"  width="800" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="font-family: 'Montserrat', sans-serif;font-size: 11px;">
 
         <tbody>
 
@@ -192,19 +221,26 @@ if (isset($_POST['print_receipt_btn'])) {
 
             </tbody>
           </table>
+           </div>
+
+          </div>
           <br>
           <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+
           <?php if ($payments_key + 1 != $pd_count) { ?>
-            <hr>
+            
           <?php } ?>
-         
-
-          <br>
-          <br>
-
           <?php 
           } //end foreach
         }
         ?>
-      </body>
-</html>
+      
+      
+   

@@ -145,7 +145,7 @@ if (empty($_SERVER['PHP_AUTH_DIGEST'])) {
     
     #pre($instance->gerbage);
 	if($instance->footer == 1)
-		require(COMMON_TEMPLATES.'footer.php');
+		require(COMMON_TEMPLATES.'user.footer.tpl.php');
     else if($instance->footer == 2)
 		require(ADMIN_TEMPLATES.'footer.php');
 

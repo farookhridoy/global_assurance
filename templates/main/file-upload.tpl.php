@@ -24,24 +24,17 @@ $getData = $db->select_single($sql);
 </div><!-- page-breadcrumbs END -->
 <h1 class="page-titlename">System</h1>
 <?php 
-    if(isset($_SESSION["message-authorize"])) {
-      $success = $_SESSION["message-authorize"];
-      
-      unset($_SESSION["message-authorize"]);
+if(isset($_SESSION["message"])) {
+    $success = $_SESSION["message"];
+    unset($_SESSION["message"]);
     echo '<strong style="color:green;font-size: 18px;font-weight: bold;">'.$success.'</strong>';
-    }elseif(isset($_SESSION["message"])) {
-      $success = $_SESSION["message"];
-     unset($_SESSION["message"]);
-    echo '<strong style="color:green;font-size: 18px;font-weight: bold;">'.$success.'</strong>';
-    }elseif(isset($_SESSION["error"])) {
-      $success = $_SESSION["error"];
-     unset($_SESSION["error"]);
+}elseif(isset($_SESSION["error"])) {
+    $success = $_SESSION["error"];
+    unset($_SESSION["error"]);
     echo '<strong style="color:red;font-size: 18px;font-weight: bold;">'.$success.'</strong>';
-   }else {
-      $success = "";
-  }
-
-
+}else {
+   $success = "";
+}
 ?>
 
 <div class="clearfix"></div>
@@ -54,7 +47,7 @@ $getData = $db->select_single($sql);
 
             <div class="form-group-row">
               <div class="row rowsm">
-                <div class="col-md-3"><label class="formheading labelSide">Choose Hertland Excel File</label></div>
+                <div class="col-md-3"><label class="formheading labelSide">Choose Heartland Excel File</label></div>
                 <div class="col-md-3">
 
                   <input type="file" name="fileToUpload"  id="file" class="form-control btn btn-primary" style="height: 33px !important;margin-top: -3px;">
@@ -63,7 +56,7 @@ $getData = $db->select_single($sql);
                   <input type="hidden" name="data_id" value="1">
               </div>
               <div class="col-md-6">
-                  <input class="btn btn-primary bgorange" type="submit" value="Upload Hertland" name="upload" data-id="1">
+                  <input class="btn btn-primary bgorange" type="submit" value="Upload Heartland" name="upload" data-id="1">
                  
 
               </div>

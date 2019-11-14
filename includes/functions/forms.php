@@ -909,9 +909,10 @@ function getAgentData($policy_id,$level){
       agent_commissions.notes, 
       agents.name,
       agents.lastname,
-      agents.id
+      agents.id as agent_id,
+      agents.level,
       FROM agent_commissions
-      INNER JOIN agents ON agent_commissions.agent_id=agents.id
+      INNER JOIN agents ON agent_commissions.level_id=agents.level_id
       WHERE agent_commissions.policy_id='$policy_id' AND agents.level='$level'";
       $agentLists = $db->select($sql);
     }
@@ -932,7 +933,8 @@ function getSingleAgentCommission($agent_id,$level,$policy_id){
       agent_commissions.notes, 
       agents.name,
       agents.lastname,
-      agents.id
+      agents.id,
+      agents.level
       FROM agent_commissions
       INNER JOIN agents ON agent_commissions.agent_id=agents.id
       WHERE agent_commissions.policy_id='$policy_id' AND agents.level='$level' AND agent_commissions.agent_id='$agent_id'";
@@ -976,5 +978,14 @@ function createNewAgentNotes($policy_id,$note_1,$note_2,$note_3,$note_4,$note_5,
     return $stats;
 }
 
+ function specialchar($value){
+        $strContent=$value;
+        $output = htmlentities($value, 0, "UTF-8");
+        if ($output == "") {
+            $output = htmlentities(utf8_encode($strContent), 0, "UTF-8");
+            $output = html_entity_decode($output);
+        }
+        return $output;
+    }
 //end file upload
 ?>

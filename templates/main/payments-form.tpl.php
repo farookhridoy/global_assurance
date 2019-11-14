@@ -6,7 +6,7 @@ $action = [ 'Pending' => "Pending",'Recieved' => "Recieved",'Void' => "Void"];
 $checkPermissionRole = checkUserAccessRole('Policies');
 $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
 //print_r($policyInfo);
-
+//error_reporting(E_ALL);
 $agentLists = getAgentLists('health',1);
 //print_r($agentLists);
 
@@ -131,7 +131,7 @@ $noteData = $db->select_single($sql);
                       <div class="tabl_th">PayBy</div>
                       <div class="tabl_th"></div>
                     </div>
-                    <?php $policyAgents = loadHealthPolicyAgents($policyInfo['idagent']); //pre($policyAgents); ?>
+                   
                     <div class="tabl_row" id="agent_frm1">
                       <div class="tabl_cell"> Agent Level 1 </div>
                       <div class="tabl_cell">                      
@@ -139,20 +139,22 @@ $noteData = $db->select_single($sql);
                           <select class="form-control payment_policy_agents" name="agent_level1" id="agent_level1" data-id="1">
                             <option value="0"></option>
                             <?php 
-                            $agentLvl1 = $policyAgents[2][0]['idagent'];
-                            if($agentLvl1){
+                           
+                               $checkAgentDataFromAC=getAgentData($policy_id_p,1);
 
-                              $checkAgentDataFromAC=getAgentData($policy_id_p,1);
+                               if ($checkAgentDataFromAC) {
+                                    $agents=$checkAgentDataFromAC;
+                               }else{
+                                    $agents = getAgentLists("health",1); 
+                                }
+                             if($agents){
+                                foreach($agents as $al_key => $al_vl){ 
 
-                              if ($checkAgentDataFromAC) {
-                               $agents=$checkAgentDataFromAC;
-                             }else{
-                              $agents = getAgentLists("health",1); 
-                            }
-                            if($agents){
-                              foreach($agents as $al_key => $al_vl){
-                                $selected_text = ( trim($policyAgents[2][0]['idagent']) == $al_vl['id']) ? 'selected="selected"': ''; echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.$al_vl['name'].'</option>';
-                                if($policyAgents[2][0]['idagent'] == $al_vl['id']){
+                                 $selected_text = ($policyInfo['idagent'] == $al_vl['id']) ? 'selected="selected"': ''; 
+
+                                 echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.specialchar($al_vl['name']).'</option>';
+
+                                 if($policyInfo['idagent'] == $al_vl['id']){
                                   $fName = $al_vl['name'];
                                   $lName = $al_vl['lastname'];
                                   $commission = $al_vl['commission'];
@@ -163,53 +165,20 @@ $noteData = $db->select_single($sql);
                                   $pay_by = $al_vl['pay_by'];
                                   $notes = $al_vl['notes'];
                                   $hideshow='';
-                                }else{
+                               }else{
                                   $hideshow='hiddenbtn';
-                                }
-
-
-                              }
-                            }else{
-                              $hideshow='hiddenbtn';
+                               }
                             }
-
-
-                          }else{
-                            $checkAgentDataFromAC=getAgentData($policy_id_p,1);
-
-                            if ($checkAgentDataFromAC) {
-                             $agents=$checkAgentDataFromAC;
-                           }else{
-                            $agents = getAgentLists("health",1); 
-                          }
-                          if($agents){
-                            foreach($agents as $al_key => $al_vl){ 
-                              $selected_text = ($policyInfo['idagent'] == $al_vl['id']) ? 'selected="selected"': '';   echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.$al_vl['name'].'</option>';
-                              if($policyInfo['idagent'] == $al_vl['id']){
-                                $fName = $al_vl['name'];
-                                $lName = $al_vl['lastname'];
-                                $commission = $al_vl['commission'];
-                                $sys_nb = $al_vl['sys_nb'];
-                                $nb = $al_vl['nb'];
-                                $sys_rn = $al_vl['sys_rn'];
-                                $rn = $al_vl['rn'];
-                                $pay_by = $al_vl['pay_by'];
-                                $notes = $al_vl['notes'];
-                                $hideshow='';
-                              }else{
-                                $hideshow='hiddenbtn';
-                              }
-                            }
-                          }else{
-                            $hideshow='hiddenbtn';
-                          }
-                        }
+                         }else{
+                          $hideshow='hiddenbtn';
+                       }
+                        
                         ?>                            
                       </select>
                     </span>
                   </div>
-                  <div class="tabl_cell"> <input type="text" id="agent_level1_f_name" name="agent_level1_f_name"  class="form-control" value="<?php echo $fName;?>" /> </div>
-                  <div class="tabl_cell"> <input type="text" id="agent_level1_l_name" name="agent_level1_l_name" class="form-control" value="<?php echo $lName;?>" /> </div>                                
+                  <div class="tabl_cell"> <input type="text" id="agent_level1_f_name" name="agent_level1_f_name"  class="form-control" value="<?php echo specialchar($fName);?>" /> </div>
+                  <div class="tabl_cell"> <input type="text" id="agent_level1_l_name" name="agent_level1_l_name" class="form-control" value="<?php echo specialchar($lName);?>" /> </div>                                
                   <div class="tabl_cell"> <input type="text" id="agent_level1_commission" name="agent_level1_commission" class="form-control widthsm" value="<?php echo $commission;?>" /></div>
                   <div class="tabl_cell"> <input type="text" id="agent_level1_sys_nb" name="agent_level1_sys_nb" class="form-control widthsm" value="<?php echo $sys_nb;?>" /></div>
                   <div class="tabl_cell"> <input type="text" id="agent_level1_nb" name="agent_level1_nb" onkeyup="newbalance(1)" class="form-control widthsm" value="<?php echo $nb;?>" /></div>
@@ -227,73 +196,45 @@ $noteData = $db->select_single($sql);
                       <select class="form-control payment_policy_agents" name="agent_level2" id="agent_level2" data-id="2">
                         <option value="0"></option>
                         <?php 
-                        $agentLvl2 = $policyAgents[3][0]['idagent'];
-                        if($agentLvl2){
-                          $checkAgentDataFromAC2=getAgentData($policy_id_p,2);
+                        
+                            $checkAgentDataFromAC2=getAgentData($policy_id_p,2);
 
-                          if ($checkAgentDataFromAC2) {
-                           $agentLists2=$checkAgentDataFromAC2;
-                         }else{
-                          $agentLists2 = getAgentLists("health",2); 
-                        }  
-                        if($agentLists2){
-                          foreach($agentLists2 as $al_key => $al_vl){
-                            $selected_text = ( trim($policyAgents[3][0]['idagent']) == $al_vl['id']) ? 'selected="selected"': ''; echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.$al_vl['name'].'</option>';
-                            if($policyAgents[3][0]['idagent'] == $al_vl['id']){
-                              $fName2 = $al_vl['name'];
-                              $lName2 = $al_vl['lastname'];
-                              $commission2 = $al_vl['commission'];
-                              $sys_nb2 = $al_vl['sys_nb'];
-                              $nb2 = $al_vl['nb'];
-                              $sys_rn2 = $al_vl['sys_rn'];
-                              $rn2 = $al_vl['rn'];
-                              $pay_by2 = $al_vl['pay_by'];
-                              $notes2 = $al_vl['notes'];
-                              $hideshow='';
-                            }else{
-                              $hideshow='hiddenbtn';
+                            if ($checkAgentDataFromAC2) {
+                                   $agentLists2=$checkAgentDataFromAC2;
+                               }else{
+                                $agentLists2 = getAgentLists("health",2); 
+                            } 
+                            if($agentLists2){
+                                foreach($agentLists2 as $al_key => $al_vl){ 
+                                  $selected_text = ($policyInfo['idagent2'] == $al_vl['id']) ? 'selected="selected"': '';   echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.specialchar($al_vl['name']).'</option>';
+
+                                  if($policyInfo['idagent2'] == $al_vl['id']){
+
+                                    $fName2 = $al_vl['name'];
+                                    $lName2 = $al_vl['lastname'];
+                                    $commission2 = $al_vl['commission'];
+                                    $sys_nb2 = $al_vl['sys_nb'];
+                                    $nb2 = $al_vl['nb'];
+                                    $sys_rn2 = $al_vl['sys_rn'];
+                                    $rn2 = $al_vl['rn'];
+                                    $pay_by2 = $al_vl['pay_by'];
+                                    $notes2 = $al_vl['notes'];
+                                    $hideshow='';
+
+                                }else{
+                                    $hideshow='hiddenbtn';
+                                }
                             }
-                          }
                         }else{
-                          $hideshow='hiddenbtn';
-                        }
-                      }else{
-                        $checkAgentDataFromAC2=getAgentData($policy_id_p,2);
-
-                        if ($checkAgentDataFromAC2) {
-                         $agentLists2=$checkAgentDataFromAC2;
-                       }else{
-                        $agentLists2 = getAgentLists("health",2); 
-                      } 
-                      if($agentLists2){
-                        foreach($agentLists2 as $al_key => $al_vl){ 
-                          $selected_text = ($policyInfo['idagent'] == $al_vl['id']) ? 'selected="selected"': '';   echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.$al_vl['name'].'</option>';
-
-                          if($policyInfo['idagent'] == $al_vl['id']){
-                                $fName2 = $al_vl['name'];
-                                $lName2 = $al_vl['lastname'];
-                                $commission2 = $al_vl['commission'];
-                                $sys_nb2 = $al_vl['sys_nb'];
-                                $nb2 = $al_vl['nb'];
-                                $sys_rn2 = $al_vl['sys_rn'];
-                                $rn2 = $al_vl['rn'];
-                                $pay_by2 = $al_vl['pay_by'];
-                                $notes2 = $al_vl['notes'];
-                                $hideshow='';
-                          }else{
                             $hideshow='hiddenbtn';
-                          }
                         }
-                      }else{
-                        $hideshow='hiddenbtn';
-                      }
-                    }
+                    
                     ?>
                   </select>
                 </span>
               </div>
-              <div class="tabl_cell"> <input type="text" id="agent_level2_f_name" name="agent_level2_f_name"  class="form-control" value="<?php echo $fName2;?>" /> </div>
-              <div class="tabl_cell"> <input type="text" id="agent_level2_l_name" name="agent_level2_l_name" class="form-control" value="<?php echo $lName2;?>" /> </div>                                
+              <div class="tabl_cell"> <input type="text" id="agent_level2_f_name" name="agent_level2_f_name"  class="form-control" value="<?php echo specialchar($fName2);?>" /> </div>
+              <div class="tabl_cell"> <input type="text" id="agent_level2_l_name" name="agent_level2_l_name" class="form-control" value="<?php echo specialchar($lName2);?>" /> </div>                                
               <div class="tabl_cell"> <input type="text" id="agent_level2_commission" name="agent_level2_commission" class="form-control widthsm" value="<?php echo $commission2;?>" /></div>
               <div class="tabl_cell"> <input type="text" id="agent_level2_sys_nb" name="agent_level2_sys_nb" class="form-control widthsm" value="<?php echo $sys_nb2;?>" /></div>
               <div class="tabl_cell"> <input type="text" id="agent_level2_nb" name="agent_level2_nb" onkeyup="newbalance(2)" class="form-control widthsm" value="<?php echo $nb2;?>" /></div>
@@ -311,72 +252,43 @@ $noteData = $db->select_single($sql);
                   <select class="form-control payment_policy_agents" name="agent_level3" id="agent_level3" data-id="3">
                     <option value="0"></option>
                     <?php 
-                    $agentLvl3 = $policyAgents[4][0]['idagent'];
-                    if($agentLvl3){
-                      $checkAgentDataFromAC3=getAgentData($policy_id_p,3);
-
-                      if (count($checkAgentDataFromAC3)>0) {
-                       $agentLists3=$checkAgentDataFromAC3;
-                     }else{
-                      $agentLists3 = getAgentLists("health",3); 
-                    }   
-                    if($agentLists3){
-                      foreach($agentLists3 as $al_key => $al_vl){
-                        $selected_text = ( trim($policyAgents[4][0]['idagent']) == $al_vl['id']) ? 'selected="selected"': ''; echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.$al_vl['name'].'</option>';
-                        if($policyAgents[4][0]['idagent'] == $al_vl['id']){
-                          $fName3 = $al_vl['name'];
-                          $lName3 = $al_vl['lastname'];
-                          $commission3 = $al_vl['commission'];
-                          $sys_nb3 = $al_vl['sys_nb'];
-                          $nb3 = $al_vl['nb'];
-                          $sys_rn3 = $al_vl['sys_rn'];
-                          $rn3 = $al_vl['rn'];
-                          $pay_by3 = $al_vl['pay_by'];
-                          $notes3 = $al_vl['notes'];
-                          $hideshow='';
-                        }else{
-                          $hideshow='hiddenbtn';
+                   
+                        $checkAgentDataFromAC3=getAgentData($policy_id_p,3);
+                       
+                        if ($checkAgentDataFromAC3) {
+                               $agentLists3=$checkAgentDataFromAC3;
+                           }else{
+                            $agentLists3 = getAgentLists("health",3); 
+                        } 
+                       
+                        if($agentLists3){
+                            foreach($agentLists3 as $al_key => $al_vl){ 
+                              $selected_text = ($policyInfo['idagent3'] == $al_vl['id']) ? 'selected="selected"': '';   echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.specialchar($al_vl['name']).'</option>';
+                              if($policyInfo['idagent3'] == $al_vl['id']){
+                                $fName3 = $al_vl['name'];
+                                $lName3 = $al_vl['lastname'];
+                                $commission3 = $al_vl['commission'];
+                                $sys_nb3 = $al_vl['sys_nb'];
+                                $nb3 = $al_vl['nb'];
+                                $sys_rn3 = $al_vl['sys_rn'];
+                                $rn3 = $al_vl['rn'];
+                                $pay_by3 = $al_vl['pay_by'];
+                                $notes3 = $al_vl['notes'];
+                                $hideshow='';
+                            }else{
+                                $hideshow='hiddenbtn';
+                            }
                         }
-                      }
                     }else{
-                      $hideshow='hiddenbtn';
-                    }
-                  }else{
-                    $checkAgentDataFromAC3=getAgentData($policy_id_p,3);
-
-                    if (count($checkAgentDataFromAC3)>0) {
-                     $agentLists3=$checkAgentDataFromAC3;
-                   }else{
-                    $agentLists3 = getAgentLists("health",3); 
-                  }   
-                  if($agentLists3){
-                    foreach($agentLists3 as $al_key => $al_vl){ 
-                      $selected_text = ($policyInfo['idagent'] == $al_vl['id']) ? 'selected="selected"': '';   echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.$al_vl['name'].'</option>';
-                      if($policyInfo['idagent'] == $al_vl['id']){
-                        $fName3 = $al_vl['name'];
-                        $lName3 = $al_vl['lastname'];
-                        $commission3 = $al_vl['commission'];
-                        $sys_nb3 = $al_vl['sys_nb'];
-                        $nb3 = $al_vl['nb'];
-                        $sys_rn3 = $al_vl['sys_rn'];
-                        $rn3 = $al_vl['rn'];
-                        $pay_by3 = $al_vl['pay_by'];
-                        $notes3 = $al_vl['notes'];
-                        $hideshow='';
-                      }else{
                         $hideshow='hiddenbtn';
-                      }
                     }
-                  }else{
-                    $hideshow='hiddenbtn';
-                  }
-                }
+                
                 ?>
               </select>
             </span>
           </div>
-          <div class="tabl_cell"> <input type="text" id="agent_level3_f_name" name="agent_level3_f_name"  class="form-control" value="<?php echo $fName3;?>" /> </div>
-          <div class="tabl_cell"> <input type="text" id="agent_level3_l_name" name="agent_level3_l_name" class="form-control" value="<?php echo $lName3;?>" /> </div>                                
+          <div class="tabl_cell"> <input type="text" id="agent_level3_f_name" name="agent_level3_f_name"  class="form-control" value="<?php echo specialchar($fName3);?>" /> </div>
+              <div class="tabl_cell"> <input type="text" id="agent_level3_l_name" name="agent_level3_l_name" class="form-control" value="<?php echo specialchar($lName3);?>" /> </div>                                 
           <div class="tabl_cell"> <input type="text" id="agent_level3_commission" name="agent_level3_commission" class="form-control widthsm" value="<?php echo $commission3;?>" /></div>
           <div class="tabl_cell"> <input type="text" id="agent_level3_sys_nb" name="agent_level3_sys_nb" class="form-control widthsm" value="<?php echo $sys_nb3;?>" /></div>
           <div class="tabl_cell"> <input type="text" id="agent_level3_nb" name="agent_level3_nb" onkeyup="newbalance(3)" class="form-control widthsm" value="<?php echo $nb3;?>" /></div>
@@ -394,72 +306,42 @@ $noteData = $db->select_single($sql);
               <select class="form-control payment_policy_agents" name="agent_level4" id="agent_level4" data-id="4">
                 <option value="0"></option>
                 <?php 
-                $agentLvl4 = $policyAgents[5][0]['idagent'];
-                if($agentLvl4){
-                  $checkAgentDataFromAC4=getAgentData($policy_id_p,4);
+                
+                    $checkAgentDataFromAC4=getAgentData($policy_id_p,4);
 
-                  if (count($checkAgentDataFromAC4)>0) {
-                   $agentLists4=$checkAgentDataFromAC4;
-                 }else{
-                  $agentLists4 = getAgentLists("health",4); 
-                }    
-                if($agentLists4){
-                  foreach($agentLists4 as $al_key => $al_vl){
-                    $selected_text = ( trim($policyAgents[5][0]['idagent']) == $al_vl['id'] && trim($policyAgents[5][0]['level']) == $al_vl['level'] ) ? 'selected="selected"': ''; echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.$al_vl['name'].'</option>';
-                    if($policyAgents[5][0]['idagent'] == $al_vl['id']){
-                      $fName4 = $al_vl['name'];
-                      $lName4 = $al_vl['lastname'];
-                      $commission4 = $al_vl['commission'];
-                      $sys_nb4 = $al_vl['sys_nb'];
-                      $nb4 = $al_vl['nb'];
-                      $sys_rn4 = $al_vl['sys_rn'];
-                      $rn4 = $al_vl['rn'];
-                      $pay_by4 = $al_vl['pay_by'];
-                      $notes4 = $al_vl['notes'];
-                      $hideshow='';
-                    }else{
-                      $hideshow='hiddenbtn';
+                    if ($checkAgentDataFromAC4) {
+                           $agentLists4=$checkAgentDataFromAC4;
+                       }else{
+                        $agentLists4 = getAgentLists("health",4); 
+                    }   
+                    if($agentLists4){
+                        foreach($agentLists4 as $al_key => $al_vl){ 
+                          $selected_text = ($policyInfo['idagent4'] == $al_vl['id']) ? 'selected="selected"': '';   echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.specialchar($al_vl['name']).'</option>';
+                          if($policyInfo['idagent4'] == $al_vl['id']){
+                            $fName4 = $al_vl['name'];
+                            $lName4 = $al_vl['lastname'];
+                            $commission4 = $al_vl['commission'];
+                            $sys_nb4 = $al_vl['sys_nb'];
+                            $nb4 = $al_vl['nb'];
+                            $sys_rn4 = $al_vl['sys_rn'];
+                            $rn4 = $al_vl['rn'];
+                            $pay_by4 = $al_vl['pay_by'];
+                            $notes4 = $al_vl['notes'];
+                            $hideshow='';
+                        }else{
+                            $hideshow='hiddenbtn';
+                        }
                     }
-                  }
                 }else{
-                  $hideshow='hiddenbtn';
-                }
-              }else{
-                $checkAgentDataFromAC4=getAgentData($policy_id_p,4);
-
-                if (count($checkAgentDataFromAC4)>0) {
-                 $agentLists4=$checkAgentDataFromAC4;
-               }else{
-                $agentLists4 = getAgentLists("health",4); 
-              }   
-              if($agentLists4){
-                foreach($agentLists4 as $al_key => $al_vl){ 
-                  $selected_text = ($policyInfo['idagent'] == $al_vl['id']) ? 'selected="selected"': '';   echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.$al_vl['name'].'</option>';
-                  if($policyInfo['idagent'] == $al_vl['id']){
-                    $fName4 = $al_vl['name'];
-                    $lName4 = $al_vl['lastname'];
-                    $commission4 = $al_vl['commission'];
-                    $sys_nb4 = $al_vl['sys_nb'];
-                    $nb4 = $al_vl['nb'];
-                    $sys_rn4 = $al_vl['sys_rn'];
-                    $rn4 = $al_vl['rn'];
-                    $pay_by4 = $al_vl['pay_by'];
-                    $notes4 = $al_vl['notes'];
-                    $hideshow='';
-                  }else{
                     $hideshow='hiddenbtn';
-                  }
                 }
-              }else{
-                $hideshow='hiddenbtn';
-              }
-            }
+            
             ?>
           </select>
         </span>
       </div>
-      <div class="tabl_cell"><input type="text" id="agent_level4_f_name" name="agent_level4_f_name"  class="form-control" value="<?php echo $fName4;?>" /></div>
-      <div class="tabl_cell"> <input type="text" id="agent_level4_l_name" name="agent_level4_l_name" class="form-control" value="<?php echo $lName4;?>" /> </div>                                
+      <div class="tabl_cell"> <input type="text" id="agent_level4_f_name" name="agent_level4_f_name"  class="form-control" value="<?php echo specialchar($fName4);?>" /> </div>
+              <div class="tabl_cell"> <input type="text" id="agent_level4_l_name" name="agent_level4_l_name" class="form-control" value="<?php echo specialchar($lName4);?>" /> </div>                                  
       <div class="tabl_cell"> <input type="text" id="agent_level4_commission" name="agent_level4_commission" class="form-control widthsm" value="<?php echo $commission4;?>" /></div>
       <div class="tabl_cell"> <input type="text" id="agent_level4_sys_nb" name="agent_level4_sys_nb" class="form-control widthsm" value="<?php echo $sys_nb4;?>" /></div>
       <div class="tabl_cell"> <input type="text" id="agent_level4_nb" name="agent_level4_nb" onkeyup="newbalance(4)" class="form-control widthsm" value="<?php echo $nb4;?>" /></div>
@@ -478,72 +360,42 @@ $noteData = $db->select_single($sql);
           <select class="form-control payment_policy_agents" name="agent_level5" id="agent_level5" data-id="5" >
             <option value="0"></option>
             <?php 
-            $agentLvl5 = $policyAgents[6][0]['idagent'];
-            if($agentLvl5){
-              $checkAgentDataFromAC5=getAgentData($policy_id_p,5);
+            
+                $checkAgentDataFromAC5=getAgentData($policy_id_p,5);
 
-              if (count($checkAgentDataFromAC5)>0) {
-               $agentLists5=$checkAgentDataFromAC5;
-             }else{
-              $agentLists5 = getAgentLists("health",5); 
-            }    
-            if($agentLists5){
-              foreach($agentLists5 as $al_key => $al_vl){
-                $selected_text = ( trim($policyAgents[6][0]['idagent']) == $al_vl['id']) ? 'selected="selected"': ''; echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.$al_vl['name'].'</option>';
-                if($policyAgents[6][0]['idagent'] == $al_vl['id']){
-                  $fName5 = $al_vl['name'];
-                  $lName5 = $al_vl['lastname'];
-                  $commission5 = $al_vl['commission'];
-                  $sys_nb5 = $al_vl['sys_nb'];
-                  $nb5 = $al_vl['nb'];
-                  $sys_rn5 = $al_vl['sys_rn'];
-                  $rn5 = $al_vl['rn'];
-                  $pay_by5 = $al_vl['pay_by'];
-                  $notes5 = $al_vl['notes'];
-                  $hideshow='';
+                    if ($checkAgentDataFromAC5) {
+                        $agentLists5=$checkAgentDataFromAC5;
+                    }else{
+                        $agentLists5 = getAgentLists("health",5); 
+                    }  
+                    if($agentLists5){
+                        foreach($agentLists5 as $al_key => $al_vl){ 
+                          $selected_text = ($policyInfo['idagent5'] == $al_vl['id']) ? 'selected="selected"': '';   echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.specialchar($al_vl['name']).'</option>';
+                          if($policyInfo['idagent5'] == $al_vl['id']){
+                            $fName5 = $al_vl['name'];
+                            $lName5 = $al_vl['lastname'];
+                            $commission5 = $al_vl['commission'];
+                            $sys_nb5 = $al_vl['sys_nb'];
+                            $nb5 = $al_vl['nb'];
+                            $sys_rn5 = $al_vl['sys_rn'];
+                            $rn5 = $al_vl['rn'];
+                            $pay_by5 = $al_vl['pay_by'];
+                            $notes5 = $al_vl['notes'];
+                            $hideshow='';
+                        }else{
+                            $hideshow='hiddenbtn';
+                        }
+                    }
                 }else{
-                  $hideshow='hiddenbtn';
+                    $hideshow='hiddenbtn';
                 }
-              }
-            }else{
-              $hideshow='hiddenbtn';
-            }
-          }else{
-            $checkAgentDataFromAC5=getAgentData($policy_id_p,5);
-
-            if (count($checkAgentDataFromAC5)>0) {
-             $agentLists5=$checkAgentDataFromAC5;
-           }else{
-            $agentLists5 = getAgentLists("health",5); 
-          }  
-          if($agentLists5){
-            foreach($agentLists5 as $al_key => $al_vl){ 
-              $selected_text = ($policyInfo['idagent'] == $al_vl['id']) ? 'selected="selected"': '';   echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.$al_vl['name'].'</option>';
-              if($policyInfo['idagent'] == $al_vl['id']){
-                $fName5 = $al_vl['name'];
-                $lName5 = $al_vl['lastname'];
-                $commission5 = $al_vl['commission'];
-                $sys_nb5 = $al_vl['sys_nb'];
-                $nb5 = $al_vl['nb'];
-                $sys_rn5 = $al_vl['sys_rn'];
-                $rn5 = $al_vl['rn'];
-                $pay_by5 = $al_vl['pay_by'];
-                $notes5 = $al_vl['notes'];
-                $hideshow='';
-              }else{
-                $hideshow='hiddenbtn';
-              }
-            }
-          }else{
-            $hideshow='hiddenbtn';
-          }
-        }
+        
         ?>
       </select>
     </span>
   </div>
-  <div class="tabl_cell"> <input type="text" id="agent_level5_f_name" name="agent_level5_f_name"  class="form-control" value="<?php echo $fName5;?>" /> </div>
-  <div class="tabl_cell"> <input type="text" id="agent_level5_l_name" name="agent_level5_l_name" class="form-control" value="<?php echo $lName5;?>" /> </div>                                
+  <div class="tabl_cell"> <input type="text" id="agent_level5_f_name" name="agent_level5_f_name"  class="form-control" value="<?php echo specialchar($fName5);?>" /> </div>
+<div class="tabl_cell"> <input type="text" id="agent_level5_l_name" name="agent_level5_l_name" class="form-control" value="<?php echo specialchar($lName5);?>" /> </div>                                 
   <div class="tabl_cell"> <input type="text" id="agent_level5_commission" name="agent_level5_commission" class="form-control widthsm" value="<?php echo $commission5;?>" /></div>
   <div class="tabl_cell"> <input type="text" id="agent_level5_sys_nb" name="agent_level5_sys_nb" class="form-control widthsm" value="<?php echo $sys_nb5;?>" /></div>
   <div class="tabl_cell"> <input type="text" id="agent_level5_nb" name="agent_level5_nb" onkeyup="newbalance(5)" class="form-control widthsm" value="<?php echo $nb5;?>" /></div>
@@ -622,7 +474,8 @@ $noteData = $db->select_single($sql);
           <h4 class="content_section_aside_header">Agent Notes</h4>
         </div>
         <div class="col-md-5">
-              <button class="btn btn-primary bgorange float-right submit_btn_agent_note">Add</button>
+              <button class="submit_btn_agent_note" id="submit_btn_agent_note"></button>
+              
         </div>
         
       </div>
@@ -754,14 +607,49 @@ $noteData = $db->select_single($sql);
 
 
           <?php
-          $paymentsList = getPaymentsLists($policy_id_p); 
-          $ins_loop = 1;
-          if(count($paymentsList)>0)
-            {foreach($paymentsList as $payments_key => $payments_value)
-              {
+          $perPage = 10;
+          $page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+          $startAt = $perPage * ($page - 1);
+
+          $query = "SELECT COUNT(*) as total FROM payments
+          WHERE id_policy = '".$policyInfo['id']."'";
+                //$r = mysql_fetch_assoc(mysql_query($query));
+          $paymentdata = $db->select($query);
+
+          foreach($paymentdata as $r_v){
+            $total_r = $r_v['total'];
+        }
+
+
+        $totalPages = ceil($total_r / $perPage);
+
+        $links = "";
+        for ($i = 1; $i <= $totalPages; $i++) {
+          $links .= ($i != $page ) 
+          ? "<li class='pages'><a href='?page=$i'>".$i."</a></li> "
+          : "$page ";
+        }
+
+
+                //$paymentdata = $db->select($query);
+
+      $query1 = "SELECT * FROM payments
+      WHERE id_policy = '".$policyInfo['id']."' 
+      ORDER BY 'timestamp' LIMIT $startAt, $perPage";
+
+      $paymentdata = $db->select($query1);
+
+                // display results here the way you want
+                //print_r($paymentdata);
+
+
+      if(count($paymentdata)>0)
+
+        {foreach($paymentdata as $payments_key => $payments_value)
+          {
                 ?>
 
-
+                
                 <tr class="row_payment" id="row_payment<?php echo $ins_loop; ?>" data-id="<?php echo $ins_loop; ?>" >
                   <td>
                     <span class="form-select tableselect_height">
@@ -992,6 +880,20 @@ $noteData = $db->select_single($sql);
                 </div><!-- table_overlay END -->
                 <div class="clearfix"></div>
                 <!-- filtersColumn END -->
+                <div class="filtersColumn">
+
+                    <div class="filtersColumn-left">
+                     <div class="paginationcrum">
+                        <ul>
+                          <li class="first"><a href=""><i class="fas fa-backward"></i></a></li>
+                          <li class="pre"><a href=""><i class="fas fa-caret-left"></i></a></li>
+                          <?php echo $links; ?>
+                          <li class="next"><a href=""><i class="fas fa-caret-right"></i></a></li>
+                          <li class="last"><a href=""><i class="fas fa-forward"></i></a></li>
+                      </ul>
+                  </div>
+              </div>
+                          
               </div><!-- content_section_aside END -->
             </div>
           </div>
@@ -1076,6 +978,8 @@ $noteData = $db->select_single($sql);
                     </table>
                   </div><!-- table_overlay END -->
                   <div class="clearfix"></div>
+                    
+                </div>
                 </div><!-- content_section_aside END -->
               </div>
             </div>

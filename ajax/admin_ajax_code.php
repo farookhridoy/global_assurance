@@ -424,23 +424,27 @@ switch($action)
         
          
         if($_POST['agent_level5']>0){
-          $agent_id = $_POST['agent_level5']; 
+          $agent_id5 = $_POST['agent_level5']; 
         }
-        elseif($_POST['agent_level4']>0){
-           $agent_id = $_POST['agent_level4'];
+        if($_POST['agent_level4']>0){
+           $agent_id4 = $_POST['agent_level4'];
         }
-        elseif($_POST['agent_level3']>0){
-            $agent_id = $_POST['agent_level3'];
+        if($_POST['agent_level3']>0){
+            $agent_id3 = $_POST['agent_level3'];
         }
-        elseif($_POST['agent_level2']>0){
-          $agent_id = $_POST['agent_level2']; 
+        if($_POST['agent_level2']>0){
+          $agent_id2 = $_POST['agent_level2']; 
         }
-        elseif($_POST['agent_level1']>0){
+        if($_POST['agent_level1']>0){
            $agent_id = $_POST['agent_level1']; 
         }
         	
         
         $db_data['idagent'] = $agent_id;
+        $db_data['idagent2'] = $agent_id2;
+        $db_data['idagent3'] = $agent_id3;
+        $db_data['idagent4'] = $agent_id4;
+        $db_data['idagent5'] = $agent_id5;
         $db_data['policytype'] = "health"; 
         $db_data['last_update'] = time(); 
         

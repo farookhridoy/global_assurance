@@ -11,9 +11,6 @@
 <link rel="stylesheet" href="<?php echo CSS_URL ?>datepicker/style.css"/>
 <script src="<?php echo JS_URL ?>datepicker/jquery-ui.js"></script>
 <script>
-	
-$('input[type=text]').attr('autocomplete','off');
-$('input[type=number]').attr('autocomplete','off');
 
 function initFormDatePicker(){
     if($('.useDatePicker').length)

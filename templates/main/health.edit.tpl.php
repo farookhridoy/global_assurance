@@ -1,7 +1,7 @@
 <?php global $datePicker,$footerFunctions,$policyInfo,$policyNotes,$insuredLists,$insuredInfo,$db,$checkPermissionRole;  $datePicker = array("date_cancelled","effective_date","date_due","date_received","date_approved","payment_start","payment_end"); 
 $checkPermissionRole = checkUserAccessRole('Policies');
 $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
-//print_r($policyInfo);
+//error_reporting(E_ALL);
 
 ?>
 <div class="sectionPanel_Right">
@@ -388,15 +388,13 @@ $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
 
               </div><!-- content_section_aside END -->
             </div>
-
-
-
-
             <div class="col-md-6">
               <div class="content_section_aside">
                 <h4 class="content_section_aside_header">Agents</h4>
                 
-                 <?php $policyAgents = loadHealthPolicyAgents($policyInfo['idagent']); //pre($policyAgents); 
+                 <?php 
+
+                    //$policyAgents = loadHealthPolicyAgents($policyInfo['idagent']); //pre($policyAgents); 
                  
                  //echo $policyAgents[2][0]['idagent']."eeteet";
                  ?>
@@ -410,7 +408,17 @@ $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
                           <span class="form-select">
                             <select class="policy_agents form-control" name="agent_level1" id="agent_level1" data-id="1">
                               <option value="0">&nbsp;</option>
-                               <?php $agents = getAgentLists("health",1);  if($agents){foreach($agents as $ag_key => $ag_value){ $selected_text = ( trim($policyAgents[2][0]['idagent']) == $ag_value['id']) ? 'selected="selected"': ''; echo '<option value="'.$ag_value['id'].'" '.$selected_text.'>'.$ag_value['name'].'</option>';}} ?>  
+                               <?php 
+                               $agents = getAgentLists("health",1);  
+                               if($agents)
+                                {foreach($agents as $ag_key => $ag_value)
+                                    { 
+                                        
+                                        $selected_text = ( trim($policyInfo['idagent']) == $ag_value['id']) ? 'selected="selected"': '';
+                                         echo '<option value="'.$ag_value['id'].'" '.$selected_text.'>'.$ag_value['name'].'</option>';
+                                     }
+                                 } 
+                                ?>  
                             </select>
                             
                             <?php //pre($agents); ?>
@@ -434,7 +442,16 @@ $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
                           <span class="form-select">
                             <select class="policy_agents form-control" name="agent_level2" id="agent_level2" data-id="2">
                             <option value="0">&nbsp;</option>
-                            <?php if($policyAgents[2]) {foreach($policyAgents[2] as $pag_key => $pag_value){ $selected_text = ($pag_value['selected'] == 1) ? 'selected="selected"': ''; echo '<option value="'.$pag_value['id'].'" '.$selected_text.'>'.$pag_value['name'].'</option>';}} ?>
+                            <?php 
+                               $agents = getAgentLists("health",2);  
+                               if($agents)
+                                {foreach($agents as $ag_key => $ag_value)
+                                    { 
+                                        $selected_text = ( trim($policyInfo['idagent2']) == $ag_value['id']) ? 'selected="selected"': '';
+                                         echo '<option value="'.$ag_value['id'].'" '.$selected_text.'>'.$ag_value['name'].'</option>';
+                                     }
+                                 } 
+                                ?>  
                             </select>
                           </span>
                         </div>
@@ -456,6 +473,17 @@ $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
                           <span class="form-select">
                             <select class="policy_agents form-control" name="agent_level3" id="agent_level3" data-id="3">
                               <option value="0">&nbsp;</option>
+                               <?php 
+                               $agents = getAgentLists("health",3);  
+                               if($agents)
+                                {foreach($agents as $ag_key => $ag_value)
+                                    { 
+                                        $selected_text = ( trim($policyInfo['idagent3']) == $ag_value['id']) ? 'selected="selected"': '';
+                                         echo '<option value="'.$ag_value['id'].'" '.$selected_text.'>'.$ag_value['name'].'</option>';
+                                     }
+                                 } 
+                                ?>  
+
                             </select>
                           </span>
                         </div>
@@ -477,6 +505,16 @@ $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
                           <span class="form-select">
                             <select class="policy_agents form-control" name="agent_level4" id="agent_level4" data-id="4">
                               <option value="0">&nbsp;</option>
+                                <?php 
+                               $agents = getAgentLists("health",4);  
+                               if($agents)
+                                {foreach($agents as $ag_key => $ag_value)
+                                    { 
+                                        $selected_text = ( trim($policyInfo['idagent4']) == $ag_value['id']) ? 'selected="selected"': '';
+                                         echo '<option value="'.$ag_value['id'].'" '.$selected_text.'>'.$ag_value['name'].'</option>';
+                                     }
+                                 } 
+                                ?>  
                             </select>
                           </span>
                         </div>
@@ -498,6 +536,16 @@ $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
                           <span class="form-select">
                             <select class="policy_agents form-control" name="agent_level5" id="agent_level5" data-id="5">
                               <option value="0">&nbsp;</option>
+                              <?php 
+                               $agents = getAgentLists("health",5);  
+                               if($agents)
+                                {foreach($agents as $ag_key => $ag_value)
+                                    { 
+                                        $selected_text = ( trim($policyInfo['idagent5']) == $ag_value['id']) ? 'selected="selected"': '';
+                                         echo '<option value="'.$ag_value['id'].'" '.$selected_text.'>'.$ag_value['name'].'</option>';
+                                     }
+                                 } 
+                                ?>  
                             </select>
                           </span>
                         </div>

@@ -25,7 +25,7 @@ $policyInfo = getSinglePolicy($policy_id);
 
 echo $policy_id.$data_id ;*/
 if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-        $flag=0;      
+        $flag=0;  $cflag=0;    
 	$Reader = new SpreadsheetReader($target_file);
 	$sheetCount = count($Reader->sheets());
 	for($i=0;$i<$sheetCount;$i++){
@@ -37,55 +37,86 @@ if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 			if($data_id==1){
 
 				if ($name=="Heartland.xlsx") {
-					if(isset($row[5])){
-						$paid_date= date("Y-m-d",strtotime($row[5]));
-					}
 
-					if(isset($policyInfo['paymentduedate'])){
-						$due_date= date("Y-m-d",strtotime($policyInfo['paymentduedate']));
-					}
+					if ($cflag==0 && $i==$i) {
 
-					if($row[12]!="APPROVAL"){
-						$status= "Recieved";
+						if ($row[15]=="Auth Amt" && $row[12]=="Status") {	
+							$cflag=1;						
+						}else {
+							$_SESSION["error"]='Please upload Heartland valid file';
+							unlink($target_file);
+							header('Location: '.THE_URL."main/file-upload/".$policyInfo['id']);
+						}
+
 					}else{
-						$status= "Pending";
+
+						if(isset($row[5])){
+							$paid_date= date("Y-m-d",strtotime($row[5]));
+						}
+
+						if(isset($policyInfo['paymentduedate'])){
+							$due_date= date("Y-m-d",strtotime($policyInfo['paymentduedate']));
+						}
+
+						if($row[12]!="APPROVAL"){
+							$status= "Recieved";
+						}else{
+							$status= "Pending";
+						}
+						$type= "Payment";
+
+						$sql = "INSERT INTO `payments`(`id_policy`,`id_pay_cycle`,`amount`,`agent_1_discount`, `agent_2_discount`, `agent_3_discount`, `agent_4_discount`, `agent_5_discount`,`date_paid`,`action`,`id_pay_type`,`fee`,`id_discount`,`id_user`,`date_due`,`locked`,`type`,`details`,`paid`,`date_created`,
+						`receipt_pay`,`receipt_type`,`receipt_note`) VALUES ('".trim($policyInfo['id'])."','".trim($policyInfo['idpaycycle'])."','".strval($row[15])."','0.00','0.00','0.00','0.00','0.00','".trim($paid_date)."','".trim($status)."','1','".trim($policyInfo['fee'])."','','".trim($user_id)."','".trim($due_date)."','0','".$type."','".trim($row[21])."','0','','".trim($row[10])."','".trim($row[7]).'-'.trim($row[9])."','".trim($row[21])."')";
+
+						$_SESSION["message"]='Hartland record created successfully from CSV/XLSX file.';
 					}
-					$type= "Payment";
-
-					$sql = "INSERT INTO `payments`(`id_policy`,`id_pay_cycle`,`amount`,`agent_1_discount`, `agent_2_discount`, `agent_3_discount`, `agent_4_discount`, `agent_5_discount`,`date_paid`,`action`,`id_pay_type`,`fee`,`id_discount`,`id_user`,`date_due`,`locked`,`type`,`details`,`paid`,`date_created`,
-					`receipt_pay`,`receipt_type`,`receipt_note`) VALUES ('".trim($policyInfo['id'])."','".trim($policyInfo['idpaycycle'])."','".strval($row[15])."','0.00','0.00','0.00','0.00','0.00','".trim($paid_date)."','".trim($status)."','1','".trim($policyInfo['fee'])."','','".trim($user_id)."','".trim($due_date)."','0','".$type."','".trim($row[21])."','0','','".trim($row[10])."','".trim($row[7]).'-'.trim($row[9])."','".trim($row[21])."')";
-
-					$_SESSION["message"]='Hartland record created successfully from CSV/XLSX file.';
 				}else{
 					$_SESSION["error"]='Please upload "Heartland.xlsx" not '.$_FILES["fileToUpload"]["name"];
+					unlink($target_file);
 					header('Location: '.THE_URL."main/file-upload/".$policyInfo['id']);
 				}
 
-				
-
-
-
 			}elseif($data_id==2){
+
 				if ($name=="Authorize.xlsx") {
-					if(isset($row[5])){
-						$paid_date= date("Y-m-d",strtotime($row[5]));
+
+					if ($cflag==0 && $i==$i) {
+
+						if ($row[5]=="Submit Date/Time" && $row[10]=="Total Amount") {
+
+							$cflag=1;						
+						}else {
+
+							$_SESSION["error"]='Please upload valid Authorize file';
+							unlink($target_file);
+							header('Location: '.THE_URL."main/file-upload/".$policyInfo['id']);
+						}
+
+					}else{
+
+						if(isset($row[5])){
+							$paid_date= date("Y-m-d",strtotime($row[5]));
+						}
+
+						if(isset($policyInfo['paymentduedate'])){
+							$due_date= date("Y-m-d",strtotime($policyInfo['paymentduedate']));
+						}
+
+
+						$status= "Pending";
+						$type= "Payment";
+
+
+						$sql = "INSERT INTO `payments`(`id_policy`,`id_pay_cycle`,`amount`,`agent_1_discount`, `agent_2_discount`, `agent_3_discount`, `agent_4_discount`, `agent_5_discount`,`date_paid`,`action`,`id_pay_type`,`fee`,`id_discount`,`id_user`,`date_due`,`locked`,`type`,`details`,`paid`,`date_created`,
+						`receipt_pay`,`receipt_type`,`receipt_note`) VALUES ('".trim($policyInfo['id'])."','".trim($policyInfo['idpaycycle'])."','".strval($row[10])."','0.00','0.00','0.00','0.00','0.00','".trim($paid_date)."','".trim($status)."','1','".trim($policyInfo['fee'])."','','".trim($user_id)."','".trim($due_date)."','0','".$type."','','0','','".trim($row[14])."','".trim($row[11]).'-'.trim($row[6])."','".trim($row[9])."')";
+
+						$_SESSION["message"]='Authorize record created successfully from CSV/XLSX file.';
 					}
+					
 
-					if(isset($policyInfo['paymentduedate'])){
-						$due_date= date("Y-m-d",strtotime($policyInfo['paymentduedate']));
-					}
-
-
-					$status= "Pending";
-					$type= "Payment";
-
-
-					$sql = "INSERT INTO `payments`(`id_policy`,`id_pay_cycle`,`amount`,`agent_1_discount`, `agent_2_discount`, `agent_3_discount`, `agent_4_discount`, `agent_5_discount`,`date_paid`,`action`,`id_pay_type`,`fee`,`id_discount`,`id_user`,`date_due`,`locked`,`type`,`details`,`paid`,`date_created`,
-					`receipt_pay`,`receipt_type`,`receipt_note`) VALUES ('".trim($policyInfo['id'])."','".trim($policyInfo['idpaycycle'])."','".strval($row[10])."','0.00','0.00','0.00','0.00','0.00','".trim($paid_date)."','".trim($status)."','1','".trim($policyInfo['fee'])."','','".trim($user_id)."','".trim($due_date)."','0','".$type."','','0','','".trim($row[14])."','".trim($row[11]).'-'.trim($row[6])."','".trim($row[9])."')";
-
-					$_SESSION["message-authorize"]='Authorize record created successfully from CSV/XLSX file.';
 				}else{
 					$_SESSION["error"]='Please upload "Authorize.xlsx" not '.$_FILES["fileToUpload"]["name"];
+					unlink($target_file);
 					header('Location: '.THE_URL."main/file-upload/".$policyInfo['id']);
 				}
 			}

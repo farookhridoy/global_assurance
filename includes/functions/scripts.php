@@ -16,6 +16,8 @@ global $policyInfo,$policyNotes,$insuredLists,$checkPermissionRole,$db;
     var payment_added_index = <?php if($paymentsList){echo count($paymentsList);}else{echo "1";} ?>;
     var insured_processing = 0;
     var edit_permission = <?php if($checkPermissionRole){echo 'true';}else{echo 'false';} ?>;
+
+    
     function loadAgents(curr_ae_id,curr_ae_data_id,curr_val)
     {
         
@@ -469,9 +471,10 @@ function savePolicyInsureds(){
     var policy_status = $('#policy_status').val();
 
     var notes = $('#notes').val();
-   
+    submit_btn_agent_note(policy_id);
 
     ///alert(notes+'/'+notesids);
+
 
                   
     if(policy_id){
@@ -510,6 +513,32 @@ function savePolicyInsureds(){
     return false;
   }
 
+function submit_btn_agent_note(policy_id) {
+  
+    if(policy_id){
+        $("#ajax_progress").find('label').text('Note saving please wait...');
+        $("#ajax_progress").show();
+        $.ajax({
+            type: 'POST',
+            url: admin_ajax_url+"?action=save_agent_notes",
+            data: $('#agent_note_inner_form :input').serialize()+"&policy_id="+policy_id, 
+            success: function(response) {
+                
+                var response_json = $.parseJSON(response);
+                if(parseInt(response_json.sucess) == 1){
+                    window.location.reload();
+                }else{
+                    window.location.reload(); 
+                }
+                //alert(response);
+            },
+        });
+
+    }else{
+        alert("Policy id can't find!!!");
+    }
+    return false;
+}
 
 //agents-note add//
 $( ".submit_btn_agent_note" ).click(function(e) {
