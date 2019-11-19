@@ -38,10 +38,40 @@ $policy_id_p= $policyInfo['id'];
 $sql="SELECT * FROM notes WHERE policy_id='$policy_id_p'";
 $noteData = $db->select_single($sql);
 
+//$_SESSION['notes'] = $_POST['notes'];
+
 ?>
+<style type="text/css" media="screen">
+    .header-payment {
+       padding: 8px 25px;
+       width: 100%;
+  }
+  .content-payment {
+     padding: 16px;
+  }
+  .sectionPanel_Right .content_section .sticky {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 100;
+      width: 81%;
+      background: #ebf3f6;
+      margin-left: 321px;
+      margin-top: 73px;
+      box-shadow: 0 -7px 28px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      float: left;
+  }
+  .sectionPanel_Right .content_section .sticky + .content-payment {
+      padding-top: 102px;
+  }
+</style>
+
 <div class="sectionPanel_Right">
   <div class="content_section">
-    <div class="page-breadcrumbs">
+    <div class="header-payment" id="myHeader">
+        <div class="page-breadcrumbs">
       <ul>
         <li><a href="#"><i class="fas fa-home"></i></a></li>
         <li><a href="#">Dashboard</a></li>
@@ -59,6 +89,10 @@ $noteData = $db->select_single($sql);
        <button class="btn btn-primary bgorange" type="button" onclick="payment_form_submit()">Save</button>
      </div>
    </div>
+   </div>
+   <div class="content-payment">
+       
+   
    <div class="clearfix"></div>
 
    <form method="post" action="" id="frm_payments" onsubmit="return payment_form_submit()" enctype="multipart/form-data">
@@ -140,8 +174,8 @@ $noteData = $db->select_single($sql);
                             <option value="0"></option>
                             <?php 
                            
-                               $checkAgentDataFromAC=getAgentData($policy_id_p,1);
-
+                               $checkAgentDataFromAC=getAgentData($policyInfo['id'],1);
+                               //print_r($checkAgentDataFromAC);
                                if ($checkAgentDataFromAC) {
                                     $agents=$checkAgentDataFromAC;
                                }else{
@@ -155,6 +189,8 @@ $noteData = $db->select_single($sql);
                                  echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.specialchar($al_vl['name']).'</option>';
 
                                  if($policyInfo['idagent'] == $al_vl['id']){
+                                    $selected_val = ($policyInfo['idagent'] == $al_vl['id']) ? $al_vl['id']: '';
+                                    $al_vl = getSingleAgentCommission($selected_val,1,$policy_id_p);
                                   $fName = $al_vl['name'];
                                   $lName = $al_vl['lastname'];
                                   $commission = $al_vl['commission'];
@@ -209,6 +245,8 @@ $noteData = $db->select_single($sql);
                                   $selected_text = ($policyInfo['idagent2'] == $al_vl['id']) ? 'selected="selected"': '';   echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.specialchar($al_vl['name']).'</option>';
 
                                   if($policyInfo['idagent2'] == $al_vl['id']){
+                                    $selected_val = ($policyInfo['idagent2'] == $al_vl['id']) ? $al_vl['id']: '';
+                                    $al_vl = getSingleAgentCommission($selected_val,2,$policy_id_p);
 
                                     $fName2 = $al_vl['name'];
                                     $lName2 = $al_vl['lastname'];
@@ -265,6 +303,8 @@ $noteData = $db->select_single($sql);
                             foreach($agentLists3 as $al_key => $al_vl){ 
                               $selected_text = ($policyInfo['idagent3'] == $al_vl['id']) ? 'selected="selected"': '';   echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.specialchar($al_vl['name']).'</option>';
                               if($policyInfo['idagent3'] == $al_vl['id']){
+                                $selected_val = ($policyInfo['idagent3'] == $al_vl['id']) ? $al_vl['id']: '';
+                              $al_vl = getSingleAgentCommission($selected_val,3,$policy_id_p);
                                 $fName3 = $al_vl['name'];
                                 $lName3 = $al_vl['lastname'];
                                 $commission3 = $al_vl['commission'];
@@ -318,6 +358,8 @@ $noteData = $db->select_single($sql);
                         foreach($agentLists4 as $al_key => $al_vl){ 
                           $selected_text = ($policyInfo['idagent4'] == $al_vl['id']) ? 'selected="selected"': '';   echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.specialchar($al_vl['name']).'</option>';
                           if($policyInfo['idagent4'] == $al_vl['id']){
+                            $selected_val = ($policyInfo['idagent4'] == $al_vl['id']) ? $al_vl['id']: '';
+                              $al_vl = getSingleAgentCommission($selected_val,4,$policy_id_p);
                             $fName4 = $al_vl['name'];
                             $lName4 = $al_vl['lastname'];
                             $commission4 = $al_vl['commission'];
@@ -372,6 +414,8 @@ $noteData = $db->select_single($sql);
                         foreach($agentLists5 as $al_key => $al_vl){ 
                           $selected_text = ($policyInfo['idagent5'] == $al_vl['id']) ? 'selected="selected"': '';   echo '<option value="'.$al_vl['id'].'" '.$selected_text.'>'.specialchar($al_vl['name']).'</option>';
                           if($policyInfo['idagent5'] == $al_vl['id']){
+                            $selected_val = ($policyInfo['idagent5'] == $al_vl['id']) ? $al_vl['id']: '';
+                              $al_vl = getSingleAgentCommission($selected_val,5,$policy_id_p);
                             $fName5 = $al_vl['name'];
                             $lName5 = $al_vl['lastname'];
                             $commission5 = $al_vl['commission'];
@@ -473,10 +517,6 @@ $noteData = $db->select_single($sql);
         <div class="col-md-7">
           <h4 class="content_section_aside_header">Agent Notes</h4>
         </div>
-        <div class="col-md-5">
-              <button class="submit_btn_agent_note" id="submit_btn_agent_note"></button>
-              
-        </div>
         
       </div>
 
@@ -484,7 +524,7 @@ $noteData = $db->select_single($sql);
         <div class="row rowsm">
           <div class="col-md-12 col-lg-1"><label class="formheading labelSide">L1</label></div>
           <div class="col-md-12 col-lg-11">
-            <input type="text" class="form-control" id="note_1" name="note_1" value="<?=$noteData['note_1']?>">
+            <input type="text" class="form-control from_agent_note" id="agent_level1_notes" name="agent_level1_notes" value="<?=$notes?>" data-id="1">
           </div>
         </div>
       </div>
@@ -493,7 +533,7 @@ $noteData = $db->select_single($sql);
         <div class="row rowsm">
           <div class="col-md-12 col-lg-1"><label class="formheading labelSide">L2</label></div>
           <div class="col-md-12 col-lg-11">
-            <input type="text" class="form-control" id="note_2" name="note_2"  value="<?=$noteData['note_2']?>">
+            <input type="text" class="form-control from_agent_note" id="agent_level2_notes" name="agent_level2_notes"  value="<?=$notes2?>" data-id="2">
           </div>
         </div>
       </div>  
@@ -502,7 +542,7 @@ $noteData = $db->select_single($sql);
         <div class="row rowsm">
           <div class="col-md-12 col-lg-1"><label class="formheading labelSide">L3</label></div>
           <div class="col-md-12 col-lg-11">
-            <input type="text" class="form-control" id="note_3" name="note_3"  value="<?=$noteData['note_3']?>">
+            <input type="text" data-id="3" class="form-control from_agent_note" id="agent_level3_notes" name="agent_level3_notes"  value="<?=$notes3?>">
           </div>
         </div>
       </div> 
@@ -511,7 +551,7 @@ $noteData = $db->select_single($sql);
         <div class="row rowsm">
           <div class="col-md-12 col-lg-1"><label class="formheading labelSide">L4</label></div>
           <div class="col-md-12 col-lg-11">
-            <input type="text" class="form-control"  id="note_4" name="note_4" value="<?=$noteData['note_4']?>">
+            <input type="text" data-id="4" class="form-control from_agent_note"  id="agent_level4_notes" name="agent_level4_notes" value="<?=$notes4?>">
           </div>
         </div>
       </div> 
@@ -520,7 +560,7 @@ $noteData = $db->select_single($sql);
         <div class="row rowsm">
           <div class="col-md-12 col-lg-1"><label class="formheading labelSide">L5</label></div>
           <div class="col-md-12 col-lg-11">
-            <input type="text" class="form-control" id="note5" name="note5" value="<?=$noteData['note_5']?>">
+            <input type="text" data-id="5" class="form-control from_agent_note" id="agent_level5_notes" name="agent_level5_notes" value="<?=$notes5?>">
           </div>
         </div>
       </div> 
@@ -537,7 +577,7 @@ $noteData = $db->select_single($sql);
           <div class="col-md-12 col-lg-3"><label class="formheading labelSide">Note</label></div>
           <div class="col-md-12 col-lg-9">
             <input type="hidden" name="notesids" class="notesids" id="notesids" value="NEW">
-            <textarea class="form-control form-textarea" name="notes" id="notes"></textarea>
+            <textarea id="notes" class="form-control form-textarea" name="notes"></textarea>
           </div>
         </div>
       </div> 
@@ -613,35 +653,22 @@ $noteData = $db->select_single($sql);
 
           $query = "SELECT COUNT(*) as total FROM payments
           WHERE id_policy = '".$policyInfo['id']."'";
-                //$r = mysql_fetch_assoc(mysql_query($query));
           $paymentdata = $db->select($query);
-
           foreach($paymentdata as $r_v){
             $total_r = $r_v['total'];
         }
-
-
         $totalPages = ceil($total_r / $perPage);
-
         $links = "";
         for ($i = 1; $i <= $totalPages; $i++) {
           $links .= ($i != $page ) 
-          ? "<li class='pages'><a href='?page=$i'>".$i."</a></li> "
-          : "$page ";
+          ? "<li class='pagess'><a href='?page=".$i."'>".$i."</a></li> "
+          : "$page";
         }
-
-
-                //$paymentdata = $db->select($query);
-
       $query1 = "SELECT * FROM payments
       WHERE id_policy = '".$policyInfo['id']."' 
       ORDER BY 'timestamp' LIMIT $startAt, $perPage";
 
       $paymentdata = $db->select($query1);
-
-                // display results here the way you want
-                //print_r($paymentdata);
-
 
       if(count($paymentdata)>0)
 
@@ -692,8 +719,8 @@ $noteData = $db->select_single($sql);
 
                         </span>
                       </td>
-                      <td><input type="text" name="paymentpaid" class="input-no-border useDatePicker datepicker-dob" value="<?=date("m/d/Y",strtotime($payments_value['date_paid'])) ?>" size="7"/></td>
-                      <td><input type="text" name="paymentduedate" class="input-no-border useDatePicker datepicker-dob" value="<?=date("m/d/Y",strtotime($payments_value['date_due']))?>" size="7"/></td>
+                      <td><input type="text" name="paymentpaid" class="input-no-border useDatePicker datepicker-dob" value="<?= isset($payments_value['date_paid'])?date("m/d/Y",strtotime($payments_value['date_paid'])):'' ?>" size="7"/></td>
+                      <td><input type="text" name="paymentduedate" class="input-no-border useDatePicker datepicker-dob" value="<?= isset($payments_value['date_due'])? date("m/d/Y",strtotime($payments_value['date_due'])):''?>" size="7"/></td>
                       <td>$<input type="text" name="paymentamount" class="input-no-border" size="6" value="<?=$payments_value['amount'] ?>"  /></td>
                       <td>$<input type="text" name="paymentpolicyfee" class="input-no-border" size="6" value="<?=$payments_value['fee'] ?>"/></td>
                       <td>$<input type="text" name="discount_agent_1" class="input-no-border" size="6" value="<?=$payments_value['agent_1_discount'] ?>"/></td>
@@ -827,7 +854,6 @@ $noteData = $db->select_single($sql);
                           {foreach($paytype as $pt_key => $pt_value)
                             {
                                 //$selected_text = ($payments_value['id_pay_type'] == $pt_key) ? 'selected="selected"': ''; 
-
                               echo '<option value="'.$pt_key.'">'.$pt_value.'</option>';
                             }
                           } 
@@ -885,11 +911,11 @@ $noteData = $db->select_single($sql);
                     <div class="filtersColumn-left">
                      <div class="paginationcrum">
                         <ul>
-                          <li class="first"><a href=""><i class="fas fa-backward"></i></a></li>
-                          <li class="pre"><a href=""><i class="fas fa-caret-left"></i></a></li>
+                          <li class="first"><a href="?page=1"><i class="fas fa-backward"></i></a></li>
+                          <li class="prev <?php if($page <= 1){ echo 'disabled'; } ?>"><a href="<?php if($page <= 1){ echo '#'; } else { echo "?page=".($page - 1); } ?>"><i class="fas fa-caret-left"></i></a></li>
                           <?php echo $links; ?>
-                          <li class="next"><a href=""><i class="fas fa-caret-right"></i></a></li>
-                          <li class="last"><a href=""><i class="fas fa-forward"></i></a></li>
+                          <li class="next <?php if($page >= $totalPages){ echo 'disabled'; } ?>"><a href="<?php if($page >= $totalPages){ echo '#'; } else { echo "?page=".($page + 1); } ?>"><i class="fas fa-caret-right"></i></a></li>
+                          <li class="last"><a href="?page=<?php echo $totalPages; ?>"><i class="fas fa-forward"></i></a></li>
                       </ul>
                   </div>
               </div>
@@ -897,6 +923,7 @@ $noteData = $db->select_single($sql);
               </div><!-- content_section_aside END -->
             </div>
           </div>
+</div>
 
 
 
@@ -982,7 +1009,7 @@ $noteData = $db->select_single($sql);
                 </div>
                 </div><!-- content_section_aside END -->
               </div>
-            </div>
+          
 
 
 
@@ -1004,6 +1031,7 @@ $noteData = $db->select_single($sql);
             </div>
 
           </form>
+          </div>
         </div>
       </div>
 
@@ -1013,6 +1041,7 @@ $noteData = $db->select_single($sql);
     function newbalance(dataid) {
 
             var parent= dataid-1;
+           
             var sysnb=0;
 
             var nbchild= $('#agent_level'+dataid+'_nb').val();
@@ -1025,8 +1054,20 @@ $noteData = $db->select_single($sql);
 
             $('#agent_level'+parent+'_sys_nb').val(sysnb.toFixed(2));
             $('#agent_level'+dataid+'_sys_nb').val(parseFloat(nbchild));
+
+            $('#agent_level'+parent+'_commission').val(sysnb.toFixed(2));
+            $('#agent_level'+dataid+'_commission').val(parseFloat(nbchild));
             //alert(sysnb);
+
+            //for (dataid; dataid <= 5; dataid++) {
+                if (dataid<=3) {
+                    var recall= dataid+1;
+                    newbalance(recall);
+                }
+            //}
     }
+
+
 
     function renewal(dataid) {
 
@@ -1047,6 +1088,24 @@ $noteData = $db->select_single($sql);
             $('#agent_level'+dataid+'_sys_rn').val(parseFloat(nbchild));
             //alert(sysnb);
 
+            if (dataid<=3) {
+                    var recall= dataid+1;
+                    renewal(recall);
+                }
+
     }
+
    
+    window.onscroll = function() {myFunction()};
+
+    var header = document.getElementById("myHeader");
+    var sticky = header.offsetTop;
+
+    function myFunction() {
+      if (window.pageYOffset > sticky) {
+        header.classList.add("sticky");
+    } else {
+        header.classList.remove("sticky");
+    }
+}
 </script>

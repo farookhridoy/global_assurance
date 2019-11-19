@@ -426,7 +426,7 @@ $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
                         </div>
                         <div class="col-md-6">
                           <input type="text" class="form-control" readonly="readonly" id="agent_level1_f_name" />
-                          <input type="text" class="form-control spaceTopTen" readonly="readonly" id="agent_level1_l_name" />
+                          <input type="text" class="form-control spaceTopTen" readonly="readonly" id="agent_level1_l_name"/>
                         </div>
                       </div>
                     </div>

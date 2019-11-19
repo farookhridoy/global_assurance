@@ -24,27 +24,39 @@ global $policyInfo,$policyNotes,$insuredLists,$checkPermissionRole,$db;
         var next_level = parseInt(curr_ae_data_id) + 1;
         var curr_val_data = parseInt(curr_val);
 
+        //console.log(curr_val_data);
+
         if(curr_val_data){
-        $.post(admin_ajax_url,{action:'load_agent', agent_type:'health', agent_num: curr_val,agent_level: curr_ae_data_id},
+        $.post(admin_ajax_url,{action:'load_agent', agent_type:'health', agent_num: curr_val_data,agent_level: curr_ae_data_id},
             function(data)
-            {    
+            {  
+
+                //console.log(data.agent_data);  
                 if(parseInt(data.sucess) == 1)
                 {     
                  //alert(data.agent_data.name);
-                 if(data.agent_data.name)
-                 $("#agent_level"+curr_ae_data_id+"_f_name").val(data.agent_data.name);
+                 if(data.agent_data.name){
+
+                   $("#agent_level"+curr_ae_data_id+"_f_name").val(data.agent_data.name);
+               }else{
+                    $("#agent_level"+curr_ae_data_id+"_f_name").val("");
+                }
                  
-                 if(data.agent_data.lastname)
-                 $("#agent_level"+curr_ae_data_id+"_l_name").val(data.agent_data.lastname);
+                 if(data.agent_data.lastname){
+                    $("#agent_level"+curr_ae_data_id+"_l_name").val(data.agent_data.lastname);
+                }else{
+                    $("#agent_level"+curr_ae_data_id+"_l_name").val("");
+                }
                  
-                 if(data.agent_sub){
+                 
+                 /*if(data.agent_sub){
                      $("#agent_level"+next_level).empty();
                      $("#agent_level"+next_level).append($("<option></option>").attr("value", "0").text(''));
                      $.each(data.agent_sub, function(k, v) {
                         $("#agent_level"+next_level).append($("<option></option>").attr("value", v.id).text(v.name));
                      //alert(v.name);
                      });
-                 }
+                 }*/
                   
                 }
                 else
@@ -56,8 +68,8 @@ global $policyInfo,$policyNotes,$insuredLists,$checkPermissionRole,$db;
             }else{
                $("#agent_level"+curr_ae_data_id+"_f_name").val("");
                $("#agent_level"+curr_ae_data_id+"_l_name").val("");
-               $("#agent_level"+next_level).empty(); 
-               $("#agent_level"+next_level).append($("<option></option>").attr("value", "0").text(''));
+               /*$("#agent_level"+next_level).empty(); 
+               $("#agent_level"+next_level).append($("<option></option>").attr("value", "0").text(''));*/
             }
             return false;
     }
@@ -157,6 +169,8 @@ function loadCoverages(curr_plan)
        var ae_id = $(this).attr("id");
        var ae_data_id = $(this).attr("data-id");
        var selected_val = $(this).val();
+
+       //alert(selected_val);
        loadAgents(ae_id,ae_data_id,selected_val);
    });
 
@@ -179,6 +193,8 @@ function loadCoverages(curr_plan)
         var next_level = parseInt(curr_ae_data_id) + 1;
         var curr_val_data = parseInt(curr_val);
 
+        //alert(curr_val_data);
+
         if(curr_val_data){
         $.post(admin_ajax_url,{action:'load_agent', agent_type:'health', agent_num: curr_val,agent_level: curr_ae_data_id,policy_id:policy_id},
             function(data)
@@ -187,33 +203,62 @@ function loadCoverages(curr_plan)
                 {     
                     $("#agent_level"+curr_ae_data_id+"_active").removeClass('hiddenbtn');
 
-                   if(data.agent_data.name)
+                   if(data.agent_data.name){
+
                        $("#agent_level"+curr_ae_data_id+"_f_name").val(data.agent_data.name);
+                   }else{
+                         $("#agent_level"+curr_ae_data_id+"_f_name").val("");
+                   }
                        
 
-                   if(data.agent_data.lastname)
+                   if(data.agent_data.lastname){
                        $("#agent_level"+curr_ae_data_id+"_l_name").val(data.agent_data.lastname);
+                   }else{
+                    $("#agent_level"+curr_ae_data_id+"_l_name").val("");
+                   }
 
-                   if(data.agent_data.commission)
+                   if(data.agent_data.commission){
                        $("#agent_level"+curr_ae_data_id+"_commission").val(data.agent_data.commission); 
+                   }else{
+                    $("#agent_level"+curr_ae_data_id+"_commission").val(""); 
+                   }
 
-                   if(data.agent_data.sys_nb)
+                   if(data.agent_data.sys_nb){
+
                        $("#agent_level"+curr_ae_data_id+"_sys_nb").val(data.agent_data.sys_nb); 
+                   }else{
+                     $("#agent_level"+curr_ae_data_id+"_sys_nb").val(""); 
+                   }
 
-                   if(data.agent_data.nb)
+                   if(data.agent_data.nb){
                        $("#agent_level"+curr_ae_data_id+"_nb").val(data.agent_data.nb);
+                   }else{
+                    $("#agent_level"+curr_ae_data_id+"_nb").val("");
+                   }
 
-                   if(data.agent_data.sys_rn)
+                   if(data.agent_data.sys_rn){
                        $("#agent_level"+curr_ae_data_id+"_sys_rn").val(data.agent_data.sys_rn);
+                   }else{
+                    $("#agent_level"+curr_ae_data_id+"_sys_rn").val("");
+                   }
 
-                   if(data.agent_data.rn)
+                   if(data.agent_data.rn){
                        $("#agent_level"+curr_ae_data_id+"_rn").val(data.agent_data.rn);
+                   }else{
+                    $("#agent_level"+curr_ae_data_id+"_rn").val("");
+                   }
 
-                   if(data.agent_data.pay_by)
+                   if(data.agent_data.pay_by){
                        $("#agent_level"+curr_ae_data_id+"_pay_by").val(data.agent_data.pay_by);
+                   }else{
+                    $("#agent_level"+curr_ae_data_id+"_pay_by").val("");
+                   }
 
-                   if(data.agent_data.notes)
+                   if(data.agent_data.notes){
                        $("#agent_level"+curr_ae_data_id+"_notes").val(data.agent_data.notes);
+                   }else{
+                    $("#agent_level"+curr_ae_data_id+"_notes").val("");
+                   }
                  
                 
                   
@@ -221,6 +266,7 @@ function loadCoverages(curr_plan)
                 else
                 {
                  //alert("Failed");
+                 
                 }
             },'json');
             
@@ -233,10 +279,7 @@ function loadCoverages(curr_plan)
                $("#agent_level"+curr_ae_data_id+"_sys_rn").val("");
                $("#agent_level"+curr_ae_data_id+"_rn").val("");
                $("#agent_level"+curr_ae_data_id+"_pay_by").val("");
-               $("#agent_level"+curr_ae_data_id+"_notes").val("");
-
-              
-               
+               $("#agent_level"+curr_ae_data_id+"_notes").val(""); 
             }
             return false;
     }
@@ -471,7 +514,7 @@ function savePolicyInsureds(){
     var policy_status = $('#policy_status').val();
 
     var notes = $('#notes').val();
-    submit_btn_agent_note(policy_id);
+    //submit_btn_agent_note(policy_id);
 
     ///alert(notes+'/'+notesids);
 
@@ -612,6 +655,69 @@ $( ".submit_btn_agent_note" ).click(function(e) {
     return false;
 
    });
+
+//onchange agent note submit
+
+
+$(".from_agent_note").on('change', function () {
+
+    var data_id = parseInt($(this).attr('data-id'));
+
+    var policy_id = $('#policy_id').val();
+    var agent_id = parseInt($('#agent_level'+data_id).children("option:selected").val());
+    var notes = $('#agent_level'+data_id+'_notes').val();
+    
+    var parent_data_id = data_id-1;
+    var parent_agent_id = parseInt($('#agent_level'+parent_data_id).children("option:selected").val());
+    var parent_notes = $('#agent_level'+parent_data_id+'_notes').val();
+
+    if (parent_data_id!=0 && parent_agent_id!="") {
+        SubmitParentAgentData(parent_data_id,policy_id,parent_notes,parent_agent_id);
+    }
+
+    var agent_notes =$('#notes').val();
+    var receipt_pay =$('#receipt_pay').val();
+    
+    //$( "#frm_payments" ).trigger('submit');
+
+    if(data_id && policy_id && agent_id){
+        ///$( "#frm_payments" ).trigger('submit');
+
+        $("#ajax_progress").find('label').text('Agent label form saving please wait...');
+        $("#ajax_progress").show();
+        $.ajax({
+            type: 'POST',
+            url: admin_ajax_url+"?action=save_agent_label",
+            data: $('#agent_frm'+data_id+' :input').serialize()+"&policy_id="+policy_id+"&data_id="+data_id+"&agent_id="+agent_id+"&notes="+notes, 
+            success: function(response) {
+                var response_json = $.parseJSON(response);
+                if(parseInt(response_json.sucess) ==1){
+                   
+                  
+                }else{
+                   alert("Failed to  save agent label data"); 
+               }
+
+
+
+           },
+       });
+        
+
+
+
+    }else{
+        alert("Policy id or Agent id not found.");
+    }
+
+    
+
+
+    return false;
+
+});
+
+
 
 //agent parent lavel data save
 function SubmitParentAgentData(data_id,policy_id,notes,agent_id) {

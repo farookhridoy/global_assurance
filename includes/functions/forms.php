@@ -900,20 +900,20 @@ function getAgentData($policy_id,$level){
     $agentLists = array();
     if($policy_id && $level){
         
-      $sql="SELECT agent_commissions.commission,
-      agent_commissions.sys_nb,
-      agent_commissions.nb,
-      agent_commissions.sys_rn,
-      agent_commissions.rn,
-      agent_commissions.pay_by,
-      agent_commissions.notes, 
-      agents.name,
-      agents.lastname,
-      agents.id as agent_id,
-      agents.level,
-      FROM agent_commissions
-      INNER JOIN agents ON agent_commissions.level_id=agents.level_id
-      WHERE agent_commissions.policy_id='$policy_id' AND agents.level='$level'";
+      $sql="SELECT `agents`.`id`,
+      `agents`.`name`,
+      `agents`.`lastname`,
+      `agents`.`level`,
+      `agent_commissions`.`notes`,
+      `agent_commissions`.`commission`,
+      `agent_commissions`.sys_nb,
+      `agent_commissions`.`nb`,
+      `agent_commissions`.`sys_rn`,
+      `agent_commissions`.`rn`,
+      `agent_commissions`.`pay_by`
+      FROM `agent_commissions`
+      INNER JOIN `agents` ON `agent_commissions`.`level_id` = agents.`level`
+      WHERE `agent_commissions`.`policy_id`='$policy_id' AND `agents`.`level`='$level' GROUP BY `agents`.`id` ";
       $agentLists = $db->select($sql);
     }
     return $agentLists;
@@ -924,23 +924,35 @@ function getSingleAgentCommission($agent_id,$level,$policy_id){
     $agent = array();
     if($policy_id && $level && $agent_id){
         
-      $sql="SELECT agent_commissions.commission,
-      agent_commissions.sys_nb,
-      agent_commissions.nb,
-      agent_commissions.sys_rn,
-      agent_commissions.rn,
-      agent_commissions.pay_by,
-      agent_commissions.notes, 
-      agents.name,
-      agents.lastname,
-      agents.id,
-      agents.level
-      FROM agent_commissions
-      INNER JOIN agents ON agent_commissions.agent_id=agents.id
-      WHERE agent_commissions.policy_id='$policy_id' AND agents.level='$level' AND agent_commissions.agent_id='$agent_id'";
+      $sql="SELECT
+      `agents`.`id`,
+      `agents`.`name`,
+      `agents`.`lastname`,
+      `agents`.`level`,
+      `agent_commissions`.`notes`,
+      `agent_commissions`.`commission`,
+      `agent_commissions`.sys_nb,
+      `agent_commissions`.`nb`,
+      `agent_commissions`.`sys_rn`,
+      `agent_commissions`.`rn`,
+      `agent_commissions`.`pay_by`
+      FROM `agent_commissions`
+      INNER JOIN `agents` ON `agent_commissions`.`agent_id` = agents.`id`
+      WHERE `agent_commissions`.`policy_id`='$policy_id' AND `agents`.`level`='$level' AND `agent_commissions`.`agent_id` ='$agent_id'";
       $agent = $db->select_single($sql);
+
+      if (!empty($agent)) {
+          
+        $agent2= $agent;
+
+      }else{
+
+        $sql="SELECT * FROM `agents` WHERE id='$agent_id' AND LEVEL='$level'";
+        $agent2 = $db->select_single($sql);
+      }
+
     }
-    return $agent;
+    return $agent2;
 }
 
 function getSingleAdmin($admin_id){

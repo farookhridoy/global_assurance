@@ -437,3 +437,7 @@ a.form-control {
 	display: inline-block;
 	vertical-align: middle;
 }
+
+.disabled:disabled {
+  background: #ccc;
+}

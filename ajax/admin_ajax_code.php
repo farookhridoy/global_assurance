@@ -28,25 +28,24 @@ switch($action)
         $agentLevel = trim($_POST['agent_level']);
         $policy_id = trim($_POST['policy_id']);
         $agentLevelSub = $agentLevel + 1;
-        
-        $checkAgentEditData=getSingleAgentCommission($agentID,$agentLevel,$policy_id);
 
+        //echo $agentID;        
+        $checkAgentEditData=getSingleAgentCommission($agentID,$agentLevel,$policy_id);
+        //print_r($checkAgentEditData);
         if ($checkAgentEditData) {
 
             $agentInfo = $checkAgentEditData;
 
         }else{
-
-            $agentInfo = getSingleAgent($agentID);
-
-        }
-
+          $agentInfo = getSingleAgent($agentID);
+       }
+       //print_r($agentInfo);
         $agentSub = getAgentLists($agentType,$agentLevelSub,$agentID);
         
         if($agentInfo){
-        $data_sucess['sucess'] = 1;
-        $data_sucess['agent_data'] = $agentInfo;
-        $data_sucess['agent_sub'] = $agentSub;
+          $data_sucess['sucess'] = 1;
+          $data_sucess['agent_data'] = $agentInfo;
+          //$data_sucess['agent_sub'] = $agentSub;
         }else{
            $data_sucess['sucess'] = 0; 
         }

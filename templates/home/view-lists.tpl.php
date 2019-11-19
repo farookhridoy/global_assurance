@@ -56,7 +56,7 @@ $serial++;
 if(is_array($data_input)){
 $data_counter = 0;
 
-$start = $row['date_added']." 9:30 am";
+$start = $row['date_added']." 9:00 am";
 $data_time = strtotime($start);
 foreach($data_input as $key => $value){
     if($data_counter>= 9)

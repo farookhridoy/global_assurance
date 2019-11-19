@@ -68,7 +68,7 @@ if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 						$sql = "INSERT INTO `payments`(`id_policy`,`id_pay_cycle`,`amount`,`agent_1_discount`, `agent_2_discount`, `agent_3_discount`, `agent_4_discount`, `agent_5_discount`,`date_paid`,`action`,`id_pay_type`,`fee`,`id_discount`,`id_user`,`date_due`,`locked`,`type`,`details`,`paid`,`date_created`,
 						`receipt_pay`,`receipt_type`,`receipt_note`) VALUES ('".trim($policyInfo['id'])."','".trim($policyInfo['idpaycycle'])."','".strval($row[15])."','0.00','0.00','0.00','0.00','0.00','".trim($paid_date)."','".trim($status)."','1','".trim($policyInfo['fee'])."','','".trim($user_id)."','".trim($due_date)."','0','".$type."','".trim($row[21])."','0','','".trim($row[10])."','".trim($row[7]).'-'.trim($row[9])."','".trim($row[21])."')";
 
-						$_SESSION["message"]='Hartland record created successfully from CSV/XLSX file.';
+						$_SESSION["message"]='Heartland record created successfully from CSV/XLSX file.';
 					}
 				}else{
 					$_SESSION["error"]='Please upload "Heartland.xlsx" not '.$_FILES["fileToUpload"]["name"];
