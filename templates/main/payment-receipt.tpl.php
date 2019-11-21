@@ -19,6 +19,7 @@
   }
 
   $policyInfo = getSinglePolicy($payment_info['id_policy']);
+  $singleReceiptInfo=getsingleInfoReceiptLists($payment_info['id_policy']);
 
 ?>
 
@@ -87,11 +88,11 @@
         <td colspan="10">
           <table width="100%" border="0" cellpadding="0" cellspacing="0">
             <tbody>
-              <tr bgcolor="#000">
-                <td style="color: #fff;padding:8px 8px;font-size: 13px;">Insured</td>
-                <td style="color: #fff;padding:8px 8px;font-size: 13px;">Policy Number</td>
-                <td style="color: #fff;padding:8px 8px;font-size: 13px;">Payment Cyde</td>
-                <td style="color: #fff;padding:8px 8px;font-size: 13px;">Amount</td>
+              <tr>
+                <td style="color: black;padding:8px 8px;font-size: 13px; border: solid 1px;">Insured</td>
+                <td style="color: black;padding:8px 8px;font-size: 13px; border: solid 1px;">Policy Number</td>
+                <td style="color: black;padding:8px 8px;font-size: 13px; border: solid 1px;">Payment Cyde</td>
+                <td style="color: black;padding:8px 8px;font-size: 13px; border: solid 1px;">Amount</td>
               </tr>
               <tr>
                 <td style="color: #000;padding:8px 8px;font-size: 12px;border-left: solid 1px #ccc;"><?php echo getHealthPrimaryInsuredText($payment_info['id_policy']); ?></td>
@@ -120,12 +121,12 @@
               <tr style="background: #fff">
                 <td align="left" colspan="2" style="padding:10px 10px;font-size: 15px; border-top: solid 1px #eee;">
                   <strong>Payment made by:</strong><br>
-                  <span style="font-size: 14px;"><?=$payment_info['receipt_pay']?><br>
-                  <?=$payment_info['receipt_type']?></span>
+                  <span style="font-size: 14px;"><?= $payment_info['receipt_pay']!=''?$payment_info['receipt_pay'] : trim($singleReceiptInfo['receipt_pay']) ?><br>
+                  <?= $payment_info['receipt_type']!=''?$payment_info['receipt_type'] : trim($singleReceiptInfo['receipt_type']) ?></span>
                 </td>
                 <td align="left" colspan="3" style="padding:10px 10px;font-size: 15px; border-top: solid 1px #eee;">
                   <strong>Notes:</strong><br>
-                  <span style="font-size: 14px;"><?=$payment_info['receipt_note']?></span>
+                  <span style="font-size: 14px;"><?= $payment_info['receipt_note']!=''?$payment_info['receipt_note'] : trim($singleReceiptInfo['receipt_note']) ?></span>
                 </td>
               </tr>
               <tr style="background: #fff">

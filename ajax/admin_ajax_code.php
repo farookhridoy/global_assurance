@@ -612,7 +612,42 @@ switch($action)
                 $data_sucess['sucess'] = 1;
             } //end policy status due date and notes update
 
-          }else{
+            if ($receipt_pay && $receipt_type && $receipt_note) {
+
+                $p_id = $r_db_data['id_policy'] = trim($_POST['policy_id']);
+                $receipt_pay = $r_db_data['receipt_pay'] = trim($_POST['receipt_pay']);
+                $receipt_type = $r_db_data['receipt_type'] = trim($_POST['receipt_type']);
+                $receipt_note = $r_db_data['receipt_note'] = trim($_POST['receipt_note']);
+
+                $sql="SELECT * FROM `policy_info_receipt` WHERE `id_policy`='$policy_id'";
+                $checkdata=$db->select_single($sql);
+
+                if ($checkdata !=null){
+                    $sql = 'UPDATE policy_info_receipt SET ';
+                }
+                else {
+                    $sql = 'INSERT INTO policy_info_receipt SET ';
+                }
+                foreach($r_db_data as $key => $value){
+
+                   $sql .=  $key.'="'.$value.'",';
+               }
+               $sql = rtrim($sql,",");
+
+               if ($checkdata !=null){
+                $sql .= 'WHERE  id_policy="'.$policy_id.'" ';
+            }
+            if ($checkdata !=null){
+                $stats = $db->edit($sql);
+            }
+            else{
+
+                $checkdata = $db->insert($sql);
+            } 
+             $data_sucess['sucess'] = 1;
+        }
+
+        }else{
            $data_sucess['sucess'] = 0; 
          }
 

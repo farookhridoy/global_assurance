@@ -260,7 +260,8 @@ function loadCoverages(curr_plan)
                     $("#agent_level"+curr_ae_data_id+"_notes").val("");
                    }
                  
-                
+                  newbalance(curr_ae_data_id);
+                  renewal(curr_ae_data_id);
                   
                 }
                 else

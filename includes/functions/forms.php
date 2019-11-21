@@ -858,6 +858,39 @@ function createNewAgentLabel($db_data,$agent_id,$policy_id,$data_id){
             $getdata = $db->insert($sql);
     }
 
+    if ($getdata) {
+           if ($agent_id && $data_id) {
+
+               $sql2 = 'UPDATE agent_commissions SET ';
+
+               foreach($db_data as $key => $value){
+                    if ($key=='notes') {
+
+                        $sql2 .=  $key.'="'.$value.'",';
+                    }
+                }
+
+            $sql2 = rtrim($sql2,",");
+            $sql2 .= 'WHERE agent_id="'.$agent_id.'" and level_id="'.$data_id.'" ';
+            $data = $db->edit($sql2);
+
+            $sql1 = 'UPDATE agents SET ';
+
+            foreach($db_data as $key => $value){
+                if ($key=='notes') {
+
+                    $sql1 .=  $key.'="'.$value.'",';
+                }
+            }
+            $sql1 = rtrim($sql1,",");
+            $sql1 .= 'WHERE id="'.$agent_id.'" and level="'.$data_id.'" ';
+            $data1 = $db->edit($sql1);
+                
+            
+        }
+    } //end get data
+   
+
  return $getdata; 
 }
 
@@ -999,5 +1032,14 @@ function createNewAgentNotes($policy_id,$note_1,$note_2,$note_3,$note_4,$note_5,
         }
         return $output;
     }
+function getsingleInfoReceiptLists($id){
+    
+    global $db;
+    $data = array();
+    $sql="SELECT * FROM policy_info_receipt where id_policy='".$id."'";
+    $data = $db->select_single($sql);
+    
+    return $data;
+}
 //end file upload
 ?>
