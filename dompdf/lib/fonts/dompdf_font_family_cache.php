@@ -77,31 +77,10 @@
     'italic' => $fontDir . '\DejaVuSerif-Italic',
     'normal' => $fontDir . '\DejaVuSerif',
   ),
-  'open sans' => array(
-    'normal' => $fontDir . '\67989a9b5ddbaaf35ab9f648d721f377',
+  'monda' => array(
+    'normal' => $fontDir . '\dac8e371ef5e6636a96e54af8b79920b',
   ),
-  'flexslider-icon' => array(
-    'normal' => $fontDir . '/80b4df05b509eafee55006a9b22a435e',
-  ),
-  'fontawesome' => array(
-    'normal' => $fontDir . '/3076479f2a85158dbcc245d48cf4cb17',
-  ),
-  'cerapro-regular' => array(
-    'normal' => $fontDir . '/7c8583184622e363ff46a7221e5e307a',
-  ),
-  'cerapro-medium' => array(
-    'normal' => $fontDir . '/18caaa872bb84395f6837ca55662bdbf',
-  ),
-  'cerapro-bold' => array(
-    'normal' => $fontDir . '/371fd54330b6f4c53422283bf6288cb2',
-  ),
-  'cerapro-light' => array(
-    'normal' => $fontDir . '/c16701e6006b388637a49fab4ac4bd8f',
-  ),
-  'cerapro-italic' => array(
-    'normal' => $fontDir . '/ab19d45dfdeb18fe4073a0c8b5c11fff',
-  ),
-  'revicons' => array(
-    'normal' => $fontDir . '/85098bcaf38f82113eacf81276a9f285',
+  'doppio one' => array(
+    'normal' => $fontDir . '\2d5a066d68f1098d0e49b2b003802c2f',
   ),
 ) ?>

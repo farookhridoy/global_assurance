@@ -10,7 +10,6 @@
 namespace Dompdf\Renderer;
 
 use Dompdf\Adapter\CPDF;
-use Dompdf\FontMetrics;
 use Dompdf\Frame;
 
 /**
@@ -138,7 +137,7 @@ class Text extends AbstractRenderer
 
             switch ($text_deco) {
                 default:
-                    continue;
+                    continue 2;
 
                 case "underline":
                     $deco_y += $base - $descent + $underline_offset + $line_thickness / 2;

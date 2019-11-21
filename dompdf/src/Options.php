@@ -84,7 +84,7 @@ class Options
      * The default paper size.
      *
      * North America standard is "letter"; other countries generally "a4"
-     * @see Dompdf\Adapter\CPDF::PAPER_SIZES for valid sizes
+     * @see \Dompdf\Adapter\CPDF::PAPER_SIZES for valid sizes
      *
      * @var string
      */
@@ -129,7 +129,7 @@ class Options
      *
      * @var int
      */
-    private $dpi = 96;
+    private $dpi = 150;
 
     /**
      * A ratio applied to the fonts height to be more like browsers' line height
@@ -157,7 +157,7 @@ class Options
      *
      * @var bool
      */
-    private $isPhpEnabled = false;
+    private $isPhpEnabled = true;
 
     /**
      * Enable remote file access
@@ -179,7 +179,7 @@ class Options
      *
      * @var bool
      */
-    private $isRemoteEnabled = false;
+    private $isRemoteEnabled = true;
 
     /**
      * Enable inline Javascript
