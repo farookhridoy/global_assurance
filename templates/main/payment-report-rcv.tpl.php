@@ -18,13 +18,13 @@ if (isset($_POST['print_receipt_btn'])) {
     $sql="SELECT * FROM payments WHERE  id IN";
     $sql .= '(';
     foreach($_POST['payment_id'] as $value){
-       $sql .= ''.$value.',';
+     $sql .= ''.$value.',';
    }
    $sql = rtrim($sql,",");
    $sql .= ')';
    $paymentsData = $db->select($sql);
 
-}else{
+ }else{
   $_SESSION["error"]='Please select payment receipts.';
   header('Location: '.THE_URL."main/receipts/");
 }
@@ -37,61 +37,60 @@ if (isset($_POST['print_receipt_btn'])) {
 <?php 
 
 if(count($paymentsData)>0){
-    $count=0;
-    foreach($paymentsData as $payments_key => $payment_info){
-        $payCycle_name = getPayCyclebyid($payment_info['id_pay_cycle']);
-        $policyInfo = getSinglePolicy($payment_info['id_policy']);
-        $singleReceiptInfo=getsingleInfoReceiptLists($payment_info['id_policy']);
-        if ($count==$payments_key) {
+  $count=0;
+  foreach($paymentsData as $payments_key => $payment_info){
+    $payCycle_name = getPayCyclebyid($payment_info['id_pay_cycle']);
+    $policyInfo = getSinglePolicy($payment_info['id_policy']);
+    $singleReceiptInfo=getsingleInfoReceiptLists($payment_info['id_policy']);
+    if ($count==$payments_key) {
 
-        }else{
-            $style="style='margin-top:10px'";
-        }
-        ?>
-        <html>
-        <head>
-          <title>Payment Receipt</title>
-          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-          <meta name="robots" content="noindex"/>
-          <meta name="robots" content="nofollow"/>
+    }else{
+      $style="style='margin-top:10px'";
+    }
+    ?>
+    
+    <title>Payment Receipt</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    
 
-          <link rel="shortcut icon" type="image/png" href="<?php echo MEDIA_IMAGES; ?>favicon.ico"/>
-          <link rel="shortcut icon" type="image/png" href="<?php echo MEDIA_IMAGES; ?>favicon.png"/>
+    <link rel="shortcut icon" type="image/png" href="<?php echo MEDIA_IMAGES; ?>favicon.ico"/>
+    <link rel="shortcut icon" type="image/png" href="<?php echo MEDIA_IMAGES; ?>favicon.png"/>
 
-          <?php 
-          $browser = new Wolfcast\BrowserDetection();
-          if ($browser->getName() == Wolfcast\BrowserDetection::BROWSER_EDGE) {
-            ?>
-            <link rel="stylesheet" type="text/css" href="<?php echo CSS_URL; ?>bootstrap.min.css"/>
-        <?php } ?>
-
-        
-        <style type="text/css" media="screen">
-            * {
-              box-sizing: border-box;
-              -moz-box-sizing: border-box;
-          }
-          .page {
-            width: 25cm;
-            min-height: 29.7cm;
-            padding: 1cm;
-            margin: 1cm auto;
-
-            border-radius: 5px;
-            background: white;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
+    <?php 
+    $browser = new Wolfcast\BrowserDetection();
+    if ($browser->getName() == Wolfcast\BrowserDetection::BROWSER_EDGE) {
+      ?>
+      <link rel="stylesheet" type="text/css" href="<?php echo CSS_URL; ?>bootstrap.min.css"/>
+    <?php } ?>
 
 
-        @page {
-          size: A4;
-          height: 1000px; 
-          margin: 1cm auto;
-          padding: 1cm;
-          border-radius: 5px;
-          background: white;
-          box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    <style type="text/css" media="screen">
+      * {
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+      }
+      .page {
+        width: 25cm;
+        min-height: 25.7cm;
+        padding: 1cm;
+        margin: 1cm auto;
+
+        border-radius: 5px;
+        background: white;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      }
+
+
+      @page {
+        size: A4;
+        height: 800px;
+        margin: 1cm auto;
+        padding: 1cm;
+        border-radius: 5px;
+        background: white;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 200px;
       }
 
       @media print {
@@ -104,130 +103,128 @@ if(count($paymentsData)>0){
           background: initial;
           page-break-after: always;
 
+        }
       }
-  }
-</style>
+    </style>
 
-</head>
-<body>
+    
+    
     <div class="page" <?=$style?>>
       <div class="subpage">
-        <table align="center" width="800" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="font-family: 'Montserrat', sans-serif;font-size: 11px; margin-bottom: 495px;">
-            <tbody>
-                <tr style="background-color: #fff;">
-                  <th colspan="9" align="right" style="padding: 10px;color: #000; font-size: 20px;text-transform: capitalize;font-family: 'Montserrat', sans-serif;">
-                  </th>
-              </tr>
-              <tr rowspan="3" style="background-color: #fff;">
-                  <th colspan="6" valign="top" align="left" style="color: #000; font-size: 20px;text-transform: capitalize;font-family: 'Montserrat', sans-serif;">
-                    <table width="100%" border="0" cellpadding="0" cellspacing="0">
-                      <tr>
-                        <td><img src="<?php echo MEDIA_IMAGES; ?>claria-logo.png" width="150" /></td>
+        <table align="center" width="750" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="font-family: 'Montserrat', sans-serif;font-size: 11px;">
+         <tr>
+          <th colspan="2" align="center"><img src="<?php echo MEDIA_IMAGES; ?>commission-paid-header.jpg" alt="image"/></th>
+        </tr>
+        <tr style="background-color: #fff;">
+          <th colspan="10" valign="top" align="left" style="color: #000; font-size: 20px;text-transform: capitalize;font-family: 'Montserrat', sans-serif;">
+            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+              <tbody>
+                <tr>
+                  <td align="left">
+                    <br><br>
+                    <span style="font-size: 19px;"><strong>PAYMENT RECEIPT</strong></span><br>
+                    <span style="font-size: 16px; font-weight: 500; padding-top: 5px;">Federal Tax ID #650771090</span>
+                    <br><br><br>
+                  </td>
+                  <td align="right"><strong style="font-size: 16px;">Date:&nbsp;</strong>
+                    <span style="font-size: 14px; font-weight: 500"><?php echo date('d-M-y',strtotime($payment_info['date_paid']));?></span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </th>
+
+          </tr>
+          <tr>
+            <td colspan="10">
+              <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tbody>
+                  <tr style="background-color: lightgray;">
+                    <td style="color: black;padding:8px 8px;font-size: 13px;font-weight: 800;border: 1px solid darkgray;">Insured</td>
+                    <td style="color: black;padding:8px 8px;font-size: 13px;font-weight: 800;border: 1px solid darkgray;">Policy Number</td>
+                    <td style="color: black;padding:8px 8px;font-size: 13px;font-weight: 800;border: 1px solid darkgray;">Payment Cyde</td>
+                    <td style="color: black;padding:8px 8px;font-size: 13px;font-weight: 800;border: 1px solid darkgray;">Amount</td>
+
+                    <tr>
+                      <td style="color: #000;padding:8px 8px;font-size: 12px;font-weight: 600;border-left: solid 1px #ccc;"><?php echo getHealthPrimaryInsuredText($payment_info['id_policy']); ?></td>
+                      <td style="color: #000;padding:8px 8px;font-size: 12px;font-weight: 600;border-left: solid 1px #ccc;border-bottom: solid 1px #ccc;" rowspan="3"><?php echo getPolicyNumberById($payment_info['id_policy']); ?></td>
+                      <td style="color: #000;padding:8px 8px;font-size: 12px;font-weight: 600;border-left: solid 1px #ccc;border-bottom: solid 1px #ccc;"><?php echo $payCycle_name['paycycle']; ?></td>
+                      <td style="color: #000;padding:8px 8px;font-size: 12px;font-weight: 600;border-left: solid 1px #ccc;border-bottom: solid 1px #ccc;border-right: solid 1px #ccc;">$<?php echo number_format($payment_info['amount'],2);?></td>
                     </tr>
                     <tr>
-                        <td><br><br>
-                          <span style="font-size: 19px;"><strong>PAYMENT RECEIPT:</strong></span><br><br>
-                      </td>
-                  </tr>
-              </table>
-          </th>
-          <th colspan="4" style="color: #000; font-size: 20px;text-transform: capitalize;font-family: 'Montserrat', sans-serif;">
-            <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="font-family: 'Montserrat', sans-serif;">
-              <tr style="background: #f3f3f3;">
-                <td colspan="2" style="padding:6px 15px;font-size: 13px;color: #000;"><strong>Paid Date:&nbsp;</strong></td>
-                <td align="right" colspan="2" style="color: #000;padding:6px 15px;font-size: 13px;"><?php echo dateFormFormat($payment_info['date_paid']);?></td>
-            </tr>
-            <tr style="background: #f3f3f3;">
-                <td colspan="2" style="padding:6px 15px;font-size: 13px;color: #000;"><strong>Due Date:&nbsp;</strong></td>
-                <td align="right" colspan="2" style="color: #000;padding:6px 15px;font-size: 13px;"><?php echo dateFormFormat($payment_info['date_due']);?></td>
-            </tr>
-        </table>
-    </th>
-</tr>
-<tr>
-  <td colspan="10">
-    <table width="100%" border="0" cellpadding="0" cellspacing="0">
-      <tbody>
-        <tr >
-          <td style="color: black;padding:8px 8px;font-size: 13px;font-weight: 600;border: solid 1px #ccc;">Insured</td>
-          <td style="color: black;padding:8px 8px;font-size: 13px;font-weight: 600;border: solid 1px #ccc;">Policy Number</td>
-          <td style="color: black;padding:8px 8px;font-size: 13px;font-weight: 600;border: solid 1px #ccc;">Payment Cyde</td>
-          <td style="color: black;padding:8px 8px;font-size: 13px;font-weight: 600;border: solid 1px #ccc;">Amount</td>
-      </tr>
-      <tr>
-          <td style="color: #000;padding:8px 8px;font-size: 12px;border-left: solid 1px #ccc;"><?php echo getHealthPrimaryInsuredText($payment_info['id_policy']); ?></td>
-          <td style="color: #000;padding:8px 8px;font-size: 12px;border-left: solid 1px #ccc;border-bottom: solid 1px #ccc;" rowspan="3"><?php echo getPolicyNumberById($payment_info['id_policy']); ?></td>
-          <td style="color: #000;padding:8px 8px;font-size: 12px;border-left: solid 1px #ccc;border-bottom: solid 1px #ccc;">
-            <?php echo $payCycle_name['paycycle']; ?>
-        </td>
-        <td style="color: #000;padding:8px 8px;font-size: 12px;border-left: solid 1px #ccc;border-bottom: solid 1px #ccc;border-right: solid 1px #ccc;">$<?php echo number_format($payment_info['amount'],2);?></td>
-    </tr>
-    <tr>
-      <td style="color: #000;padding:8px 8px;font-size: 12px;border-left: solid 1px #ccc;"></td>
-      <td style="color: #000;padding:8px 8px;font-size: 12px;border-left: solid 1px #ccc;"><strong>Policy Fee</strong></td>
-      <td style="color: #000;padding:8px 8px;font-size: 12px;border-left: solid 1px #ccc;border-bottom: solid 1px #ccc;border-right: solid 1px #ccc;">$<?php echo number_format($payment_info['fee'],2); ?></td>
-  </tr>
-  <tr>
-      <td style="color: #000;padding:8px 8px;font-size: 12px;border-left: solid 1px #ccc;border-bottom: solid 1px #ccc;"></td>
-      <td style="color: #000;padding:8px 8px;font-size: 12px;border-left: solid 1px #ccc;border-bottom: solid 1px #ccc;"><strong>Total</strong></td>
-      <td style="color: #000;padding:8px 8px;font-size: 12px;border-left: solid 1px #ccc;border-bottom: solid 1px #ccc;border-right: solid 1px #ccc;">$<?php echo number_format($payment_info['amount']+$payment_info['fee'],2);?></td>
-  </tr>
-  <tr style="background: #fff">
-      <td colspan="5"><br><br><br></td>
-  </tr>
-  <tr style="background: #fff">
-      <td align="left" colspan="2" style="padding:10px 10px;font-size: 15px; border-top: solid 1px #eee;">
-        <strong>Payment made by:</strong><br>
-        <span style="font-size: 14px;"><?= $payment_info['receipt_pay']!=''?$payment_info['receipt_pay'] : trim($singleReceiptInfo['receipt_pay']) ?><br>
-           <?= $payment_info['receipt_type']!=''?$payment_info['receipt_type'] : trim($singleReceiptInfo['receipt_type']) ?></span>
-      </td>
-      <td align="left" colspan="3" style="padding:10px 10px;font-size: 15px; border-top: solid 1px #eee;">
-          <strong>Notes:</strong><br>
-          <span style="font-size: 14px;"><?= $payment_info['receipt_note']!=''?$payment_info['receipt_note'] : trim($singleReceiptInfo['receipt_note']) ?></span>
-      </td>
-  </tr>
-  <tr style="background: #fff">
-    <td colspan="5"><br>
-      <br></td>
-  </tr>
-  <tr><td colspan="5"><br><br><br><br></td></tr>
-  <tr>
-      <td colspan="10">
-        <table width="100%" border="0" cellpadding="0" cellspacing="0">
-          <tr>
-            <td colspan="4">
-              <table width="100%" border="0" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td align="center" width="50%" style="padding: 0; font-size: 14px;">
-                    <span style="width: 250px; border-top: solid 1px #999; padding-top: 5px; display: block;">Authorized Signature</span>
-                </td>
-                <td align="center" width="50%" style="padding: 0; font-size: 14px;">
-                    <span style="width: 250px; border-top: solid 1px #999; padding-top: 5px; display: block;">Date</span>
-                </td>
-            </tr>
-        </table>
-    </td>
-</tr>
-</table>
-</td>
-</tr>
-<tr style="background: #fff">
-  <td colspan="5">
-    <br><br><br>
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</body>
+                      <td style="color: #000;padding:8px 8px;font-size: 12px;border-left: solid 1px #ccc;"></td>
+                      <td style="color: #000;padding:8px 8px;font-size: 12px;border-left: solid 1px #ccc;"><strong>Policy Fee</strong></td>
+                      <td style="color: #000;padding:8px 8px;font-size: 12px; font-weight: 600 ;border-left: solid 1px #ccc;border-bottom: solid 1px #ccc;border-right: solid 1px #ccc;">$<?php echo number_format($payment_info['fee'],2); ?></td>
+                    </tr>
+                    <tr>
+                      <td style="color: #000;padding:8px 8px;font-size: 12px;border-left: solid 1px #ccc;border-bottom: solid 1px #ccc;"></td>
+                      <td style="color: #000;padding:8px 8px;font-size: 12px;border-left: solid 1px #ccc;border-bottom: solid 1px #ccc;"><strong>Total</strong></td>
+                      <td style="color: #000;padding:8px 8px;font-size: 12px;font-weight: 600 ;border-left: solid 1px #ccc;border-bottom: solid 1px #ccc;border-right: solid 1px #ccc;">$<?php echo number_format($payment_info['amount']+$payment_info['fee'],2);?></td>
+                    </tr>
 
-</html>
-<?php 
+                    <tr>
+                      <td colspan="5"><br><br><br></td>
+                    </tr>
+                    <tr style="background: #fff">
+                      <td align="left" colspan="2" style="padding:10px 10px;font-size: 15px; ">
+                        <strong>Payment made by:</strong><br>
+                        <span style="font-size: 14px;font-weight: 500"><?= $payment_info['receipt_pay']!=''?$payment_info['receipt_pay'] : trim($singleReceiptInfo['receipt_pay']) ?><br>
+                          <?= $payment_info['receipt_type']!=''?$payment_info['receipt_type'] : trim($singleReceiptInfo['receipt_type']) ?></span>
+                        </td>
+                        <td align="left" colspan="3" style="padding:10px 10px;font-size: 15px; ">
+                          <strong>Notes:</strong><br>
+                          <span style="font-size: 14px;font-weight: 500"><?= $payment_info['receipt_note']!=''?$payment_info['receipt_note'] : trim($singleReceiptInfo['receipt_note']) ?></span>
+                        </td>
+                      </tr>
+                      <tr style="background: #fff">
+                        <td colspan="5"><br>
+                          <img src="<?php echo MEDIA_IMAGES; ?>leylasignature.png" alt="signature"/>
+
+                          <br></td>
+                        </tr>
+
+
+
+                        <tr>
+                          <td colspan="10" align="left">
+                            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                              <tr>
+                                <td colspan="4" align="left">
+                                  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                      <td align="left" width="50%" style="padding: 0; font-size: 14px;">
+                                        <span style="width: 250px; border-top: solid 1px #999; padding-top: 5px; display: block;">
+                                          <center><strong style="color: #1e3c87">Leyla Viera</strong></center>
+                                          <center style="color: #c69308">Accounting Analyst</center>
+                                        </span>
+                                      </td>
+
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+
+                        <tr style="background: #fff">
+                          <td colspan="5"><br><br><br></td>
+                        </tr>
+
+
+
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <th colspan="4" align="center"><img src="<?php echo MEDIA_IMAGES; ?>commission-paid-footer.jpg" alt="image"/></th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <?php 
           } //end foreach
-      }
-      ?>
+        }
+        ?>
