@@ -66,7 +66,7 @@ if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 						$type= "Payment";
 
 						$sql = "INSERT INTO `payments`(`id_policy`,`id_pay_cycle`,`amount`,`agent_1_discount`, `agent_2_discount`, `agent_3_discount`, `agent_4_discount`, `agent_5_discount`,`date_paid`,`action`,`id_pay_type`,`fee`,`id_discount`,`id_user`,`date_due`,`locked`,`type`,`details`,`paid`,`date_created`,
-						`receipt_pay`,`receipt_type`,`receipt_note`) VALUES ('".trim($policyInfo['id'])."','".trim($policyInfo['idpaycycle'])."','".strval($row[15])."','0.00','0.00','0.00','0.00','0.00','".trim($paid_date)."','".trim($status)."','1','".trim($policyInfo['fee'])."','','".trim($user_id)."','".trim($due_date)."','0','".$type."','".trim($row[21])."','0','','".preg_replace('/[^a-zA-Z0-9_ -]/s', '', $row[10])."','".preg_replace('/[^a-zA-Z0-9_ -]/s', '', $row[7]).'-'.preg_replace('/[^a-zA-Z0-9_ -]/s', '', $row[9])."','".trim($row[21])."')";
+						`receipt_pay`,`receipt_type`,`receipt_note`) VALUES ('".trim($policyInfo['id'])."','".trim($policyInfo['idpaycycle'])."','".strval($row[15])."','0.00','0.00','0.00','0.00','0.00','".trim($paid_date)."','".trim($status)."','1','".trim($policyInfo['fee'])."','','".trim($user_id)."','".trim($due_date)."','0','".$type."','".trim($row[21])."','0','','".addslashes($row[10])."','".addslashes($row[7]).'-'.addslashes($row[9])."','".addslashes($row[21])."')";
 
 						$_SESSION["message"]='Heartland record created successfully from CSV/XLSX file.';
 					}
@@ -108,7 +108,7 @@ if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 
 
 						$sql = "INSERT INTO `payments`(`id_policy`,`id_pay_cycle`,`amount`,`agent_1_discount`, `agent_2_discount`, `agent_3_discount`, `agent_4_discount`, `agent_5_discount`,`date_paid`,`action`,`id_pay_type`,`fee`,`id_discount`,`id_user`,`date_due`,`locked`,`type`,`details`,`paid`,`date_created`,
-						`receipt_pay`,`receipt_type`,`receipt_note`) VALUES ('".trim($policyInfo['id'])."','".trim($policyInfo['idpaycycle'])."','".strval($row[10])."','0.00','0.00','0.00','0.00','0.00','".trim($paid_date)."','".trim($status)."','1','".trim($policyInfo['fee'])."','','".trim($user_id)."','".trim($due_date)."','0','".$type."','','0','','".preg_replace('/[^a-zA-Z0-9_ -]/s', '', $row[14]).'-'.preg_replace('/[^a-zA-Z0-9_ -]/s', '', $row[15])."','".preg_replace('/[^a-zA-Z0-9_ -]/s', '', $row[11]).'-'.preg_replace('/[^a-zA-Z0-9_ -]/s', '', $row[6])."','".trim($row[9])."')";
+						`receipt_pay`,`receipt_type`,`receipt_note`) VALUES ('".trim($policyInfo['id'])."','".trim($policyInfo['idpaycycle'])."','".strval($row[10])."','0.00','0.00','0.00','0.00','0.00','".trim($paid_date)."','".trim($status)."','1','".trim($policyInfo['fee'])."','','".trim($user_id)."','".trim($due_date)."','0','".$type."','','0','','".addslashes($row[14]).'-'.addslashes($row[15])."','".addslashes($row[11]).'-'.addslashes($row[6])."','".addslashes($row[9])."')";
 
 						$_SESSION["message"]='Authorize record created successfully from CSV/XLSX file.';
 					}
