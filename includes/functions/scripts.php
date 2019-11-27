@@ -1430,33 +1430,7 @@ function calculate_premium_form_submit(){
     //window.location.href = window.location.href;              
     return false;
 }
-function remove_special_character($string) {
- 
-  $t = $string;
-  
-  $specChars = array(
-    ' ' => '-',    '!' => '',    '"' => '',
-    '#' => '',    '$' => '',    '%' => '',
-    '&amp;' => '',    '\'' => '',   '(' => '',
-    ')' => '',    '*' => '',    '+' => '',
-    ',' => '',    '₹' => '',    '.' => '',
-    '/-' => '',    ':' => '',    ';' => '',
-    '<' => '',    '=' => '',    '>' => '',
-    '?' => '',    '@' => '',    '[' => '',
-    '\\' => '',   ']' => '',    '^' => '',
-    '_' => '',    '`' => '',    '{' => '',
-    '|' => '',    '}' => '',    '~' => '',
-    '-----' => '-',    '----' => '-',    '---' => '-',
-    '/' => '',    '--' => '-',   '/_' => '-',   
-    
-    );
-  
-  foreach ($specChars as $k => $v) {
-    $t = str_replace($k, $v, $t);
-  }
-  
-  return $t;
-}
+
 function premium_inclusion_form_submit(){
     var length = $('#form_calculate_premium table tr.insured-data').length;
     $('#form_calculate_premium table tr.insured-data').each(function(index, element){

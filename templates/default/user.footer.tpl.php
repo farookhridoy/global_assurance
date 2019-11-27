@@ -4,8 +4,15 @@
 <script type="text/javascript" src="<?php echo JS_URL; ?>bootstrap.min.js"></script>
 <script type="text/javascript" src="<?php echo JS_URL; ?>jquery.mCustomScrollbar.concat.min.js"></script>
 <script type="text/javascript" src="<?php echo JS_URL; ?>pagescript.js"></script>
+<script type="text/javascript" src="<?php echo JS_URL; ?>select2.min.js"></script>
 
-
+<script type="text/javascript">
+	 $(document).ready(function () {
+	 	$('.mySelect2').select2({
+	 		width: "100%",
+	 	});
+    });
+</script>
 <?php global $datePicker, $footerFunctions; if(!empty($datePicker) && is_array($datePicker)){ ?>
 <link rel="stylesheet" href="<?php echo CSS_URL ?>datepicker/jquery-ui.css"/>
 <link rel="stylesheet" href="<?php echo CSS_URL ?>datepicker/style.css"/>
@@ -30,5 +37,6 @@ if(!empty($footerFunctions) && is_array($footerFunctions)){
  }
 }
 ?>
+
 </body>
 </html>

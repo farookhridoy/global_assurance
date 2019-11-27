@@ -53,8 +53,8 @@ $getData = $db->select_single($sql);*/
                     <div class="tabl_row" id="agent_frm1">
                       <div class="tabl_cell"> Agent Level 1 </div>
                       <div class="tabl_cell">                      
-                        <span class="form-select">
-                          <select class="form-control payment_policy_agents" name="agent_level1" id="agent_level1" data-id="1">
+                        <span >
+                          <select class="form-control payment_policy_agents mySelect2" name="agent_level1" id="agent_level1" data-id="1">
                             <option value="0"></option>
                             <?php 
 
@@ -112,8 +112,8 @@ $getData = $db->select_single($sql);*/
                   <div class="tabl_row" id="agent_frm2">
                     <div class="tabl_cell"> Agent Level 2 </div>
                     <div class="tabl_cell">                      
-                      <span class="form-select">
-                        <select class="form-control payment_policy_agents" name="agent_level2" id="agent_level2" data-id="2">
+                      <span >
+                        <select class="form-control payment_policy_agents mySelect2" name="agent_level2" id="agent_level2" data-id="2">
                           <option value="0"></option>
                           <?php 
 
@@ -174,8 +174,8 @@ $getData = $db->select_single($sql);*/
                 <div class="tabl_row" id="agent_frm3">
                   <div class="tabl_cell"> Agent Level 3 </div>
                   <div class="tabl_cell">                      
-                    <span class="form-select">
-                      <select class="form-control payment_policy_agents" name="agent_level3" id="agent_level3" data-id="3">
+                    <span >
+                      <select class="form-control payment_policy_agents mySelect2" name="agent_level3" id="agent_level3" data-id="3">
                         <option value="0"></option>
                         <?php 
 
@@ -229,8 +229,8 @@ $getData = $db->select_single($sql);*/
               <div class="tabl_row" id="agent_frm4">
                 <div class="tabl_cell"> Agent Level 4 </div>
                 <div class="tabl_cell">                      
-                  <span class="form-select">
-                    <select class="form-control payment_policy_agents" name="agent_level4" id="agent_level4" data-id="4">
+                  <span >
+                    <select class="form-control payment_policy_agents mySelect2" name="agent_level4" id="agent_level4" data-id="4">
                       <option value="0"></option>
                       <?php 
 
@@ -284,8 +284,8 @@ $getData = $db->select_single($sql);*/
             <div class="tabl_row" id="agent_frm5">
               <div class="tabl_cell"> Agent Level 5 </div>
               <div class="tabl_cell">                      
-                <span class="form-select">
-                  <select class="form-control payment_policy_agents" name="agent_level5" id="agent_level5" data-id="5" >
+                <span >
+                  <select class="form-control payment_policy_agents mySelect2" name="agent_level5" id="agent_level5" data-id="5" >
                     <option value="0"></option>
                     <?php 
 
@@ -419,4 +419,4 @@ $getData = $db->select_single($sql);*/
 </div>
 
 </div>
-</div><!-- sectionPanel_Right END -->
+</div>
