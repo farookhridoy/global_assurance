@@ -11,7 +11,6 @@ $(window).scroll(function(){
 });
 
 
-
 $(document).ready(function(){
   $('.userporthead_port').click( function(e) {
     e.preventDefault(); 
@@ -36,7 +35,6 @@ $(document).ready(function(){
   $('#contactinformations, #planDetails').css('min-height', paymentinfopaymentperiod)
 
 });
-
 
 $('.filteredCol button').click(function(){
   $(this).toggleClass('togglebtns');

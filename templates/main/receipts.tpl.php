@@ -21,21 +21,7 @@ if (isset($_GET['from_date']) && isset($_GET['to_date'])) {
 	$from_date=date("Y-m-d",strtotime(trim($_GET['from_date'])));
 	$to_date=date("Y-m-d",strtotime(trim($_GET['to_date'])));
 
-	$query = "SELECT COUNT(*) as total FROM payments WHERE date_due >= '".$from_date."' AND date_due <='".$to_date."'";
-	$paymentdata = $db->select($query);
-	foreach($paymentdata as $r_v){
-		$total_r = $r_v['total'];
-	}
-
-	$totalPages = ceil($total_r / $perPage);
-        $links = "";
-        for ($i = 1; $i <= $totalPages; $i++) {
-          $links .= ($i != $page ) 
-          ? "<li class='pagess'><a href='?page=".$i."'>".$i."</a></li> "
-          : "$page";
-        }
-
-    $sql="SELECT * FROM payments WHERE  date_due >= '".$from_date."' AND date_due <='".$to_date."' ORDER BY 'timestamp' LIMIT $startAt, $perPage";
+    $sql="SELECT * FROM payments WHERE  date_due >= '".$from_date."' AND date_due <='".$to_date."' ORDER BY 'timestamp' ";
 	$paymentsData = $db->select($sql);
 
 
@@ -189,21 +175,22 @@ if (isset($_GET['from_date']) && isset($_GET['to_date'])) {
 					</div>
 					<div class="clearfix"></div>
 					<!-- filtersColumn END -->
-					<div class="filtersColumn">
+							<div class="filtersColumn">
+								<div class="filtersColumn-left">
+									<div class="paginationcrum">
+										<ul>
+											<li class="first"><a href="?page=1"><i class="fas fa-backward"></i></a></li>
+											<li class="prev <?php if($page <= 1){ echo 'disabled'; } ?>"><a href="<?php if($page <= 1){ echo '#'; } else { echo "?page=".($page - 1); } ?>"><i class="fas fa-caret-left"></i></a></li>
+											<?php echo $links; ?>
+											<li class="next <?php if($page >= $totalPages){ echo 'disabled'; } ?>"><a href="<?php if($page >= $totalPages){ echo '#'; } else { echo "?page=".($page + 1); } ?>"><i class="fas fa-caret-right"></i></a></li>
+											<li class="last"><a href="?page=<?php echo $totalPages; ?>"><i class="fas fa-forward"></i></a></li>
+										</ul>
+									</div>
+								</div>
+							</div><!-- content_section_aside END -->
+				
 
-						<div class="filtersColumn-left">
-							<div class="paginationcrum">
-								<ul>
-									<li class="first"><a href="?page=1"><i class="fas fa-backward"></i></a></li>
-									<li class="prev <?php if($page <= 1){ echo 'disabled'; } ?>"><a href="<?php if($page <= 1){ echo '#'; } else { echo "?page=".($page - 1); } ?>"><i class="fas fa-caret-left"></i></a></li>
-									<?php echo $links; ?>
-									<li class="next <?php if($page >= $totalPages){ echo 'disabled'; } ?>"><a href="<?php if($page >= $totalPages){ echo '#'; } else { echo "?page=".($page + 1); } ?>"><i class="fas fa-caret-right"></i></a></li>
-									<li class="last"><a href="?page=<?php echo $totalPages; ?>"><i class="fas fa-forward"></i></a></li>
-								</ul>
-							</div>
-						</div>
-
-					</div><!-- content_section_aside END -->
+					
 				</form>
 			</div>
 		</div>
