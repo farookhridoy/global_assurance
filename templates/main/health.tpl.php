@@ -54,8 +54,8 @@ if($_REQUEST['pr']){
                             window.location = url;
                         }
                       </script>
-                      <div class="icongroup">
-                        <select class="form-control" onchange="redirectPolicy(this);">
+                      <div class="">
+                        <select class="form-control mySelect2" onchange="redirectPolicy(this);">
                           <option value="0">&nbsp;</option>
                           <?php $healthPolicies = getHealthPolicies(); if($healthPolicies){foreach($healthPolicies as $hp_key => $hp_value){echo '<option value="'. THE_URL.'main/health-edit/'.$hp_value['id'].'">'.$hp_value['policynumber'].'</option>';}} ?>
                         </select>
@@ -72,8 +72,8 @@ if($_REQUEST['pr']){
                             window.location = url;
                         }
                       </script>
-                      <div class="icongroup">
-                        <select class="form-control" onchange="redirectPolicy(this);">
+                      <div class="">
+                        <select class="form-control mySelect2" onchange="redirectPolicy(this);">
                           <option value="0">&nbsp;</option>                        
                           <?php $healthPolicies = getHealthPolicies(); if($healthPolicies){foreach($healthPolicies as $hp_key => $hp_value){echo '<option value="'. THE_URL.'main/payments-form/'.$hp_value['id'].'">'.$hp_value['policynumber'].'</option>';}} ?>
                         </select>

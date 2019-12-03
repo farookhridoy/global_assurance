@@ -7,11 +7,49 @@
 <script type="text/javascript" src="<?php echo JS_URL; ?>select2.min.js"></script>
 
 <script type="text/javascript">
-	 $(document).ready(function () {
-	 	$('.mySelect2').select2({
-	 		width: "100%",
-	 	});
+              $(document).ready(function () {
+                function permute(input, permArr, usedChars) {
+                  var i, ch;
+                  for (i = 0; i < input.length; i++) {
+                    ch = input.splice(i, 1)[0];
+                    usedChars.push(ch);
+                    if (input.length === 0) {
+                      permArr.push(usedChars.slice());
+                  }
+                  permute(input, permArr, usedChars);
+                  input.splice(i, 0, ch);
+                  usedChars.pop();
+              }
+              return permArr;
+            }
+
+          $('.mySelect2').select2({
+            width: "100%",
+
+            matcher: function(term, text) {
+
+                if (term.length === 0) return true;
+                texts = text.split(" ");
+
+                allCombinations = permute(texts, [], []);
+
+                for (i in allCombinations) {
+                  if (allCombinations[i].join(" ").toUpperCase().indexOf(term.toUpperCase()) === 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        });
     });
+
+  
+
+  $(document).click(function() {
+    $(".mySelect2").select2('close');
+});
+
+  
 </script>
 <?php global $datePicker, $footerFunctions; if(!empty($datePicker) && is_array($datePicker)){ ?>
 <link rel="stylesheet" href="<?php echo CSS_URL ?>datepicker/jquery-ui.css"/>

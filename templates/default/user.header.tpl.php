@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo CSS_URL; ?>style-jeet.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo CSS_URL; ?>style.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo CSS_URL; ?>media.css"/>
-    <link rel="stylesheet" type="text/css" href="<?php echo CSS_URL; ?>select2.min.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo CSS_URL; ?>select2.css"/>
     
     <link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,300i,400,400i,500,500i,600,600i,700,700i,800,900" rel="stylesheet"/>
