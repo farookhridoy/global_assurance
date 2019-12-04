@@ -73,13 +73,13 @@ $singleReceiptInfo=getsingleInfoReceiptLists($payment_info['id_policy']);
                 <td style="color: black;padding:8px 8px;font-size: 13px;font-weight: 800;border: 1px solid darkgray;">Amount</td>
 
                 <tr>
-                  <td style="color: #000;padding:8px 8px;font-size: 12px;font-weight: 600;border-left: solid 1px #ccc;"><?php echo getHealthPrimaryInsuredText($payment_info['id_policy']); ?></td>
+                  <td style="color: #000;padding:8px 8px;font-size: 12px;font-weight: 600;border-left: solid 1px #ccc;"></td>
                   <td style="color: #000;padding:8px 8px;font-size: 12px;font-weight: 600;border-left: solid 1px #ccc;border-bottom: solid 1px #ccc;" rowspan="3"><?php echo getPolicyNumberById($payment_info['id_policy']); ?></td>
                   <td style="color: #000;padding:8px 8px;font-size: 12px;font-weight: 600;border-left: solid 1px #ccc;border-bottom: solid 1px #ccc;"><?php echo $payCycle_name['paycycle']; ?></td>
                   <td style="color: #000;padding:8px 8px;font-size: 12px;font-weight: 600;border-left: solid 1px #ccc;border-bottom: solid 1px #ccc;border-right: solid 1px #ccc;">$<?php echo number_format($payment_info['amount'],2);?></td>
                 </tr>
                 <tr>
-                  <td style="color: #000;padding:8px 8px;font-size: 12px;border-left: solid 1px #ccc;"></td>
+                  <td style="color: #000;padding:8px 8px;font-size: 12px;font-weight: 600;border-left: solid 1px #ccc;"><?php echo getHealthPrimaryInsuredText($payment_info['id_policy']); ?></td>
                   <td style="color: #000;padding:8px 8px;font-size: 12px;border-left: solid 1px #ccc;"><strong>Policy Fee</strong></td>
                   <td style="color: #000;padding:8px 8px;font-size: 12px; font-weight: 600 ;border-left: solid 1px #ccc;border-bottom: solid 1px #ccc;border-right: solid 1px #ccc;">$<?php echo number_format($payment_info['fee'],2); ?></td>
                 </tr>
@@ -98,10 +98,12 @@ $singleReceiptInfo=getsingleInfoReceiptLists($payment_info['id_policy']);
                     <span style="font-size: 14px;font-weight: 500"><?= $payment_info['receipt_pay']!=''?$payment_info['receipt_pay'] : trim($singleReceiptInfo['receipt_pay']) ?><br>
                       <?= $payment_info['receipt_type']!=''?$payment_info['receipt_type'] : trim($singleReceiptInfo['receipt_type']) ?></span>
                     </td>
+
                     <td align="left" colspan="3" style="padding:10px 10px;font-size: 15px;">
                       <strong>Notes:</strong><br>
-                      <span style="font-size: 14px;font-weight: 500"><?= $payment_info['receipt_note']!=''?$payment_info['receipt_note'] : trim($singleReceiptInfo['receipt_note']) ?></span>
+                      <span style="font-size: 14px;font-weight: 500"><?= $payment_info['receipt_note']!=''?$payment_info['receipt_note'] : trim($singleReceiptInfo['receipt_note']) ?><br> &nbsp;</span>
                     </td>
+
                   </tr>
                   <tr style="background: #fff">
                     <td colspan="5"><br>

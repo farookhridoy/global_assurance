@@ -92,85 +92,33 @@ if(isset($_SESSION["message"])) {
 </div>
 </div>
 
+<!-- <div class="col-md-8"> 
+ <form method="post" action="<?php echo THE_URL."main/upload"; ?>" id="frm_agent_notes" enctype="multipart/form-data">
+
+  <div class="content_section_aside">
+    <h4 class="content_section_aside_header">Upload xlsx sheet</h4>
+
+    <div class="form-group-row">
+      <div class="row rowsm">
+        <div class="col-md-3"><label class="formheading labelSide">Choose Agents File</label></div>
+        <div class="col-md-3">
+
+          <input type="file" name="fileToUpload"  id="file" class="form-control btn btn-primary" style="height: 33px !important;margin-top: -3px;">
+
+          <input type="hidden" name="policy_id" id="policy_id" value="<?php echo $policyInfo['id']; ?>">
+        </div>
+        <div class="col-md-6">
+          <input type="hidden" name="data_id" value="3">
+          <input class="btn btn-success" type="submit" value="Upload Agents" name="upload" data-id="3">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+</div> -->
+</div>
+
 </div>
 </div>
 
-<!-- sectionPanel_Right END -->
-
-<!-- /*require_once('../spreadsheet-plugin/php-excel-reader/excel_reader2.php');
-require_once('../spreadsheet-plugin/SpreadsheetReader.php');
-//error_reporting(E_ALL);
-$policy_id =  trim($_POST['policy_id']);
-$file =  trim($_FILES["uploadFile"]);
-
-if (isset($_POST["uploadbtn"]))
-{
-    if($policy_id && $file){
-
-        $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
-
-        if(in_array($_FILES["uploadFile"]["type"],$allowedFileType)){
-
-            $targetPath = '../includes/file-folder/'.$_FILES['uploadFile']['name'];
-            move_uploaded_file($_FILES['uploadFile']['tmp_name'], $targetPath);
-
-            $Reader = new SpreadsheetReader($targetPath);
-
-            $sheetCount = count($Reader->sheets());
-
-            for($i=0;$i<$sheetCount;$i++){
-                $Reader->ChangeSheet($i);
-                foreach ($Reader as $row){
-                    if(isset($row[3])){
-                        $paid_date= date("Y-m-d",strtotime($row[3]));
-                    }
-
-                    $sql = "INSERT INTO `payments`(`id_policy`,`id_pay_cycle`,`amount`,`date_paid`,`action`,`id_pay_type`,`fee`,`id_discount`,`id_user`,`date_due`,`locked`,`type`,`details`,`paid`,`date_created`,
-                    `receipt_pay`,`receipt_type`,`receipt_note`) VALUES ('".trim($policyInfo['id'])."','".trim($policyInfo['idpaycycle'])."','".trim($row[12])."','".trim($paid_date)."','".trim($row[10])."','','".trim($policyInfo['fee'])."','','".trim($row[15])."','".trim($policyInfo['paymentduedate'])."','0','".trim($row[9])."','','0','','".trim($row[8])."','".trim($row[5]).'-'.trim($row[7])."','".trim($row[18])."')";
-
-                    $result = $db->insert($sql);
-                    if (! empty($result)) {
-
-                        
-
-                        echo "<script type=\"text/javascript\">
-                            alert(\"Excel Data Imported into the Database\");
-                            window.location.reload()
-                        </script>";
-
-                    } else {
-
-                        
-                        echo "<script type=\"text/javascript\">
-                            alert(\"Problem in Importing Excel Data\");
-                           
-                        </script>";
-                    }
-
-                }//end foreach
-
-            }//end for
-        }else{ 
-
-                //alert("Invalid File Type. Upload Excel File.");
-                echo "<script type=\"text/javascript\">
-                            alert(\"Invalid File Type. Upload Excel File.\");
-                           
-                        </script>";
-        }
-        if($payments){
-            //alert("Upload Excel File.");
-             echo "<script type=\"text/javascript\">
-                            alert(\"Upload Excel File.\");
-                           
-                        </script>";
-        }
-    }else{
-
-        //alert("Faild");
-        echo "<script type=\"text/javascript\">
-                            alert(\"Faild.\");
-                           
-                        </script>";
-    }
-} */  -->

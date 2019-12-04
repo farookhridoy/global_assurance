@@ -405,8 +405,8 @@ $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
                     <div class="col-md-12 col-lg-9">
                       <div class="row rowsm">
                         <div class="col-md-6">
-                          <span class="form-select">
-                            <select class="policy_agents form-control" name="agent_level1" id="agent_level1" data-id="1">
+                          <span class="">
+                            <select class="policy_agents form-control mySelect2" name="agent_level1" id="agent_level1" data-id="1">
                               <option value="0">&nbsp;</option>
                                <?php 
                                $agents = getAgentLists("health",1);  
@@ -439,8 +439,8 @@ $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
                     <div class="col-md-12 col-lg-9">
                       <div class="row rowsm">
                         <div class="col-md-6">
-                          <span class="form-select">
-                            <select class="policy_agents form-control" name="agent_level2" id="agent_level2" data-id="2">
+                          <span class="">
+                            <select class="policy_agents form-control mySelect2" name="agent_level2" id="agent_level2" data-id="2">
                             <option value="0">&nbsp;</option>
                             <?php 
                                $agents = getAgentLists("health",2);  
@@ -470,8 +470,8 @@ $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
                     <div class="col-md-12 col-lg-9">
                       <div class="row rowsm">
                         <div class="col-md-6">
-                          <span class="form-select">
-                            <select class="policy_agents form-control" name="agent_level3" id="agent_level3" data-id="3">
+                          <span class="">
+                            <select class="policy_agents form-control mySelect2" name="agent_level3" id="agent_level3" data-id="3">
                               <option value="0">&nbsp;</option>
                                <?php 
                                $agents = getAgentLists("health",3);  
@@ -502,8 +502,8 @@ $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
                     <div class="col-md-12 col-lg-9">
                       <div class="row rowsm">
                         <div class="col-md-6">
-                          <span class="form-select">
-                            <select class="policy_agents form-control" name="agent_level4" id="agent_level4" data-id="4">
+                          <span class="">
+                            <select class="policy_agents form-control mySelect2" name="agent_level4" id="agent_level4" data-id="4">
                               <option value="0">&nbsp;</option>
                                 <?php 
                                $agents = getAgentLists("health",4);  
@@ -533,8 +533,8 @@ $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
                     <div class="col-md-12 col-lg-9">
                       <div class="row rowsm">
                         <div class="col-md-6">
-                          <span class="form-select">
-                            <select class="policy_agents form-control" name="agent_level5" id="agent_level5" data-id="5">
+                          <span class="">
+                            <select class="policy_agents form-control mySelect2" name="agent_level5" id="agent_level5" data-id="5">
                               <option value="0">&nbsp;</option>
                               <?php 
                                $agents = getAgentLists("health",5);  
