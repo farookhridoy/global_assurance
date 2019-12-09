@@ -63,7 +63,7 @@ $getData = $db->select_single($sql);*/
                             if ($checkAgentDataFromAC) {
                               $agents=$checkAgentDataFromAC;
                             }else{
-                              $agents = getAgentLists("health",1); 
+                              $agents = getSubAgentLists("health",1); 
                             }
                             if($agents){
                               foreach($agents as $al_key => $al_vl){ 
@@ -122,7 +122,7 @@ $getData = $db->select_single($sql);*/
                           if ($checkAgentDataFromAC2) {
                            $agentLists2=$checkAgentDataFromAC2;
                          }else{
-                          $agentLists2 = getAgentLists("health",2); 
+                          $agentLists2 = getSubAgentLists("health",2,$policyInfo['idagent']); 
                         } 
 
                         //print_r($agentLists2);
@@ -184,7 +184,7 @@ $getData = $db->select_single($sql);*/
                         if ($checkAgentDataFromAC3) {
                          $agentLists3=$checkAgentDataFromAC3;
                        }else{
-                        $agentLists3 = getAgentLists("health",3); 
+                        $agentLists3 = getSubAgentLists("health",3,$policyInfo['idagent2']); 
                       } 
 
                       if($agentLists3){
@@ -239,7 +239,7 @@ $getData = $db->select_single($sql);*/
                       if ($checkAgentDataFromAC4) {
                        $agentLists4=$checkAgentDataFromAC4;
                      }else{
-                      $agentLists4 = getAgentLists("health",4); 
+                      $agentLists4 = getSubAgentLists("health",4,$policyInfo['idagent3']); 
                     }   
                     if($agentLists4){
                       foreach($agentLists4 as $al_key => $al_vl){ 
@@ -294,7 +294,7 @@ $getData = $db->select_single($sql);*/
                     if ($checkAgentDataFromAC5) {
                       $agentLists5=$checkAgentDataFromAC5;
                     }else{
-                      $agentLists5 = getAgentLists("health",5); 
+                      $agentLists5 = getSubAgentLists("health",5,$policyInfo['idagent4']); 
                     }  
                     if($agentLists5){
                       foreach($agentLists5 as $al_key => $al_vl){ 

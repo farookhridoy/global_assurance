@@ -39,13 +39,14 @@ switch($action)
         }else{
           $agentInfo = getSingleAgent($agentID);
        }
-       //print_r($agentInfo);
-        $agentSub = getAgentLists($agentType,$agentLevelSub,$agentID);
+       
+        //$agentSub = getAgentLists($agentType,$agentLevelSub,$agentID);
+        $agentSub = getSubAgentLists($agentType,$agentLevelSub,$agentID);
         
         if($agentInfo){
           $data_sucess['sucess'] = 1;
           $data_sucess['agent_data'] = $agentInfo;
-          //$data_sucess['agent_sub'] = $agentSub;
+          $data_sucess['agent_sub'] = $agentSub;
         }else{
            $data_sucess['sucess'] = 0; 
         }

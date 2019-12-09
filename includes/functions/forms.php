@@ -204,6 +204,20 @@ function getAgentLists($policy_type,$level,$parent=0){
     return $agentLists;
 }
 
+function getSubAgentLists($policy_type,$level,$parent=0){
+    global $db;
+    $agentLists = array();
+    if($policy_type && $level){
+        if($policy_type == "life")
+        $sql="SELECT * FROM agents WHERE life='1' AND active ='1' AND level='$level' AND idagent='$parent'";
+        else
+        $sql="SELECT * FROM agents WHERE health='1' AND active ='1' AND level='$level' AND idagent='$parent'";
+        
+        $agentLists = $db->select($sql);
+    }
+    return $agentLists;
+}
+
 
 
 function getSingleAgent($agent_id){
@@ -945,7 +959,7 @@ function getAgentData($policy_id,$level){
       `agent_commissions`.`rn`,
       `agent_commissions`.`pay_by`
       FROM `agent_commissions`
-      INNER JOIN `agents` ON `agent_commissions`.`level_id` = agents.`level`
+      INNER JOIN `agents` ON `agent_commissions`.`level_id` = agents.`idagent`
       WHERE `agent_commissions`.`policy_id`='$policy_id' AND `agents`.`level`='$level' GROUP BY `agents`.`id` ";
       $agentLists = $db->select($sql);
     }

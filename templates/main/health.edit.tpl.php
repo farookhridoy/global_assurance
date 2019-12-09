@@ -409,7 +409,7 @@ $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
                             <select class="policy_agents form-control mySelect2" name="agent_level1" id="agent_level1" data-id="1">
                               <option value="0">&nbsp;</option>
                                <?php 
-                               $agents = getAgentLists("health",1);  
+                               $agents = getSubAgentLists("health",1);  
                                if($agents)
                                 {foreach($agents as $ag_key => $ag_value)
                                     { 
@@ -443,7 +443,7 @@ $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
                             <select class="policy_agents form-control mySelect2" name="agent_level2" id="agent_level2" data-id="2">
                             <option value="0">&nbsp;</option>
                             <?php 
-                               $agents = getAgentLists("health",2);  
+                               $agents = getSubAgentLists("health",2,$policyInfo['idagent']);  
                                if($agents)
                                 {foreach($agents as $ag_key => $ag_value)
                                     { 
@@ -474,7 +474,7 @@ $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
                             <select class="policy_agents form-control mySelect2" name="agent_level3" id="agent_level3" data-id="3">
                               <option value="0">&nbsp;</option>
                                <?php 
-                               $agents = getAgentLists("health",3);  
+                               $agents = getSubAgentLists("health",3,$policyInfo['idagent2']);  
                                if($agents)
                                 {foreach($agents as $ag_key => $ag_value)
                                     { 
@@ -506,7 +506,7 @@ $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
                             <select class="policy_agents form-control mySelect2" name="agent_level4" id="agent_level4" data-id="4">
                               <option value="0">&nbsp;</option>
                                 <?php 
-                               $agents = getAgentLists("health",4);  
+                               $agents = getSubAgentLists("health",4,$policyInfo['idagent3']);  
                                if($agents)
                                 {foreach($agents as $ag_key => $ag_value)
                                     { 
@@ -537,7 +537,7 @@ $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
                             <select class="policy_agents form-control mySelect2" name="agent_level5" id="agent_level5" data-id="5">
                               <option value="0">&nbsp;</option>
                               <?php 
-                               $agents = getAgentLists("health",5);  
+                               $agents = getSubAgentLists("health",5,$policyInfo['idagent4']);  
                                if($agents)
                                 {foreach($agents as $ag_key => $ag_value)
                                     { 

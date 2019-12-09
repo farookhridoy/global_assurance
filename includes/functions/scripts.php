@@ -49,14 +49,14 @@ global $policyInfo,$policyNotes,$insuredLists,$checkPermissionRole,$db;
                 }
                  
                  
-                 /*if(data.agent_sub){
+                 if(data.agent_sub){
                      $("#agent_level"+next_level).empty();
                      $("#agent_level"+next_level).append($("<option></option>").attr("value", "0").text(''));
                      $.each(data.agent_sub, function(k, v) {
                         $("#agent_level"+next_level).append($("<option></option>").attr("value", v.id).text(v.name));
                      //alert(v.name);
                      });
-                 }*/
+                 }
                   
                 }
                 else
@@ -68,8 +68,8 @@ global $policyInfo,$policyNotes,$insuredLists,$checkPermissionRole,$db;
             }else{
                $("#agent_level"+curr_ae_data_id+"_f_name").val("");
                $("#agent_level"+curr_ae_data_id+"_l_name").val("");
-               /*$("#agent_level"+next_level).empty(); 
-               $("#agent_level"+next_level).append($("<option></option>").attr("value", "0").text(''));*/
+               $("#agent_level"+next_level).empty(); 
+               $("#agent_level"+next_level).append($("<option></option>").attr("value", "0").text(''));
             }
             return false;
     }
@@ -259,6 +259,15 @@ function loadCoverages(curr_plan)
                    }else{
                     $("#agent_level"+curr_ae_data_id+"_notes").val("");
                    }
+
+                   if(data.agent_sub){
+                       $("#agent_level"+next_level).empty();
+                       $("#agent_level"+next_level).append($("<option></option>").attr("value", "0").text(''));
+                       $.each(data.agent_sub, function(k, v) {
+                        $("#agent_level"+next_level).append($("<option></option>").attr("value", v.id).text(v.name));
+                    
+                        });
+                   }
                  
                   newbalance(curr_ae_data_id);
                   renewal(curr_ae_data_id);
@@ -280,7 +289,10 @@ function loadCoverages(curr_plan)
                $("#agent_level"+curr_ae_data_id+"_sys_rn").val("");
                $("#agent_level"+curr_ae_data_id+"_rn").val("");
                $("#agent_level"+curr_ae_data_id+"_pay_by").val("");
-               $("#agent_level"+curr_ae_data_id+"_notes").val(""); 
+               $("#agent_level"+curr_ae_data_id+"_notes").val("");
+
+               $("#agent_level"+next_level).empty(); 
+               $("#agent_level"+next_level).append($("<option></option>").attr("value", "0").text('')); 
             }
             return false;
     }

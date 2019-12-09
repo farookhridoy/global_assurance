@@ -7,7 +7,7 @@ $checkPermissionRole = checkUserAccessRole('Policies');
 $footerFunctions = array("scriptHealthNew","scriptHealthRateup");
 //print_r($policyInfo);
 //error_reporting(E_ALL);
-$agentLists = getAgentLists('health',1);
+$agentLists = getSubAgentLists('health',1);
 //print_r($agentLists);
 
 $policyCycle = getPayCycleLists();
@@ -179,7 +179,7 @@ $singleReceiptInfo=getsingleInfoReceiptLists($policy_id_p);
                                if ($checkAgentDataFromAC) {
                                     $agents=$checkAgentDataFromAC;
                                }else{
-                                    $agents = getAgentLists("health",1); 
+                                    $agents = getSubAgentLists("health",1); 
                                 }
 
                              if($agents){
@@ -240,7 +240,7 @@ $singleReceiptInfo=getsingleInfoReceiptLists($policy_id_p);
                             if ($checkAgentDataFromAC2) {
                                    $agentLists2=$checkAgentDataFromAC2;
                                }else{
-                                $agentLists2 = getAgentLists("health",2); 
+                                $agentLists2 = getSubAgentLists("health",2,$policyInfo['idagent']); 
                             } 
                             if($agentLists2){
                                 foreach($agentLists2 as $al_key => $al_vl){ 
@@ -298,7 +298,7 @@ $singleReceiptInfo=getsingleInfoReceiptLists($policy_id_p);
                         if ($checkAgentDataFromAC3) {
                                $agentLists3=$checkAgentDataFromAC3;
                            }else{
-                            $agentLists3 = getAgentLists("health",3); 
+                            $agentLists3 = getSubAgentLists("health",3,$policyInfo['idagent2']); 
                         } 
                        
                         if($agentLists3){
@@ -353,7 +353,7 @@ $singleReceiptInfo=getsingleInfoReceiptLists($policy_id_p);
                     if ($checkAgentDataFromAC4) {
                            $agentLists4=$checkAgentDataFromAC4;
                        }else{
-                        $agentLists4 = getAgentLists("health",4); 
+                        $agentLists4 = getSubAgentLists("health",4,$policyInfo['idagent3']); 
                     }   
                     if($agentLists4){
                         foreach($agentLists4 as $al_key => $al_vl){ 
@@ -408,7 +408,7 @@ $singleReceiptInfo=getsingleInfoReceiptLists($policy_id_p);
                     if ($checkAgentDataFromAC5) {
                         $agentLists5=$checkAgentDataFromAC5;
                     }else{
-                        $agentLists5 = getAgentLists("health",5); 
+                        $agentLists5 = getSubAgentLists("health",5,$policyInfo['idagent4']); 
                     }  
                     if($agentLists5){
                         foreach($agentLists5 as $al_key => $al_vl){ 
