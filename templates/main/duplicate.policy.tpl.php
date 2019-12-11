@@ -32,8 +32,8 @@ $footerFunctions = array("scriptDuplicatePolicy");
                     <div class="row">
                       <div class="col-md-5 ">
                         <label class="formheading">Policy Number</label>
-                        <span class="form-select">
-                        <select class="form-control" name="policy_number" id="policy_number">
+                        <span class="">
+                        <select class="form-control mySelect2" name="policy_number" id="policy_number">
                           <option value="0">&nbsp;</option>
                           <?php $healthPolicies = getHealthPolicies(); if($healthPolicies){foreach($healthPolicies as $hp_key => $hp_value){$selected_text = ($hp_value['id'] == $policyInfo['id']) ? 'selected="selected"': '';   echo '<option value="'.$hp_value['id'].'" '.$selected_text.'>'.$hp_value['policynumber'].'</option>';}} ?>
                         </select>

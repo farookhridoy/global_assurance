@@ -75,8 +75,8 @@ foreach($PolicyDeductible as $keyDeductible => $valDeductible){
                       </div>
                       <div class="col-md-5 ">
                         <label class="formheading">Select Policy Number</label>
-                        <span class="form-select">
-                          <select class="form-control" onchange="redirectPolicy(this);">
+                        <span class="">
+                          <select class="form-control mySelect2" onchange="redirectPolicy(this);">
                             <?php $healthPolicies = getHealthPolicies(); if($healthPolicies){foreach($healthPolicies as $hp_key => $hp_value){$selected_text = ($policyInfo['id'] == $hp_value['id']) ? 'selected="selected"': ''; echo '<option value="'. THE_URL.'main/print_policy/'.$hp_value['id'].'" '.$selected_text.'>'.$hp_value['policynumber'].'</option>';}} ?>
                           </select>
                         </span>
