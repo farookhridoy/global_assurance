@@ -686,6 +686,9 @@ switch($action)
                 $new_payments = createNewAgentLabel($db_data,$agent_id,$policy_id,$data_id);
 
                 if($new_payments){
+                  $dbp_data['idagent'.$data_id]=$agent_id;
+
+                  saveHealthPolicy($policy_id,$dbp_data);
 
                   $data_sucess['sucess'] = 1;
 

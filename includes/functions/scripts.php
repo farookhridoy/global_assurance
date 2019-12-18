@@ -562,6 +562,17 @@ function savePolicyInsureds(){
                 },
             });
         }
+        //for agent save level wise
+        for (var i = 0; i < 5; i++) {
+
+              var data_id = parseInt(i);
+              var agent_id = parseInt($('#agent_level'+data_id).children("option:selected").val());
+              var notes = $('#agent_level'+data_id+'_notes').val();
+         
+              if (data_id!=0 && agent_id!="") {
+                  SubmitParentAgentData(data_id,policy_id,notes,agent_id);
+              }
+        }
 
     }else{
         alert("Policy id not found!!!");

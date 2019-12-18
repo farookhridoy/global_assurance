@@ -238,8 +238,11 @@ $singleReceiptInfo=getsingleInfoReceiptLists($policy_id_p);
                             $checkAgentDataFromAC2=getAgentData($policy_id_p,2);
 
                             if ($checkAgentDataFromAC2) {
+
                                    $agentLists2=$checkAgentDataFromAC2;
+                                   
                                }else{
+
                                 $agentLists2 = getSubAgentLists("health",2,$policyInfo['idagent']); 
                             } 
                             if($agentLists2){

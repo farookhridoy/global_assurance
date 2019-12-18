@@ -959,7 +959,7 @@ function getAgentData($policy_id,$level){
       `agent_commissions`.`rn`,
       `agent_commissions`.`pay_by`
       FROM `agent_commissions`
-      INNER JOIN `agents` ON `agent_commissions`.`level_id` = agents.`idagent`
+      INNER JOIN `agents` ON `agent_commissions`.`agent_id` = agents.`idagent`
       WHERE `agent_commissions`.`policy_id`='$policy_id' AND `agents`.`level`='$level' GROUP BY `agents`.`id` ";
       $agentLists = $db->select($sql);
     }

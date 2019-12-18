@@ -32,7 +32,7 @@
   <body class="globalassurance">
   <div class="roots">
   <header>
-        <div class="logo"><a href="dashboard.html"><img src="<?php echo MEDIA_IMAGES; ?>logo.png" alt="logo"/></a></div>
+        <div class="logo"><a href="<?php echo THE_URL ?>"><img src="<?php echo MEDIA_IMAGES; ?>logo.png" alt="logo"/></a></div>
         <div class="menuToggle" id="leftPanelMenu"><i class="fas fa-bars"></i><i class="fas fa-times"></i></div>
         <div class="float-right">
           <div class="userporthead">
